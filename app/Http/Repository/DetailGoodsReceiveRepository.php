@@ -41,10 +41,15 @@ class DetailGoodsReceiveRepository{
     {
         $this->detailGoodsReceive->where('goods_receive_id', $good_receive_id)->delete();
     }
-
+    
     public function delete_by_id($id)
     {
         $this->detailGoodsReceive->find($id)->delete();
+    }
+    
+    public function get_all_by_gr_id($gr_id)
+    {
+        return $this->detailGoodsReceive->where('goods_receive_id', $gr_id)->get();
     }
 
 }

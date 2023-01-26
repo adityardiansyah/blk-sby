@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Repository\ConversionRepository;
 use App\Http\Repository\DetailGoodsReceiveRepository;
 use App\Http\Repository\GoodsReceiveRepository;
 use Illuminate\Http\Request;
@@ -10,11 +11,12 @@ use Illuminate\Support\Facades\Auth;
 
 class GoodsReceiveController extends Controller
 {
-    protected $goodsReceiveRepository, $detailGoodsReceiveRepository;
+    protected $goodsReceiveRepository, $detailGoodsReceiveRepository, $conversionRepository;
 
-    public function __construct(GoodsReceiveRepository $goods, DetailGoodsReceiveRepository $dtGoods) {
+    public function __construct(GoodsReceiveRepository $goods, DetailGoodsReceiveRepository $dtGoods, ConversionRepository $con) {
         $this->goodsReceiveRepository = $goods;
         $this->detailGoodsReceiveRepository = $dtGoods;
+        $this->conversionRepository = $con;
     }
 
     public function index()
@@ -70,7 +72,21 @@ class GoodsReceiveController extends Controller
 
     public function show($id)
     {
-        //
+        try {
+            if($id){
+                $data = $this->goodsReceiveRepository->get_data_by_id($id);
+                return response()->json([
+                    'message' => 'Data found',
+                    'data' => $data
+                ]);
+            }
+            
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'Data not found',
+                'data' => []
+            ]);
+        }
     }
 
     public function update(Request $request, $id)
@@ -126,6 +142,34 @@ class GoodsReceiveController extends Controller
     public function update_status($id, Request $request)
     {
         try{
+            $type = $request->type;
+            $detail = $this->goodsReceiveRepository->get_data_by_id($id);
+            if(!empty($detail->detail) && $detail->status !== $type){
+                if($type === "open"){
+                    $checkStock = $this->conversionRepository->checkStockItem($detail->detail, 'OUT');
+                    if($checkStock['error']){
+                        return response()->json([
+                            'message' => 'Cannot sale! '.$checkStock['data'].', Not enough stock',
+                            'error' => true
+                        ]);
+                    }
+                }
+
+                foreach ($detail->detail as $key => $value) {
+                    if($type === "confirmed" && $detail->status !== $type){
+                        $this->conversionRepository->update_qty($value->conversion_id, $value->qty, 'IN');
+                    }elseif($type === "open" && $detail->status !== $type){
+                        $update = $this->conversionRepository->update_qty($value->conversion_id, $value->qty, 'OUT');
+                        if(!empty($update['error'])){
+                            return response()->json([
+                                'message' => 'Cannot open!, '.$update['data'].' Not enough stock',
+                                'error' => true
+                            ]);
+                        }
+                    }
+                }
+            }
+
             $this->goodsReceiveRepository->update_status($id, $request->type);
 
             return response()->json([
