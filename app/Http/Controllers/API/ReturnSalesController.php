@@ -3,18 +3,23 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Repository\ConversionRepository;
 use App\Http\Repository\DetailSalesRepository;
-use App\Models\DetailSale;
+use App\Http\Repository\ReturnSalesRepository;
+use App\Http\Repository\SalesRepository;
 use Illuminate\Http\Request;
 
-class DetailSalesController extends Controller
+class ReturnSalesController extends Controller
 {
-    protected $detailSalesRepository;
+    protected $saleRepository, $detailSalesRepossitory, $conversionRepository, $returnSalesRepository;
 
-    public function __construct(DetailSalesRepository $ds) {
-        $this->detailSalesRepository = $ds;
+    public function __construct(SalesRepository $sr, DetailSalesRepository $dsr, ConversionRepository $con, ReturnSalesRepository $rsp) {
+        $this->saleRepository = $sr;
+        $this->detailSalesRepossitory = $dsr;
+        $this->conversionRepository = $con;
+        $this->returnSalesRepository = $rsp;
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -33,7 +38,19 @@ class DetailSalesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $data = $this->returnSalesRepository->create($request->all());
+            return response()->json([
+                'data' => $data,
+                'message' => 'success return',
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'data' => [],
+                'message' => $th->getMessage(),
+                'error' => 500
+            ]);
+        }
     }
 
     /**
@@ -67,20 +84,6 @@ class DetailSalesController extends Controller
      */
     public function destroy($id)
     {
-        try {
-            if($id){
-                $this->detailSalesRepository->delete($id);
-            }
-            return response()->json([
-                'message' => 'success deleted',
-            ]);
-
-        } catch (\Throwable $th) {
-            return response()->json([
-                'message' => $th->getMessage(),
-                "error" => 500
-            ]);
-        }
+        //
     }
-    
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Seller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -57,5 +58,22 @@ class AuthController extends Controller
         return [
             'message' => 'You have successfully logged out and the token was successfully deleted'
         ];
+    }
+
+    public function profile()
+    {
+        try {
+            $user = Auth::user();
+            $data = Seller::where('user_id', $user->id)->first();
+            $data->username = $user->username;
+    
+            return response()->json([
+                                'data' => $data,
+                            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => $th->getMessage(),
+            ]);
+        }
     }
 }

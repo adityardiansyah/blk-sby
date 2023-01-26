@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Repository\ConversionRepository;
 use App\Http\Repository\DetailSalesRepository;
 use App\Http\Repository\SalesRepository;
 use Illuminate\Http\Request;
@@ -10,11 +11,12 @@ use Illuminate\Support\Facades\Auth;
 
 class SalesController extends Controller
 {
-    protected $saleRepository, $detailSalesRepossitory;
+    protected $saleRepository, $detailSalesRepossitory, $conversionRepository;
 
-    public function __construct(SalesRepository $sr, DetailSalesRepository $dsr) {
+    public function __construct(SalesRepository $sr, DetailSalesRepository $dsr, ConversionRepository $con) {
         $this->saleRepository = $sr;
         $this->detailSalesRepossitory = $dsr;
+        $this->conversionRepository = $con;
     }
 
     public function index()
@@ -149,11 +151,44 @@ class SalesController extends Controller
     public function update_status(Request $request, $id)
     {
         try{
-            $this->saleRepository->update_status($id, $request->type);
+            $type = $request->type;
 
-            return response()->json([
-                'message' => 'success updated',
-            ]);
+            $detail = $this->saleRepository->get_data_by_id($id);
+            if(!empty($detail->detail)){
+                if($type === "confirmed"){
+                    $checkStock = $this->conversionRepository->checkStockItem($detail->detail, 'OUT');
+                    if($checkStock['error']){
+                        return response()->json([
+                            'message' => 'Cannot sale! '.$checkStock['data'].', Not enough stock',
+                            'error' => true
+                        ]);
+                    }
+                }
+                
+                foreach ($detail->detail as $key => $value) {
+                    if($type === "confirmed" && $detail->status !== $type){
+                        $update = $this->conversionRepository->update_qty($value->conversion_id, $value->qty, 'OUT');
+                        if(!empty($update['error'])){
+                            return response()->json([
+                                'message' => 'Cannot sale! '.$update['data'].', Not enough stock',
+                                'error' => true
+                            ]);
+                        }
+                    }elseif($type === "open" && $detail->status !== $type){
+                        $update = $this->conversionRepository->update_qty($value->conversion_id, $value->qty, 'IN');
+                    }
+                }
+                $this->saleRepository->update_status($id, $request->type);
+    
+                return response()->json([
+                    'message' => 'success updated',
+                ]);
+            }else{
+                return response()->json([
+                    'message' => 'data not found!',
+                ]);
+            }
+
         } catch (\Throwable $th) {
             return response()->json([
                 'data' => [],
@@ -161,5 +196,6 @@ class SalesController extends Controller
                 'error' => 500
             ]);
         }
+
     }
 }

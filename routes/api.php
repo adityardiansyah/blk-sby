@@ -6,6 +6,7 @@ use App\Http\Controllers\API\DetailGoodsReceiveController;
 use App\Http\Controllers\API\DetailSalesController;
 use App\Http\Controllers\API\GoodsReceiveController;
 use App\Http\Controllers\API\ProductMasterController;
+use App\Http\Controllers\API\ReturnSalesController;
 use App\Http\Controllers\API\SalesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -17,7 +18,7 @@ Route::get('/sync-product-master', [ProductMasterController::class, 'syncProduct
 
 
 Route::group(['middleware' => ['auth:sanctum']], function(){
-    Route::get('/profile', function(Request $request) {return auth()->user();});
+    Route::get('/profile', [AuthController::class, 'profile']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/get-product-master', [ProductMasterController::class, 'index']);
     
@@ -30,4 +31,6 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('sales/{id}/update', [SalesController::class, 'update_status']);
     Route::apiResource('sales', SalesController::class);
     Route::apiResource('detail-sales', DetailSalesController::class);
+    
+    Route::apiResource('return-sales', ReturnSalesController::class);
 });

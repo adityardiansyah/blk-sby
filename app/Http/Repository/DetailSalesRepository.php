@@ -15,22 +15,29 @@ class DetailSalesRepository{
         return $this->detailSale->where('id', $id)->first();
     }
 
-    public function create($data, $id)
+    public function create($data, $id, $status='finished')
     {
         $arr = [
             "sales_id" => $id,
             "conversion_id" => $data['conversion_id'],
             "item_name" => $data['item_name'], 
             "sku" => $data['sku'], 
-            "qty" => $data['qty'],
             "unit" => $data['unit'],
             "unit_price" => $data['unit_price'], 
-            "bruto_price" => $data['bruto_price'],
             "discount" => $data['discount'],
-            "nett_total" => $data['nett_total'],
             "notes" => "-",
-            "status" => "finished"
+            "status" => $status
         ];
+        if($status == "finished"){
+            $arr['qty'] = $data['qty'];
+            $arr['bruto_price'] = $data['qty'] * $data['unit_price'];
+            $arr['nett_total'] = $arr['bruto_price'] - $data['discount'];
+        }elseif($status == "return"){
+            $arr['qty'] = $data['qty_return'];
+            $arr['bruto_price'] = $data['qty_return'] * $data['unit_price'];
+            $arr['nett_total'] = $arr['bruto_price'] - $data['discount'];
+        }
+
         return $this->detailSale->create($arr);
     }
 
@@ -68,5 +75,10 @@ class DetailSalesRepository{
     public function delete_by_sales_id($id)
     {
         $this->detailSale->where('sales_id',$id)->delete();
+    }
+
+    public function get_data_by_sales_id($sales_id)
+    {
+        return $this->detailSale->where('sales_id', $sales_id)->get();
     }
 }
