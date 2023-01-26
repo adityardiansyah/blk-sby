@@ -1,4 +1,4 @@
 include:
   - project: 'edp/ci-cd'
     ref: master
-    file: 'gsm1-ci.yml'
+    file: 'gsm-env-ci.yml'
