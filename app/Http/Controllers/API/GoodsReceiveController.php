@@ -45,9 +45,8 @@ class GoodsReceiveController extends Controller
                 $request->validate([
                     'file_attachment' => 'mimes:jpg,jpeg,png|max:2048',
                 ]);
-                $name = $request->file('file_attachment')->getClientOriginalName();
-                $path = $request->file('file_attachment')->store('public/files/goodsreceive');
-                $file = $name.$path;
+                $path = $request->file('file_attachment')->store('files/goodsreceive','public');
+                $file = $path;
             }
             
             $data = $this->goodsReceiveRepository->create($request->all(), $file);

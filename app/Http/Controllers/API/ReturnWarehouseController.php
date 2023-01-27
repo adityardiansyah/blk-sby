@@ -3,23 +3,19 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Repository\ConversionRepository;
-use App\Http\Repository\DetailSalesRepository;
-use App\Http\Repository\ReturnSalesRepository;
-use App\Http\Repository\SalesRepository;
+use App\Http\Repository\DetailReturnWarehouseRepository;
+use App\Http\Repository\ReturnWarehouseRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
-class ReturnSalesController extends Controller
+class ReturnWarehouseController extends Controller
 {
-    protected $saleRepository, $detailSalesRepossitory, $conversionRepository, $returnSalesRepository;
+    protected $returnWarehouseRepository, $detailReturnWarehouseRepository;
 
-    public function __construct(SalesRepository $sr, DetailSalesRepository $dsr, ConversionRepository $con, ReturnSalesRepository $rsp) {
-        $this->saleRepository = $sr;
-        $this->detailSalesRepossitory = $dsr;
-        $this->conversionRepository = $con;
-        $this->returnSalesRepository = $rsp;
+    public function __construct(ReturnWarehouseRepository $rwr, DetailReturnWarehouseRepository $drwr) {
+        $this->returnWarehouseRepository = $rwr;
+        $this->detailReturnWarehouseRepository = $drwr;
     }
-
     /**
      * Display a listing of the resource.
      *
@@ -35,14 +31,27 @@ class ReturnSalesController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
-     */ 
+     */
     public function store(Request $request)
     {
-        try{
-            $data = $this->returnSalesRepository->create($request->all());
+        try {
+            $file = "";
+            if(!empty($request->file('file_attachment'))){
+                $request->validate([
+                    'file_attachment' => 'mimes:jpg,jpeg,png|max:2048',
+                ]);
+                $path = $request->file('file_attachment')->store('files/return_warehouse', 'public');
+                $file = $path;
+            }
+            $data = $this->returnWarehouseRepository->create($request->all(), $file);
+            if(!empty($data)){
+                foreach ($request->detail as $key => $value) {
+                    $this->detailReturnWarehouseRepository->create($data['id'], $value);
+                }
+            }
             return response()->json([
                 'data' => $data,
-                'message' => 'success return',
+                'message' => 'success inserted',
             ]);
         } catch (\Throwable $th) {
             return response()->json([
@@ -51,6 +60,7 @@ class ReturnSalesController extends Controller
                 'error' => 500
             ]);
         }
+        // return $request->all();
     }
 
     /**
@@ -61,21 +71,7 @@ class ReturnSalesController extends Controller
      */
     public function show($id)
     {
-        try {
-            if($id){
-                $data = $this->returnSalesRepository->get_data_by_id($id);
-                return response()->json([
-                    'message' => 'Data found',
-                    'data' => $data
-                ]);
-            }
-            
-        } catch (\Throwable $th) {
-            return response()->json([
-                'message' => 'Data not found',
-                'data' => []
-            ]);
-        }
+        //
     }
 
     /**

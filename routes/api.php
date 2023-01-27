@@ -7,6 +7,7 @@ use App\Http\Controllers\API\DetailSalesController;
 use App\Http\Controllers\API\GoodsReceiveController;
 use App\Http\Controllers\API\ProductMasterController;
 use App\Http\Controllers\API\ReturnSalesController;
+use App\Http\Controllers\API\ReturnWarehouseController;
 use App\Http\Controllers\API\SalesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -33,4 +34,5 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::apiResource('detail-sales', DetailSalesController::class);
     
     Route::apiResource('return-sales', ReturnSalesController::class);
+    Route::apiResource('return-warehouse', ReturnWarehouseController::class);
 });
