@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class ReturnWarehouse extends Model
 {
     use HasFactory;
+
+    protected $fillable = ["seller_id","shop_id","trans_no","trans_date","notes","file_attachment","status"];
 }
