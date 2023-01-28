@@ -15,12 +15,12 @@ class ReturnWarehouseRepository{
 
     public function get_data_by_shop($id)
     {
-        return $this->returnWarehouse->where('shop_id', $id)->get();
+        return $this->returnWarehouse->with('detail')->where('shop_id', $id)->orderBy('created_at', 'desc')->get();
     }
 
     public function get_data_by_id($id)
     {
-        return $this->returnWarehouse->where('id', $id)->first();
+        return $this->returnWarehouse->with('detail')->where('id', $id)->first();
     }
 
     public function create($data, $file)

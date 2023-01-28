@@ -66,6 +66,7 @@ class AuthController extends Controller
             $user = Auth::user();
             $data = Seller::where('user_id', $user->id)->first();
             $data->username = $user->username;
+            $data->seller_id = $user->id;
     
             return response()->json([
                                 'data' => $data,

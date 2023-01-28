@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Repository\DetailReturnWarehouseRepository;
 use App\Http\Repository\ReturnWarehouseRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class ReturnWarehouseController extends Controller
@@ -23,7 +24,20 @@ class ReturnWarehouseController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $shop_id = Auth::user()->seller->shop_id;
+            $data = $this->returnWarehouseRepository->get_data_by_shop($shop_id);
+            
+            return response()->json([
+                'message' => 'Data found',
+                'data' => $data
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'Data not found',
+                'data' => []
+            ]);
+        }
     }
 
     /**
@@ -71,7 +85,21 @@ class ReturnWarehouseController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+            if($id){
+                $data = $this->returnWarehouseRepository->get_data_by_id($id);
+                return response()->json([
+                    'message' => 'Data found',
+                    'data' => $data
+                ]);
+            }
+            
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'Data not found',
+                'data' => []
+            ]);
+        }
     }
 
     /**

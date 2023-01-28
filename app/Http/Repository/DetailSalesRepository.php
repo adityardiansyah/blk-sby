@@ -25,17 +25,15 @@ class DetailSalesRepository{
             "unit" => $data['unit'],
             "unit_price" => $data['unit_price'], 
             "discount" => $data['discount'],
+            "bruto_price" => $data['bruto_price'],
+            "nett_total" => $data['nett_total'],
             "notes" => "-",
             "status" => $status
         ];
         if($status == "finished"){
             $arr['qty'] = $data['qty'];
-            $arr['bruto_price'] = $data['qty'] * $data['unit_price'];
-            $arr['nett_total'] = $arr['bruto_price'] - $data['discount'];
         }elseif($status == "return"){
             $arr['qty'] = $data['qty_return'];
-            $arr['bruto_price'] = $data['qty_return'] * $data['unit_price'];
-            $arr['nett_total'] = $arr['bruto_price'] - $data['discount'];
         }
 
         return $this->detailSale->create($arr);
