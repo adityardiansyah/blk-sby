@@ -20,7 +20,7 @@ class ReturnSalesRepository{
 
     public function get_data_by_shop($id)
     {
-        return $this->returnSale->where('shop_id', $id)->get();
+        return $this->returnSale->where('shop_id', $id)->orderBy('created_at', 'desc')->get();
     }
 
     public function get_data_by_id($id)
@@ -50,6 +50,9 @@ class ReturnSalesRepository{
 
         if($qty < $detailSale->qty){
             $detailSale->qty_return = $qty;
+            $detailSale['bruto_price'] = $qty * $detailSale->unit_price;
+            $detailSale['nett_total'] = $detailSale['bruto_price'] - $detailSale->discount;
+
             // pecah detail sales
             $this->detailSalesRepository->create($detailSale, $detailSale->sales_id, "return");
             

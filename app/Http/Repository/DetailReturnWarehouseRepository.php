@@ -17,7 +17,7 @@ class DetailReturnWarehouseRepository{
 
     public function get_data_by_shop($id)
     {
-        return $this->returnWarehouseDetail->where('shop_id', $id)->get();
+        return $this->returnWarehouseDetail->where('shop_id', $id)->orderBy('created_at', 'desc')->get();
     }
 
     public function get_data_by_id($id)

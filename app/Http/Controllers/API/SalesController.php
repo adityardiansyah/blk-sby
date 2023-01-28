@@ -47,12 +47,17 @@ class SalesController extends Controller
                 $total_discount = 0;
 
                 foreach ($request->detail as $key => $value) {
-                    $total_price = $total_price + $value->total_price;
-                    $total_tax = $total_tax + $value->total_tax;
-                    $total_discount = $total_discount + $value->total_discount;
+                    $value['bruto_price'] = $value['qty'] * $value['unit_price'];
+                    $total_discount = $total_discount + $value['discount'];
+                    $value['nett_total'] = $value['bruto_price'] - $value['discount'];
+                    $total_price = $total_price + $value['bruto_price'];
 
                     $this->detailSalesRepossitory->create($value, $data->id);
                 }
+                if($request->include_tax === "YES"){
+                    $total_tax = $total_price * ($request->tax_persen / 100);
+                }
+
                 $res_total = [
                     "total_price" => $total_price,
                     "total_tax" => $total_tax,
