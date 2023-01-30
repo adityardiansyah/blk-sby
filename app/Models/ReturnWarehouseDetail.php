@@ -15,7 +15,7 @@ class ReturnWarehouseDetail extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function returnWarehouse(): BelongsTo
+    public function returnWarehouse()
     {
         return $this->belongsTo(ReturnWarehouse::class);
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Repository\ConversionRepository;
 use App\Http\Repository\DetailReturnWarehouseRepository;
 use App\Http\Repository\ReturnWarehouseRepository;
 use Illuminate\Http\Request;
@@ -11,11 +12,12 @@ use Illuminate\Support\Facades\Storage;
 
 class ReturnWarehouseController extends Controller
 {
-    protected $returnWarehouseRepository, $detailReturnWarehouseRepository;
+    protected $returnWarehouseRepository, $detailReturnWarehouseRepository, $conversionRepository;
 
-    public function __construct(ReturnWarehouseRepository $rwr, DetailReturnWarehouseRepository $drwr) {
+    public function __construct(ReturnWarehouseRepository $rwr, DetailReturnWarehouseRepository $drwr, ConversionRepository $con) {
         $this->returnWarehouseRepository = $rwr;
         $this->detailReturnWarehouseRepository = $drwr;
+        $this->conversionRepository = $con;
     }
     /**
      * Display a listing of the resource.
@@ -122,6 +124,66 @@ class ReturnWarehouseController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            if($id){
+                $this->detailReturnWarehouseRepository->delete($id);
+                $this->returnWarehouseRepository->delete($id);
+            }
+            
+            return response()->json([
+                'message' => 'success deleted',
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'delete failed',
+                "error" => 500
+            ]);
+        }
+        
+    }
+
+    public function update_status($id, Request $request)
+    {
+        try{
+            $type = $request->type;
+            $detail = $this->returnWarehouseRepository->get_data_by_id($id);
+            if(!empty($detail->detail) && $detail->status !== $type){
+                if($type === "confirmed"){
+                    $checkStock = $this->conversionRepository->checkStockItem($detail->detail, 'OUT');
+                    if($checkStock['error']){
+                        return response()->json([
+                            'message' => 'Cannot sale! '.$checkStock['data'].', Not enough stock',
+                            'error' => true
+                        ]);
+                    }
+                }
+
+                foreach ($detail->detail as $key => $value) {
+                    if($type === "confirmed" && $detail->status !== $type){
+                        $this->conversionRepository->update_qty($value->conversion_id, $value->qty, 'OUT');
+                    }elseif($type === "open" && $detail->status !== $type){
+                        $update = $this->conversionRepository->update_qty($value->conversion_id, $value->qty, 'IN');
+                        if(!empty($update['error'])){
+                            return response()->json([
+                                'message' => 'Cannot open!, '.$update['data'].' Not enough stock',
+                                'error' => true
+                            ]);
+                        }
+                    }
+                }
+            }
+
+            $this->returnWarehouseRepository->update_status($id, $request->type);
+
+            return response()->json([
+                'message' => 'success updated',
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'data' => [],
+                'message' => $th->getMessage(),
+                'error' => 500
+            ]);
+        }
     }
 }

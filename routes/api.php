@@ -3,12 +3,15 @@
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\ConversionController;
 use App\Http\Controllers\API\DetailGoodsReceiveController;
+use App\Http\Controllers\API\DetailReturnWarehouseController;
 use App\Http\Controllers\API\DetailSalesController;
+use App\Http\Controllers\API\DetailStockOpnameController;
 use App\Http\Controllers\API\GoodsReceiveController;
 use App\Http\Controllers\API\ProductMasterController;
 use App\Http\Controllers\API\ReturnSalesController;
 use App\Http\Controllers\API\ReturnWarehouseController;
 use App\Http\Controllers\API\SalesController;
+use App\Http\Controllers\API\StockOpnameController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,5 +37,11 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::apiResource('detail-sales', DetailSalesController::class);
     
     Route::apiResource('return-sales', ReturnSalesController::class);
+    
+    Route::post('return-warehouse/{id}/update', [ReturnWarehouseController::class, 'update_status']);
     Route::apiResource('return-warehouse', ReturnWarehouseController::class);
+    Route::apiResource('detail-return-warehouse', DetailReturnWarehouseController::class);
+    
+    Route::apiResource('stock-opname', StockOpnameController::class);
+    Route::apiResource('detail-stock-opname', DetailStockOpnameController::class);
 });

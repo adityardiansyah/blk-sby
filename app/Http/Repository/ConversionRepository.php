@@ -2,6 +2,7 @@
 namespace App\Http\Repository;
 
 use App\Models\Conversion;
+use Illuminate\Support\Facades\Auth;
 
 class ConversionRepository{
     protected $conversion;
@@ -12,7 +13,7 @@ class ConversionRepository{
 
     public function get_data_by_shop($id)
     {
-        return $this->conversion->where('shop_id', $id)->get();
+        return $this->conversion->where('shop_id', $id)->orderBy('created_at','desc')->get();
     }
 
     public function get_data_by_id($id)
@@ -24,8 +25,8 @@ class ConversionRepository{
     {
         $arr = [
             'product_master_id' => $data['product_master_id'],
-            'seller_id' => $data['seller_id'],
-            'shop_id' => $data['shop_id'],
+            'seller_id' => Auth::user()->seller->id,
+            'shop_id' => Auth::user()->seller->shop_id,
             'name_item' => $data['name_item'],
             'qty_final' => 0,
             'sku' => $data['sku'],
@@ -43,8 +44,8 @@ class ConversionRepository{
     {
         $arr = [
             'product_master_id' => $data['product_master_id'],
-            'seller_id' => $data['seller_id'],
-            'shop_id' => $data['shop_id'],
+            'seller_id' => Auth::user()->seller->id,
+            'shop_id' => Auth::user()->seller->shop_id,
             'name_item' => $data['name_item'],
             'sku' => $data['sku'],
             'price' => $data['price']

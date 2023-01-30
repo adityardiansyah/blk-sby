@@ -51,4 +51,13 @@ class ReturnWarehouseRepository{
         return $result;
     }
 
+    public function update_status($id, $type)
+    {
+        return $this->returnWarehouse->where('id',$id)->update(['status' => $type]);
+    }
+
+    public function delete($id)
+    {
+        $this->returnWarehouse->find($id)->delete();
+    }
 }
