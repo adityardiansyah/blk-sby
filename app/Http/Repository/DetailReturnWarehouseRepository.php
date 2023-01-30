@@ -42,4 +42,14 @@ class DetailReturnWarehouseRepository{
         }
     }
 
+    public function delete_by_id($id)
+    {
+        $this->returnWarehouseDetail->find($id)->delete();
+    }
+
+    public function delete($return_id)
+    {
+        $this->returnWarehouseDetail->where('return_warehouse_id', $return_id)->delete();
+    }
+    
 }
