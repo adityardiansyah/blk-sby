@@ -41,14 +41,23 @@ class ConversionController extends Controller
     public function store(Request $request)
     {
         try {
-            $this->conversion->create($request->all());
-            
-            return response()->json([
-                'message' => 'success inserted',
-            ]);
+            $data = $this->conversion->create($request->all());
+            if($data){
+                return response()->json([
+                    'message' => 'success inserted',
+                ]);
+            }else{
+                return response()->json([
+                    'message' => $request->sku.' sudah pernah dimasukkan, coba ganti nama lain',
+                    'error' => true
+                ]);
+            }
             
         } catch (\Throwable $th) {
-            throw $th;
+            return response()->json([
+                'message' => $th->getMessage(),
+                'data' => []
+            ]);
         }
     }
 

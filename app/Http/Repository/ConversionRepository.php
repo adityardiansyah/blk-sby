@@ -23,6 +23,7 @@ class ConversionRepository{
 
     public function create($data)
     {
+        $result = [];
         $arr = [
             'product_master_id' => $data['product_master_id'],
             'seller_id' => Auth::user()->seller->id,
@@ -33,9 +34,11 @@ class ConversionRepository{
             'price' => $data['price']
         ];
 
-        $check = $this->conversion->where('sku', $data['sku'])->first();
+        $check = $this->conversion->where('sku', $data['sku'])->where('shop_id', Auth::user()->seller->shop_id)->first();
         if(empty($check)){
             $result = $this->conversion->create($arr);
+        }else{
+            $result = false;
         }
         return $result;
     }
