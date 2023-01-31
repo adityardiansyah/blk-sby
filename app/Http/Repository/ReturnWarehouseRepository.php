@@ -37,6 +37,15 @@ class ReturnWarehouseRepository{
         return $this->returnWarehouse->create($return);
     }
 
+    public function update($data, $file, $id)
+    {
+        $return = [
+            "notes" => $data['notes'],
+            "file_attachment" => $file,
+        ];
+        $this->returnWarehouse->where('id',$id)->update($return);
+    }
+
     public function generate_return_no()
     {
         $format = "RTR/";

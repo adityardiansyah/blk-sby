@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Presence extends Model
 {
     use HasFactory;
+    protected $fillable = ["seller_id","date","time","latitude","longitude","type"];
 }

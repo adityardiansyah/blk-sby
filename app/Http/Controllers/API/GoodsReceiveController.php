@@ -48,7 +48,6 @@ class GoodsReceiveController extends Controller
                 $path = $request->file('file_attachment')->store('files/goodsreceive','public');
                 $file = $path;
             }
-            
             $data = $this->goodsReceiveRepository->create($request->all(), $file);
             if($data->id && !empty($request->detail)){
                 foreach ($request->detail as $key => $value) {
@@ -63,8 +62,7 @@ class GoodsReceiveController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 'data' => [],
-                'message' => 'insert failed',
-                'error' => 500
+                'message' => $th->getMessage(),
             ]);
         }
     }
@@ -115,8 +113,7 @@ class GoodsReceiveController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 'data' => [],
-                'message' => 'insert failed',
-                'error' => 500
+                'message' => 'insert failed'
             ]);
         }
     }

@@ -15,12 +15,13 @@ class CreatePresencesTable extends Migration
     {
         Schema::create('presences', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_seller');
+            $table->unsignedBigInteger('seller_id');
             $table->date('date');
             $table->time('time');
             $table->string('latitude');
             $table->string('longitude');
             $table->enum('type', ['IN','OUT']);
+            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -35,15 +35,19 @@ class DetailStockOpnameRepository{
         return $this->detailStockOpname->create($arr);
     }
 
-    public function update($id, $data)
+    public function update($data, $id)
     {
-        $arr = [
-            "trans_date" => $data['trans_date'],
-            "include_tax" => $data['include_tax'],
-            "tax_persen" => $data['tax_persen'],
-            "notes" => $data['notes'],
+        $match = [
+            "stock_opname_id" => $id,
+            "conversion_id" => $data['conversion_id'],
+            "item_name" => $data['item_name'],
+            "sku" => $data['sku']
         ];
-        return $this->detailStockOpname->where('id', $id)->update($arr);
+
+        $arr = [
+            "qty" => $data['qty'],
+        ];
+        return $this->detailStockOpname->updateOrCreate($match,$arr);
     }
 
     public function delete($id)

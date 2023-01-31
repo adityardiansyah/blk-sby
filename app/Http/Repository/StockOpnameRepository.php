@@ -38,8 +38,6 @@ class StockOpnameRepository{
     {
         $arr = [
             "trans_date" => $data['trans_date'],
-            "include_tax" => $data['include_tax'],
-            "tax_persen" => $data['tax_persen'],
             "notes" => $data['notes'],
         ];
         return $this->stock->where('id', $id)->update($arr);
