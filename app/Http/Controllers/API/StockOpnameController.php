@@ -63,13 +63,13 @@ class StockOpnameController extends Controller
                 }
             }
             return response()->json([
-                'data' => $data,
                 'message' => 'success return',
+                'data' => $data,
             ]);
         } catch (\Throwable $th) {
             return response()->json([
-                'data' => [],
-                'message' => $th->getMessage()
+                'message' => $th->getMessage(),
+                'data' => []
             ]);
         }
     }
@@ -108,13 +108,24 @@ class StockOpnameController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $stock = $this->stockOpnameRepository->update($id, $request->all());
-        if(!empty($stock->detail)){
-            foreach ($stock->detail as $key => $value) {
-                $this->detailStockOpnameRepository->update($id, $value);
+        try {
+            $data = $this->stockOpnameRepository->update($id, $request->all());
+            if(!empty($data->detail)){
+                foreach ($data->detail as $key => $value) {
+                    $this->detailStockOpnameRepository->update($id, $value);
+                }
             }
+            return response()->json([
+                'message' => 'success updated',
+                'data' => $data
+            ]);
+            
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => $th->getMessage(),
+                'data' => []
+            ]);
         }
-        return $request->all();
     }
 
     /**
@@ -131,11 +142,12 @@ class StockOpnameController extends Controller
             
             return response()->json([
                 'message' => 'success deleted',
+                "data" => []
             ]);
         } catch (\Throwable $th) {
             return response()->json([
-                'message' => 'delete failed',
-                "error" => 500
+                'message' => $th->getMessage(),
+                "data" => []
             ]);
         }
     }

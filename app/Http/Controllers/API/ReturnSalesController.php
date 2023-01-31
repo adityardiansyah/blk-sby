@@ -41,14 +41,13 @@ class ReturnSalesController extends Controller
         try{
             $data = $this->returnSalesRepository->create($request->all());
             return response()->json([
-                'data' => $data,
                 'message' => 'success return',
+                'data' => $data,
             ]);
         } catch (\Throwable $th) {
             return response()->json([
-                'data' => [],
                 'message' => $th->getMessage(),
-                'error' => 500
+                'data' => [],
             ]);
         }
     }

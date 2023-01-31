@@ -69,11 +69,13 @@ class AuthController extends Controller
             $data->seller_id = $user->id;
     
             return response()->json([
-                                'data' => $data,
-                            ]);
+                'message' => 'Data berhasil ditemukan',
+                'data' => $data,
+            ]);
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => $th->getMessage(),
+                'data' => []
             ]);
         }
     }

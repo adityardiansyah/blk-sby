@@ -129,11 +129,12 @@ class GoodsReceiveController extends Controller
             
             return response()->json([
                 'message' => 'success deleted',
+                'data' => []
             ]);
         } catch (\Throwable $th) {
             return response()->json([
-                'message' => 'delete failed',
-                "error" => 500
+                'message' => $th->getMessage(),
+                'data' => []
             ]);
         }
     }
@@ -149,8 +150,8 @@ class GoodsReceiveController extends Controller
                     if($checkStock['error']){
                         return response()->json([
                             'message' => 'Cannot sale! '.$checkStock['data'].', Not enough stock',
-                            'error' => true
-                        ]);
+                            'data' => []
+                        ], 400);
                     }
                 }
 
@@ -162,8 +163,8 @@ class GoodsReceiveController extends Controller
                         if(!empty($update['error'])){
                             return response()->json([
                                 'message' => 'Cannot open!, '.$update['data'].' Not enough stock',
-                                'error' => true
-                            ]);
+                                'data' => []
+                            ], 400);
                         }
                     }
                 }
@@ -173,12 +174,12 @@ class GoodsReceiveController extends Controller
 
             return response()->json([
                 'message' => 'success updated',
+                'data' => $detail,
             ]);
         } catch (\Throwable $th) {
             return response()->json([
-                'data' => [],
                 'message' => $th->getMessage(),
-                'error' => 500
+                'data' => [],
             ]);
         }
     }

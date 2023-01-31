@@ -72,8 +72,7 @@ class SalesController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 'data' => [],
-                'message' => $th->getMessage(),
-                'error' => 500
+                'message' => $th->getMessage()
             ]);
         }
     }
@@ -130,8 +129,7 @@ class SalesController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 'data' => [],
-                'message' => $th->getMessage(),
-                'error' => 500
+                'message' => $th->getMessage()
             ]);
         }
     }
@@ -144,11 +142,12 @@ class SalesController extends Controller
             
             return response()->json([
                 'message' => 'success deleted',
+                'data' => []
             ]);
         } catch (\Throwable $th) {
             return response()->json([
-                'message' => 'delete failed',
-                "error" => 500
+                'message' => $th->getMessage(),
+                'data' => [],
             ]);
         }
     }
@@ -165,8 +164,8 @@ class SalesController extends Controller
                     if($checkStock['error']){
                         return response()->json([
                             'message' => 'Cannot sale! '.$checkStock['data'].', Not enough stock',
-                            'error' => true
-                        ]);
+                            'data' => []
+                        ], 400);
                     }
                 }
                 
@@ -176,8 +175,8 @@ class SalesController extends Controller
                         if(!empty($update['error'])){
                             return response()->json([
                                 'message' => 'Cannot sale! '.$update['data'].', Not enough stock',
-                                'error' => true
-                            ]);
+                                'data' => []
+                            ], 400);
                         }
                     }elseif($type === "open" && $detail->status !== $type){
                         $update = $this->conversionRepository->update_qty($value->conversion_id, $value->qty, 'IN');
@@ -187,18 +186,19 @@ class SalesController extends Controller
     
                 return response()->json([
                     'message' => 'success updated',
+                    'data' => $detail
                 ]);
             }else{
                 return response()->json([
                     'message' => 'data not found!',
+                    'data' => []
                 ]);
             }
 
         } catch (\Throwable $th) {
             return response()->json([
-                'data' => [],
                 'message' => $th->getMessage(),
-                'error' => 500
+                'data' => [],
             ]);
         }
 

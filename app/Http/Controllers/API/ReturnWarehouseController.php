@@ -94,6 +94,11 @@ class ReturnWarehouseController extends Controller
                     'message' => 'Data found',
                     'data' => $data
                 ]);
+            }else{
+                return response()->json([
+                    'message' => 'ID not found',
+                    'data' => []
+                ],400);
             }
             
         } catch (\Throwable $th) {
@@ -128,15 +133,21 @@ class ReturnWarehouseController extends Controller
             if($id){
                 $this->detailReturnWarehouseRepository->delete($id);
                 $this->returnWarehouseRepository->delete($id);
+                return response()->json([
+                    'message' => 'success deleted',
+                    'data' => []
+                ]);
+            }else{
+                return response()->json([
+                    'message' => 'ID not found',
+                    'data' => []
+                ],400);
             }
             
-            return response()->json([
-                'message' => 'success deleted',
-            ]);
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => 'delete failed',
-                "error" => 500
+                'data' => []
             ]);
         }
         
@@ -177,6 +188,7 @@ class ReturnWarehouseController extends Controller
 
             return response()->json([
                 'message' => 'success updated',
+                'data' => [],
             ]);
         } catch (\Throwable $th) {
             return response()->json([

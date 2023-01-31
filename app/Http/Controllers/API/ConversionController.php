@@ -45,12 +45,13 @@ class ConversionController extends Controller
             if($data){
                 return response()->json([
                     'message' => 'success inserted',
+                    'data' => $data
                 ]);
             }else{
                 return response()->json([
                     'message' => $request->sku.' sudah pernah dimasukkan, coba ganti nama lain',
-                    'error' => true
-                ]);
+                    'data' => []
+                ], 400);
             }
             
         } catch (\Throwable $th) {
@@ -93,14 +94,16 @@ class ConversionController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $this->conversion->update($id, $request->all());
+            $data = $this->conversion->update($id, $request->all());
             return response()->json([
                 'message' => 'success updated',
+                'data' => $data
             ]);
             
         } catch (\Throwable $th) {
             return response()->json([
-                'message' => $th->getMessage()
+                'message' => $th->getMessage(),
+                'data' => []
             ]);
         }
     }
