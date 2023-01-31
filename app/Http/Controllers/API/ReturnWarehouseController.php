@@ -72,11 +72,9 @@ class ReturnWarehouseController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 'data' => [],
-                'message' => $th->getMessage(),
-                'error' => 500
+                'message' => $th->getMessage()
             ]);
         }
-        // return $request->all();
     }
 
     /**
@@ -118,7 +116,31 @@ class ReturnWarehouseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $file = "";
+            if(!empty($request->file('file_attachment'))){
+                $request->validate([
+                    'file_attachment' => 'mimes:jpg,jpeg,png|max:2048',
+                ]);
+                $path = $request->file('file_attachment')->store('files/return_warehouse', 'public');
+                $file = $path;
+            }
+            $data = $this->returnWarehouseRepository->update($request->all(), $file, $id);
+            if(!empty($request->detail)){
+                foreach ($request->detail as $key => $value) {
+                    $this->detailReturnWarehouseRepository->update($id, $value);
+                }
+            }
+            return response()->json([
+                'data' => [],
+                'message' => 'success updated',
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'data' => [],
+                'message' => $th->getMessage()
+            ]);
+        }
     }
 
     /**

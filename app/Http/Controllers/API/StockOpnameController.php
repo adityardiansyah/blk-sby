@@ -110,9 +110,14 @@ class StockOpnameController extends Controller
     {
         try {
             $data = $this->stockOpnameRepository->update($id, $request->all());
-            if(!empty($data->detail)){
-                foreach ($data->detail as $key => $value) {
-                    $this->detailStockOpnameRepository->update($id, $value);
+            if(!empty($request->detail)){
+                foreach ($request->detail as $key => $value) {
+                    $conv = $this->conversionRepository->get_data_by_id($value['conversion_id']);
+                    if(!empty($conv)){
+                        $value['item_name'] = $conv->name_item;
+                        $value['sku'] = $conv->sku;
+                        $this->detailStockOpnameRepository->update($value, $id);
+                    }
                 }
             }
             return response()->json([
@@ -148,6 +153,26 @@ class StockOpnameController extends Controller
             return response()->json([
                 'message' => $th->getMessage(),
                 "data" => []
+            ]);
+        }
+    }
+
+    public function update_status(Request $request, $id)
+    {
+        try{
+            $type = $request->type;
+            if($id){
+                $this->stockOpnameRepository->update_status($id, $type);
+            }
+
+            return response()->json([
+                'message' => 'success updated',
+                'data' => [],
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => $th->getMessage(),
+                'data' => [],
             ]);
         }
     }

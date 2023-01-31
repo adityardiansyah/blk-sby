@@ -42,6 +42,24 @@ class DetailReturnWarehouseRepository{
         }
     }
 
+    public function update($id, $data)
+    {
+        $conversion = $this->conversion->find($data['conversion_id']);
+
+        $match = [
+            "return_warehouse_id" => $id,
+            "conversion_id" => $data['conversion_id'],
+            "item_name" => $conversion->name_item,
+            "sku" => $conversion->sku,
+            "purchase_price" => 0,
+        ];
+        $return = [
+            "qty" => $data['qty'],
+            "status" => "open"
+        ];
+        $this->returnWarehouseDetail->updateOrCreate($match, $return);
+    }
+
     public function delete_by_id($id)
     {
         $this->returnWarehouseDetail->find($id)->delete();
