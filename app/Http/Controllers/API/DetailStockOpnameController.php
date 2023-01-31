@@ -69,11 +69,12 @@ class DetailStockOpnameController extends Controller
             
             return response()->json([
                 'message' => 'success deleted',
+                'data' => []
             ]);
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => 'delete failed',
-                "error" => 500
+                'data' => []
             ]);
         }
     }
