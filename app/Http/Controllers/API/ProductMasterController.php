@@ -40,7 +40,18 @@ class ProductMasterController extends Controller
      */
     public function index()
     {
-        return ProductMaster::get();
+        try{
+            $data = ProductMaster::get();
+            return response()->json([
+                'message' => 'Data ditemukan',
+                'data' => $data,
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => $th->getMessage(),
+                'data' => [],
+            ]);
+        }
     }
 
     /**
