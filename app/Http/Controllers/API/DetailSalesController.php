@@ -78,7 +78,7 @@ class DetailSalesController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => $th->getMessage(),
-                "error" => 500
+                "data" => []
             ]);
         }
     }

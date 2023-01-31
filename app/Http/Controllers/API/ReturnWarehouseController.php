@@ -164,8 +164,8 @@ class ReturnWarehouseController extends Controller
                     if($checkStock['error']){
                         return response()->json([
                             'message' => 'Cannot sale! '.$checkStock['data'].', Not enough stock',
-                            'error' => true
-                        ]);
+                            'data' => []
+                        ], 400);
                     }
                 }
 
@@ -177,8 +177,8 @@ class ReturnWarehouseController extends Controller
                         if(!empty($update['error'])){
                             return response()->json([
                                 'message' => 'Cannot open!, '.$update['data'].' Not enough stock',
-                                'error' => true
-                            ]);
+                                'data' => []
+                            ], 400);
                         }
                     }
                 }
@@ -194,7 +194,6 @@ class ReturnWarehouseController extends Controller
             return response()->json([
                 'data' => [],
                 'message' => $th->getMessage(),
-                'error' => 500
             ]);
         }
     }
