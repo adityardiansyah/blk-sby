@@ -31,7 +31,9 @@ class ConversionRepository{
             'name_item' => $data['name_item'],
             'qty_final' => 0,
             'sku' => $data['sku'],
-            'price' => $data['price']
+            'price' => $data['price'],
+            'color' => $data['color']?? '',
+            'size' => $data['size']?? ''
         ];
 
         $check = $this->conversion->where('sku', $data['sku'])->where('shop_id', Auth::user()->seller->shop_id)->first();
@@ -51,7 +53,9 @@ class ConversionRepository{
             'shop_id' => Auth::user()->seller->shop_id,
             'name_item' => $data['name_item'],
             'sku' => $data['sku'],
-            'price' => $data['price']
+            'price' => $data['price'],
+            'color' => $data['color']?? '',
+            'size' => $data['size']?? ''
         ];
         return $this->conversion->where('id', $id)->update($arr);
     }

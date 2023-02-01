@@ -15,16 +15,19 @@ class ProductMasterController extends Controller
             $data_db = $productMaster->count();
             if(count($data_erp) > $data_db){
                 foreach ($data_erp as $key => $value) {
-                    $check = ProductMaster::where('code', $value->code)
-                                            ->where('name', $value->name)->first();
-                    if(empty($check)){
-                        $arr = [
-                            'code' => $value->code,
-                            'name' => $value->name,
-                            'name_warehouse' => $value->name_warehouse
-                        ];
-                        ProductMaster::create($arr);
-                    }
+                    $match = [
+                        'code' => $value->code,
+                        'name' => $value->name,
+                        'name_warehouse' => $value->name_warehouse
+                    ];
+
+                    $arr = [
+                        'brand' => $value->brand,
+                        'variant' => $value->variant,
+                        'motive' => $value->motive,
+                    ];
+                    ProductMaster::updateOrCreate($match, $arr);
+                    
                 }
             }
             return response()->json(['message' => 'success', 'date' => date('Y-m-d H:i:s')]);
