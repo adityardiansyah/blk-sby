@@ -18,6 +18,9 @@ class CreateProductMastersTable extends Migration
             $table->string('code');
             $table->string('name');
             $table->string('name_warehouse');
+            $table->string('brand');
+            $table->string('variant');
+            $table->string('motive');
             $table->timestamps();
         });
     }

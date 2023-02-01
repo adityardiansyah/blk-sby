@@ -9,5 +9,5 @@ class Conversion extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['product_master_id','seller_id','shop_id','name_item','sku', 'qty_final','price'];
+    protected $fillable = ['product_master_id','seller_id','shop_id','name_item','sku', 'qty_final','price','color','size'];
 }

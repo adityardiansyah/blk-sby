@@ -21,7 +21,9 @@ class CreateConversionsTable extends Migration
             $table->string('name_item');
             $table->string('sku');
             $table->integer('qty_final');
-            $table->bigInteger('price');
+            $table->bigInteger('price')->nullable();
+            $table->string('color')->nullable();
+            $table->string('size')->nullable();
             $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
             $table->foreign('shop_id')->references('id')->on('shop')->onDelete('cascade');
             $table->foreign('product_master_id')->references('id')->on('product_masters')->onDelete('cascade');
