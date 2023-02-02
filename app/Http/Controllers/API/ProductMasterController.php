@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\MasterColor;
+use App\Models\MasterSize;
 use App\Models\ProductMaster;
 use Illuminate\Http\Request;
 
@@ -67,48 +69,49 @@ class ProductMasterController extends Controller
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function get_color()
     {
-        //
+        try{
+            $data = [];
+            $message = "";
+            $data = MasterColor::orderBy('name','asc')->get();
+            if(!empty($data)){
+                $message = "Data ditemukan";
+            }else{
+                $message = "Data tidak ditemukan!";
+            }
+            return response()->json([
+                'message' => $message,
+                'data' => $data,
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => $th->getMessage(),
+                'data' => [],
+            ]);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function get_sizes()
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        try{
+            $data = [];
+            $message = "";
+            $data = MasterSize::orderBy('name','asc')->get();
+            if(!empty($data)){
+                $message = "Data ditemukan";
+            }else{
+                $message = "Data tidak ditemukan!";
+            }
+            return response()->json([
+                'message' => $message,
+                'data' => $data,
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => $th->getMessage(),
+                'data' => [],
+            ]);
+        }
     }
 }
