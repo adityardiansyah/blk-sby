@@ -29,7 +29,7 @@ class ProductMaster extends Model
             join im_prd_brand d on d.id = b.brand_id 
             join im_prd_motive e on e.id = b.motive_id 
             join im_prd_variant f on f.id = b.variant_id
-            where b.prd_type_id IN  (39,40,41,42 ) 
+            where b.prd_type_id IN  (37,39,40,41,42 ) 
             and b.prd_code is not null
         ");
         return $get_data;

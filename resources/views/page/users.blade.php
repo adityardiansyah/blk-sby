@@ -29,7 +29,7 @@
                                 <td>*******</td>
                                 <td>{{ date('Y-m-d', strtotime($item->created_at)) }}</td>
                                 <td>
-                                    <span class="badge bg-success">Active</span>
+                                    <span class="">{{ Str::ucfirst($item->status) }}</span>
                                 </td>
                             </tr>
                         @endforeach

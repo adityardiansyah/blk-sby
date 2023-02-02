@@ -41,12 +41,22 @@ class ProductMasterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         try{
-            $data = ProductMaster::get();
+            $data = [];
+            $message = "";
+            $query = $request['query'];
+            if($query !== null){
+                $data = ProductMaster::where('name','like','%'.$query.'%')->get();
+                if(!empty($data)){
+                    $message = "Data ditemukan";
+                }else{
+                    $message = "Data tidak ditemukan!";
+                }
+            }
             return response()->json([
-                'message' => 'Data ditemukan',
+                'message' => $message,
                 'data' => $data,
             ]);
         } catch (\Throwable $th) {
