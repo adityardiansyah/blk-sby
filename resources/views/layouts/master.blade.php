@@ -48,10 +48,30 @@
                                 <span>Dashboard</span>
                             </a>
                         </li>
+                        <li class="sidebar-item  has-sub">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-diagram-3"></i>
+                                <span>Master</span>
+                            </a>
+                            <ul class="submenu ">
+                                <li class="submenu-item ">
+                                    <a href="component-alert.html">Warna</a>
+                                </li>
+                                <li class="submenu-item ">
+                                    <a href="component-alert.html">Ukuran</a>
+                                </li>
+                            </ul>
+                        </li>
                         <li class="sidebar-item {{ Session::get('menu_active') == 'users'? 'active': '' }}">
-                            <a href="{{ route('users') }}" class='sidebar-link'>
+                            <a href="{{ route('users.index') }}" class='sidebar-link'>
                                 <i class="bi bi-people"></i>
                                 <span>User</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item {{ Session::get('menu_active') == 'seller'? 'active': '' }}">
+                            <a href="{{ route('seller.index') }}" class='sidebar-link'>
+                                <i class="bi bi-people"></i>
+                                <span>Seller</span>
                             </a>
                         </li>
                         <li class="sidebar-item ">

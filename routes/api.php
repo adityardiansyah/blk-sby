@@ -26,6 +26,8 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/profile', [AuthController::class, 'profile']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/get-product-master', [ProductMasterController::class, 'index']);
+    Route::get('/get-color', [ProductMasterController::class, 'get_color']);
+    Route::get('/get-sizes', [ProductMasterController::class, 'get_sizes']);
     
     Route::apiResource('conversion', ConversionController::class);
     

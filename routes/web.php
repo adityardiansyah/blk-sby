@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SellerController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -21,4 +22,5 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('users', [UserController::class, 'index'])->name('users');
+Route::get('users', [UserController::class, 'index'])->name('users.index');
+Route::get('seller', [SellerController::class, 'index'])->name('seller.index');
