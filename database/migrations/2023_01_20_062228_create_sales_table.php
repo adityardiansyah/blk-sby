@@ -23,6 +23,7 @@ class CreateSalesTable extends Migration
             $table->integer('tax_persen');
             $table->integer('total_price');
             $table->integer('total_tax');
+            $table->integer('discount_persen');
             $table->integer('total_disccount');
             $table->longText('notes');
             $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');

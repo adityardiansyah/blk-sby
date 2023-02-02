@@ -22,6 +22,8 @@ class CreateProductMastersTable extends Migration
             $table->string('variant');
             $table->string('motive');
             $table->timestamps();
+
+            $table->index(['name']);
         });
     }
 
