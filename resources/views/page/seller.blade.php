@@ -14,9 +14,9 @@
                 <table class="table table-striped" id="table1">
                     <thead>
                         <tr>
+                            <th>No. Reg</th>
                             <th>Nama</th>
-                            <th>Username</th>
-                            <th>Password</th>
+                            <th>Phone</th>
                             <th>Tgl. Dibuat</th>
                             <th>Status</th>
                         </tr>
