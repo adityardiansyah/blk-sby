@@ -102,7 +102,7 @@ class GoodsReceiveController extends Controller
             $data = $this->goodsReceiveRepository->update($request->all(), $file, $id);
             if($id && !empty($request->detail)){
                 foreach ($request->detail as $key => $value) {
-                    $this->detailGoodsReceiveRepository->update($value);
+                    $this->detailGoodsReceiveRepository->update($value, $id);
                 }
     
                 return response()->json([
@@ -113,7 +113,7 @@ class GoodsReceiveController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 'data' => [],
-                'message' => 'insert failed'
+                'message' => $th->getMessage()
             ]);
         }
     }
