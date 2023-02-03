@@ -49,20 +49,16 @@ class DetailSalesRepository{
         ];
 
         $arr = [
-            "sales_id" => $id,
-            "conversion_id" => $data['conversion_id'],
-            "item_name" => $data['item_name'], 
-            "sku" => $data['sku'], 
             "qty" => $data['qty'],
             "unit" => $data['unit'],
             "unit_price" => $data['unit_price'], 
-            "bruto_price" => $data['bruto_price'],
+            "bruto_price" => $data['qty'] * $data['unit_price'],
             "discount" => $data['discount'],
-            "nett_total" => $data['nett_total'],
+            "nett_total" => ($data['qty'] * $data['unit_price']) - $data['discount'],
             "notes" => "-",
             "status" => "finished"
         ];
-        return $this->detailSale->where('sales_id', $id)->updateOrCreate($detail, $arr);
+        return $this->detailSale->updateOrCreate($detail, $arr);
     }
 
     public function delete($id)

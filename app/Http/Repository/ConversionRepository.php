@@ -13,7 +13,7 @@ class ConversionRepository{
 
     public function get_data_by_shop($id)
     {
-        return $this->conversion->where('shop_id', $id)->orderBy('created_at','desc')->get();
+        return $this->conversion->with('productMaster')->where('shop_id', $id)->orderBy('created_at','desc')->get();
     }
 
     public function get_data_by_id($id)
