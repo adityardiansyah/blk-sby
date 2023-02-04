@@ -105,6 +105,7 @@ class SalesController extends Controller
                     $total_price = 0;
                     $total_tax = 0;
                     $total_discount = 0;
+                    $this->detailSalesRepossitory->delete_by_sales_id($id);
                     foreach ($request->detail as $key => $value) {
                         $total_price = $total_price + ($value['unit_price'] * $value['qty']);
                         $total_discount = $total_discount + $value['discount'];

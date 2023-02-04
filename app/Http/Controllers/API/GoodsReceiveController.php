@@ -101,6 +101,7 @@ class GoodsReceiveController extends Controller
             
             $data = $this->goodsReceiveRepository->update($request->all(), $file, $id);
             if($id && !empty($request->detail)){
+                $this->detailGoodsReceiveRepository->delete($id);
                 foreach ($request->detail as $key => $value) {
                     $this->detailGoodsReceiveRepository->update($value, $id);
                 }
