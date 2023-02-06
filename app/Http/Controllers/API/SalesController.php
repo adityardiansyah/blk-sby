@@ -33,7 +33,7 @@ class SalesController extends Controller
             return response()->json([
                 'message' => 'Data not found',
                 'data' => []
-            ]);
+            ], 400);
         }
     }
 
@@ -73,7 +73,7 @@ class SalesController extends Controller
             return response()->json([
                 'data' => [],
                 'message' => $th->getMessage()
-            ]);
+            ], 400);
         }
     }
 
@@ -92,7 +92,7 @@ class SalesController extends Controller
             return response()->json([
                 'message' => 'Data not found',
                 'data' => []
-            ]);
+            ], 400);
         }
     }
 
@@ -131,7 +131,7 @@ class SalesController extends Controller
             return response()->json([
                 'data' => [],
                 'message' => $th->getMessage()
-            ]);
+            ], 400);
         }
     }
 
@@ -149,7 +149,7 @@ class SalesController extends Controller
             return response()->json([
                 'message' => $th->getMessage(),
                 'data' => [],
-            ]);
+            ], 400);
         }
     }
 
@@ -200,7 +200,7 @@ class SalesController extends Controller
             return response()->json([
                 'message' => $th->getMessage(),
                 'data' => [],
-            ]);
+            ], 400);
         }
 
     }

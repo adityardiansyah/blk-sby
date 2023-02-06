@@ -33,7 +33,7 @@ class PresenceController extends Controller
             return response()->json([
                 'message' => 'Data not found',
                 'data' => []
-            ]);
+            ], 400);
         }
     }
 
@@ -55,7 +55,7 @@ class PresenceController extends Controller
             return response()->json([
                 'data' => [],
                 'message' => $th->getMessage(),
-            ]);
+            ], 400);
         }
     }
 

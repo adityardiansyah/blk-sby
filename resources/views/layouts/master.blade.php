@@ -54,11 +54,11 @@
                                 <span>Master</span>
                             </a>
                             <ul class="submenu ">
-                                <li class="submenu-item ">
-                                    <a href="component-alert.html">Warna</a>
+                                <li class="submenu-item {{ Session::get('menu_active') == 'color'? 'active': '' }}">
+                                    <a href="{{ route('master.color') }}">Warna</a>
                                 </li>
-                                <li class="submenu-item ">
-                                    <a href="component-alert.html">Ukuran</a>
+                                <li class="submenu-item {{ Session::get('menu_active') == 'size'? 'active': '' }}">
+                                    <a href="{{ route('master.size') }}">Ukuran</a>
                                 </li>
                             </ul>
                         </li>

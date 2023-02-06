@@ -38,7 +38,7 @@ class ReturnWarehouseController extends Controller
             return response()->json([
                 'message' => 'Data not found',
                 'data' => []
-            ]);
+            ], 400);
         }
     }
 
@@ -73,7 +73,7 @@ class ReturnWarehouseController extends Controller
             return response()->json([
                 'data' => [],
                 'message' => $th->getMessage()
-            ]);
+            ], 400);
         }
     }
 
@@ -103,7 +103,7 @@ class ReturnWarehouseController extends Controller
             return response()->json([
                 'message' => 'Data not found',
                 'data' => []
-            ]);
+            ], 400);
         }
     }
 
@@ -139,7 +139,7 @@ class ReturnWarehouseController extends Controller
             return response()->json([
                 'data' => [],
                 'message' => $th->getMessage()
-            ]);
+            ], 400);
         }
     }
 
@@ -168,9 +168,9 @@ class ReturnWarehouseController extends Controller
             
         } catch (\Throwable $th) {
             return response()->json([
-                'message' => 'delete failed',
+                'message' => $th->getMessage(),
                 'data' => []
-            ]);
+            ], 400);
         }
         
     }
@@ -216,7 +216,7 @@ class ReturnWarehouseController extends Controller
             return response()->json([
                 'data' => [],
                 'message' => $th->getMessage(),
-            ]);
+            ], 400);
         }
     }
 }
