@@ -203,7 +203,7 @@ class GoodsReceiveController extends Controller
                         return response()->json([
                             'message' => 'invalid file format',
                             'data' => [],
-                        ]);
+                        ], 400);
                     }
                 }
             }
