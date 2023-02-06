@@ -38,7 +38,7 @@ class StockOpnameController extends Controller
             return response()->json([
                 'message' => 'Data not found',
                 'data' => []
-            ]);
+            ], 400);
         }
     }
 
@@ -70,7 +70,7 @@ class StockOpnameController extends Controller
             return response()->json([
                 'message' => $th->getMessage(),
                 'data' => []
-            ]);
+            ], 400);
         }
     }
 
@@ -95,7 +95,7 @@ class StockOpnameController extends Controller
             return response()->json([
                 'message' => 'Data not found',
                 'data' => []
-            ]);
+            ], 400);
         }
     }
 
@@ -129,7 +129,7 @@ class StockOpnameController extends Controller
             return response()->json([
                 'message' => $th->getMessage(),
                 'data' => []
-            ]);
+            ], 400);
         }
     }
 
@@ -153,7 +153,7 @@ class StockOpnameController extends Controller
             return response()->json([
                 'message' => $th->getMessage(),
                 "data" => []
-            ]);
+            ], 400);
         }
     }
 
@@ -173,7 +173,7 @@ class StockOpnameController extends Controller
             return response()->json([
                 'message' => $th->getMessage(),
                 'data' => [],
-            ]);
+            ], 400);
         }
     }
 }

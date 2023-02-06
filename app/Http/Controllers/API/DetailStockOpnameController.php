@@ -75,7 +75,7 @@ class DetailStockOpnameController extends Controller
             return response()->json([
                 'message' => 'delete failed',
                 'data' => []
-            ]);
+            ], 400);
         }
     }
 }

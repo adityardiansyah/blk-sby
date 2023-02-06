@@ -58,7 +58,7 @@ class ConversionController extends Controller
             return response()->json([
                 'message' => $th->getMessage(),
                 'data' => []
-            ]);
+            ], 400);
         }
     }
 
@@ -104,7 +104,7 @@ class ConversionController extends Controller
             return response()->json([
                 'message' => $th->getMessage(),
                 'data' => []
-            ]);
+            ], 400);
         }
     }
 

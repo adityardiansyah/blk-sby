@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Repository\ConversionRepository;
 use App\Http\Repository\DetailGoodsReceiveRepository;
 use App\Http\Repository\GoodsReceiveRepository;
+use App\Models\FileGoodsReceived;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Svg\Tag\Rect;
 
 class GoodsReceiveController extends Controller
 {
@@ -33,7 +35,7 @@ class GoodsReceiveController extends Controller
             return response()->json([
                 'message' => 'Data not found',
                 'data' => []
-            ]);
+            ], 400);
         }
     }
 
@@ -63,7 +65,7 @@ class GoodsReceiveController extends Controller
             return response()->json([
                 'data' => [],
                 'message' => $th->getMessage(),
-            ]);
+            ], 400);
         }
     }
 
@@ -82,7 +84,7 @@ class GoodsReceiveController extends Controller
             return response()->json([
                 'message' => 'Data not found',
                 'data' => []
-            ]);
+            ], 400);
         }
     }
 
@@ -90,15 +92,7 @@ class GoodsReceiveController extends Controller
     {
         try {
             $file = "";
-            if(!empty($request->file('file_attachment'))){
-                $request->validate([
-                    'file_attachment' => 'mimes:jpg,jpeg,png|max:2048',
-                ]);
-                $name = $request->file('file_attachment')->getClientOriginalName();
-                $path = $request->file('file_attachment')->store('public/files/goodsreceive');
-                $file = $name.$path;
-            }
-            
+
             $data = $this->goodsReceiveRepository->update($request->all(), $file, $id);
             if($id && !empty($request->detail)){
                 $this->detailGoodsReceiveRepository->delete($id);
@@ -115,7 +109,7 @@ class GoodsReceiveController extends Controller
             return response()->json([
                 'data' => [],
                 'message' => $th->getMessage()
-            ]);
+            ], 400);
         }
     }
 
@@ -133,7 +127,7 @@ class GoodsReceiveController extends Controller
             return response()->json([
                 'message' => $th->getMessage(),
                 'data' => []
-            ]);
+            ], 400);
         }
     }
 
@@ -178,7 +172,54 @@ class GoodsReceiveController extends Controller
             return response()->json([
                 'message' => $th->getMessage(),
                 'data' => [],
+            ], 400);
+        }
+    }
+
+    public function upload_attachment(Request $request)
+    {
+        try {
+            if(!$request->hasFile('file_attachment')) {
+                return response()->json([
+                    'message' => 'File upload not found!',
+                    'data' => [],
+                ], 400);
+            }
+            // return $request->all();
+            // $this->validate($request, [
+            //     'file_attachment' => 'mimes:jpg,jpeg,png|max:2048'
+            // ]);
+            $allowedfileExtension = ['pdf','jpg','png','jpeg'];
+
+            if(!empty($request->file_attachment)){
+                foreach ($request->file_attachment as $value) {
+                    $extension = $value->getClientOriginalExtension();
+                    // $name = $value->getClientOriginalName();
+                    $check = in_array($extension,$allowedfileExtension);
+                    if($check){
+                        $path = $value->store('public/files/goodsreceive');
+        
+                        $sv = new FileGoodsReceived;
+                        $sv->filename = $path;
+                        $sv->goods_receive_id = $request->goods_receive_id;
+                        $sv->save();
+                    }else{
+                        return response()->json([
+                            'message' => 'invalid file format',
+                            'data' => [],
+                        ]);
+                    }
+                }
+            }
+            return response()->json([
+                'message' => 'success insert',
+                'data' => [],
             ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => $th->getMessage(),
+                'data' => [],
+            ], 400);
         }
     }
 }

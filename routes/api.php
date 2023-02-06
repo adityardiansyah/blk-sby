@@ -32,6 +32,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::apiResource('conversion', ConversionController::class);
     
     Route::post('goods-receive/{id}/update', [GoodsReceiveController::class, 'update_status']);
+    Route::post('goods-receive/upload-attachment', [GoodsReceiveController::class, 'upload_attachment']);
     Route::apiResource('goods-receive', GoodsReceiveController::class);
     Route::apiResource('detail-goods-receive', DetailGoodsReceiveController::class);
     

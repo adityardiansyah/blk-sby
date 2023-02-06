@@ -65,7 +65,7 @@ class ProductMasterController extends Controller
             return response()->json([
                 'message' => $th->getMessage(),
                 'data' => [],
-            ]);
+            ], 400);
         }
     }
 
@@ -88,7 +88,7 @@ class ProductMasterController extends Controller
             return response()->json([
                 'message' => $th->getMessage(),
                 'data' => [],
-            ]);
+            ], 400);
         }
     }
 
@@ -111,7 +111,7 @@ class ProductMasterController extends Controller
             return response()->json([
                 'message' => $th->getMessage(),
                 'data' => [],
-            ]);
+            ], 400);
         }
     }
 }

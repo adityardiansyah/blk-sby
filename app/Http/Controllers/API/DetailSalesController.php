@@ -79,7 +79,7 @@ class DetailSalesController extends Controller
             return response()->json([
                 'message' => $th->getMessage(),
                 "data" => []
-            ]);
+            ], 400);
         }
     }
     
