@@ -185,19 +185,15 @@ class GoodsReceiveController extends Controller
                     'data' => [],
                 ], 400);
             }
-            // return $request->all();
-            // $this->validate($request, [
-            //     'file_attachment' => 'mimes:jpg,jpeg,png|max:2048'
-            // ]);
+
             $allowedfileExtension = ['pdf','jpg','png','jpeg'];
 
             if(!empty($request->file_attachment)){
                 foreach ($request->file_attachment as $value) {
                     $extension = $value->getClientOriginalExtension();
-                    // $name = $value->getClientOriginalName();
                     $check = in_array($extension,$allowedfileExtension);
                     if($check){
-                        $path = $value->store('public/files/goodsreceive');
+                        $path = $value->store('goodsreceive');
         
                         $sv = new FileGoodsReceived;
                         $sv->filename = $path;
@@ -219,6 +215,22 @@ class GoodsReceiveController extends Controller
             return response()->json([
                 'message' => $th->getMessage(),
                 'data' => [],
+            ], 400);
+        }
+    }
+
+    public function delete_file($id)
+    {
+        try {
+            FileGoodsReceived::find($id)->delete();
+            return response()->json([
+                'message' => 'success deleted',
+                'data' => []
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => $th->getMessage(),
+                'data' => []
             ], 400);
         }
     }
