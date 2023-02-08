@@ -15,7 +15,8 @@
         "laravel/passport": "*",
         "laravel/sanctum": "*",
         "laravel/tinker": "^2.5",
-        "laravel/ui": "*"
+        "laravel/ui": "*",
+        "maatwebsite/excel": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

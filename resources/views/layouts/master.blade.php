@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/shared/iconly.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/extensions/simple-datatables/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/pages/simple-datatables.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/extensions/toastify-js/src/toastify.css') }}">
 </head>
 
 <body>
@@ -53,7 +54,7 @@
                                 <i class="bi bi-diagram-3"></i>
                                 <span>Master</span>
                             </a>
-                            <ul class="submenu ">
+                            <ul class="submenu {{ in_array(Session::get('menu_active'), ['color','size'])? 'active': '' }}">
                                 <li class="submenu-item {{ Session::get('menu_active') == 'color'? 'active': '' }}">
                                     <a href="{{ route('master.color') }}">Warna</a>
                                 </li>
@@ -62,16 +63,24 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="sidebar-item  has-sub">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-shop"></i>
+                                <span>Toko</span>
+                            </a>
+                            <ul class="submenu {{ in_array(Session::get('menu_active'), ['shop','seller'])? 'active': '' }}">
+                                <li class="submenu-item {{ Session::get('menu_active') == 'shop'? 'active': '' }}">
+                                    <a href="{{ route('shop.index') }}">Toko</a>
+                                </li>
+                                <li class="submenu-item {{ Session::get('menu_active') == 'seller'? 'active': '' }}">
+                                    <a href="{{ route('seller.index') }}">Seller</a>
+                                </li>
+                            </ul>
+                        </li>
                         <li class="sidebar-item {{ Session::get('menu_active') == 'users'? 'active': '' }}">
                             <a href="{{ route('users.index') }}" class='sidebar-link'>
                                 <i class="bi bi-people"></i>
                                 <span>User</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item {{ Session::get('menu_active') == 'seller'? 'active': '' }}">
-                            <a href="{{ route('seller.index') }}" class='sidebar-link'>
-                                <i class="bi bi-people"></i>
-                                <span>Seller</span>
                             </a>
                         </li>
                         <li class="sidebar-item ">
@@ -111,16 +120,11 @@
                             </a>
                         </li>
 
-                        <li class="sidebar-item  has-sub">
-                            <a href="#" class='sidebar-link'>
+                        <li class="sidebar-item {{ Session::get('menu_active') == 'laporan'? 'active': '' }}">
+                            <a href="{{ route('laporan.index') }}" class='sidebar-link'>
                                 <i class="bi bi-file-earmark-bar-graph"></i>
                                 <span>Laporan</span>
                             </a>
-                            <ul class="submenu ">
-                                <li class="submenu-item ">
-                                    <a href="component-alert.html">Mutasi</a>
-                                </li>
-                            </ul>
                         </li>
 
                     </ul>
@@ -139,11 +143,11 @@
             <footer>
                 <div class="footer clearfix mb-0 text-muted">
                     <div class="float-start">
-                        <p>2021 &copy; Mazer</p>
+                        <p>{{ date('Y') }} &copy; PT. BEHAESTEX</p>
                     </div>
                     <div class="float-end">
                         <p>Crafted with <span class="text-danger"><i class="bi bi-heart"></i></span> by <a
-                                href="https://saugi.me">Saugi</a></p>
+                                href="">IT BTX</a></p>
                     </div>
                 </div>
             </footer>
@@ -153,5 +157,22 @@
     <script src="{{ asset('assets/js/app.js') }}"></script>
     <script src="{{ asset('assets/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
     <script src="{{ asset('assets/js/pages/simple-datatables.js') }}"></script>
+    <script src="{{ asset('assets/extensions/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/extensions/toastify-js/src/toastify.js') }}"></script>
+
+    <script>
+        function message(title, success='true') {
+            Toastify({
+                text: title,
+                duration: 7000,
+                close:true,
+                gravity:"top",
+                position: "right",
+                backgroundColor: (success)? "#61876E": "#F55050",
+            }).showToast();
+        }
+    </script>
+
+    @stack('js')
 </body>
 </html>

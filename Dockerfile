@@ -1,6 +1,7 @@
 #LARAVEL via artisan
 
 FROM thecodingmachine/php:8.1-v4-apache
+FROM node:16.13.1
 ARG PHP_VER=8.1
 
 #ENV APACHE_RUN_USER=www-data \
@@ -33,9 +34,15 @@ RUN sudo chown -R docker:docker /var/www
 RUN composer install  \
     && composer update
 
+RUN npm install \
+    && npm update
+
 RUN php artisan cache:clear
 RUN php artisan view:clear
 RUN php artisan route:clear
+
+RUN npm run prod \
+    && npm run production
 
 # RUN sudo composer require doctrine/dbal
 # RUN sudo apt-get -y install mysql-server mysql-client

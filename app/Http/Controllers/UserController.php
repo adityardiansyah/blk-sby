@@ -12,7 +12,10 @@ class UserController extends Controller
     protected $userRepository;
 
     public function __construct(UserRepository $us) {
-        Session::put('menu_active','users');
+        $this->middleware(function ($request, $next){
+            Session::put('menu_active','users');
+            return $next($request);
+        });
         $this->userRepository = $us;
     }
     
