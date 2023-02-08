@@ -9,7 +9,10 @@ use Illuminate\Support\Facades\Session;
 class SizeController extends Controller
 {
     public function __construct() {
-        Session::put('menu_active','size');
+        $this->middleware(function ($request, $next){
+            Session::put('menu_active','size');
+            return $next($request);
+        });
     }
 
     public function index(){

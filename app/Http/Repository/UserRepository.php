@@ -4,6 +4,7 @@ namespace App\Http\Repository;
 use App\Models\Conversion;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserRepository{
     protected $user;
@@ -14,7 +15,7 @@ class UserRepository{
 
     public function get_all()
     {
-        return $this->user->get();
+        return $this->user->orderBy('id', 'desc')->get();
     }
 
     public function get_data_by_id($id)
@@ -24,23 +25,14 @@ class UserRepository{
 
     public function create($data)
     {
-        $result = [];
         $arr = [
-            'product_master_id' => $data['product_master_id'],
-            'seller_id' => Auth::user()->seller->id,
-            'shop_id' => Auth::user()->seller->shop_id,
-            'name_item' => $data['name_item'],
-            'qty_final' => 0,
-            'sku' => $data['sku'],
-            'price' => $data['price']
+            'name' => $data['name'],
+            'username' => $data['username'],
+            'password' => Hash::make($data['password']),
+            'status' => "active"
         ];
+        $result = $this->user->create($arr);
 
-        $check = $this->user->where('sku', $data['sku'])->where('shop_id', Auth::user()->seller->shop_id)->first();
-        if(empty($check)){
-            $result = $this->user->create($arr);
-        }else{
-            $result = false;
-        }
         return $result;
     }
 

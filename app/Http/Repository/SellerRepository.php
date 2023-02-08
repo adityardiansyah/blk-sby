@@ -23,15 +23,30 @@ class SellerRepository{
 
     public function create($data)
     {
-        $result = [];
         $arr = [
+            "shop_id" => $data['shop_id'],
+            "user_id" => $data['user_id'],
+            "no_seller" => $this->generate_noreg(),
+            "name" => $data['name'],
+            "phone" => $data['phone'],
+            "photo" => $data['photo'],
+            "email" => $data['email'],
+            "status" => "active",
         ];
+        $result = $this->seller->create($arr);
+        
+        return $result;
+    }
 
-        $check = $this->seller->where('sku', $data['sku'])->where('shop_id', Auth::seller()->seller->shop_id)->first();
-        if(empty($check)){
-            $result = $this->seller->create($arr);
+    public function generate_noreg()
+    {
+        $data = $this->seller->get()->count();
+        $format = "A";
+        $no = $data + 1;
+        if($data == 0){
+            $result = $format.'001';
         }else{
-            $result = false;
+            $result = $format.substr("000",0,3-strlen($no)).$no;
         }
         return $result;
     }

@@ -20,10 +20,11 @@ class ProductMasterController extends Controller
                     $match = [
                         'code' => $value->code,
                         'name' => $value->name,
-                        'name_warehouse' => $value->name_warehouse
+                        'name_warehouse' => $value->name_warehouse,
                     ];
 
                     $arr = [
+                        'group' => $value->group,
                         'brand' => $value->brand,
                         'variant' => $value->variant,
                         'motive' => $value->motive,
