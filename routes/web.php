@@ -26,8 +26,8 @@ Route::get('seller', [SellerController::class, 'index'])->name('seller.index');
 Route::post('seller', [SellerController::class, 'store'])->name('seller.store');
 Route::get('laporan', [ReportController::class, 'index'])->name('laporan.index');
 Route::get('laporan/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'laporan_stock'])->name('laporan.stock');
+Route::get('laporan-excel/stock/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'download_excel_stock'])->name('laporan.excel.stock');
 Route::get('test', function(){
     return view('exports.stock');
 });
 
-Route::get('test-data', [ReportController::class, 'download_excel_stock']);

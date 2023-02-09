@@ -6,7 +6,7 @@
         <td>Store : {{ $shop }}</td>
     </tr>
     <tr>
-        <td>Date : {{ $date_start }} - {{ $date_end }}</td>
+        <td>Date : {{ $date_start }} / {{ $date_end }}</td>
     </tr>
     <tr>
         <td>User : </td>
@@ -16,24 +16,24 @@
 <table border="1">
     <thead>
     <tr>
-        <th rowspan="2">No</th>
-        <th rowspan="2">Nama Master</th>
-        <th rowspan="2">Nama SKU</th>
-        <th colspan="6">Category</th>
-        <th colspan="4">Qty (pcs)</th>
-        <th rowspan="2">Harga Jual</th>
+        <th rowspan="2"><b>No</b></th>
+        <th rowspan="2"><b>Nama Master</b></th>
+        <th rowspan="2"><b>Nama SKU</b></th>
+        <th colspan="6" style="text-align: center;"><b>Category</b></th>
+        <th colspan="4" style="text-align: center;"><b>Qty (pcs)</b></th>
+        <th rowspan="2"><b>Harga Jual</b></th>
     </tr>
     <tr>
-        <th>Group</th>
-        <th>Brand</th>
-        <th>Varian</th>
-        <th>Motive</th>
-        <th>Warna</th>
-        <th>Size</th>
-        <th>Last Month</th>
-        <th>Received</th>
-        <th>Sales</th>
-        <th>Stock on Hand</th>
+        <th><b>Group</b></th>
+        <th><b>Brand</b></th>
+        <th><b>Varian</b></th>
+        <th><b>Motive</b></th>
+        <th><b>Warna</b></th>
+        <th><b>Size</b></th>
+        <th><b>Last Month</b></th>
+        <th><b>Received</b></th>
+        <th><b>Sales</b></th>
+        <th><b>Stock on Hand</b></th>
     </tr>
     </thead>
     <tbody>

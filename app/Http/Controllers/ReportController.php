@@ -34,10 +34,8 @@ class ReportController extends Controller
 	    return $pdf->stream();
     }
 
-    public function download_excel_stock()
+    public function download_excel_stock($date_start, $date_end, $shop_id)
     {
-        // $q = new ReportRepository();
-        // return $data =  $q->get_all_by_shop(1, '2023-02-01','2023-02-29');
-        return (new StockExporter(1, '2023-02-01','2023-02-29'))->download('stock.xlsx');
+        return (new StockExporter($shop_id, $date_start,$date_end))->download('laporan-stock.xlsx');
     }
 }
