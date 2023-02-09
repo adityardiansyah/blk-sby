@@ -50,7 +50,7 @@
                             <td>2</td>
                             <td>Laporan Penjualan</td>
                             <td>
-                                <button class="btn btn-success" onclick="export_pdf('laporan_sales')"><i class="bi bi-download"></i> Download Excel</button>
+                                <button class="btn btn-success" onclick="export_excel('laporan_sales')"><i class="bi bi-download"></i> Download Excel</button>
                                 <button class="btn btn-danger" onclick="export_pdf('laporan_sales')"><i class="bi bi-download"></i> Download PDF</button>
                             </td>
                         </tr>
@@ -133,11 +133,13 @@
             let url;
             if(params === 'laporan_stock'){
                 url = "{{ route('laporan.excel.stock', [':date_start',':date_end',':shop_id']) }}";
-                url = url.replace(':date_start', date_start);
-                url = url.replace(':date_end', date_end);
-                url = url.replace(':shop_id', shop_id);
+            }else if(params === 'laporan_sales'){
+                url = "{{ route('laporan.excel.sales', [':date_start',':date_end',':shop_id']) }}";
             }
-            console.log(url);
+            url = url.replace(':date_start', date_start);
+            url = url.replace(':date_end', date_end);
+            url = url.replace(':shop_id', shop_id);
+            
             window.open(url);
         }
     </script>
