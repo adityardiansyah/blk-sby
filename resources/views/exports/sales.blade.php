@@ -9,7 +9,7 @@
         <td>Date : {{ date('d m Y', strtotime($date_start)) }} / {{ date('d m Y', strtotime($date_end)) }}</td>
     </tr>
     <tr>
-        <td>User : </td>
+        <td>User : {{ Auth::user()->name }}</td>
     </tr>
 </table>
 <br>

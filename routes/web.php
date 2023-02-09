@@ -18,6 +18,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', function () {
         return view('home');
     });
+    Route::get('auth', function () {
+        return Auth::user()->load(['user_group']);
+    });
     Route::get('shop', [ShopController::class, 'index'])->name('shop.index');
     Route::get('size', [SizeController::class, 'index'])->name('master.size');
     Route::get('color', [ColorController::class, 'index'])->name('master.color');

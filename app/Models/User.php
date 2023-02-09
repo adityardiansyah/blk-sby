@@ -42,6 +42,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
+    public function user_group()
+    {
+        return $this->hasMany(UserGroup::class, 'user_id', 'id');
+    }
+
     public function getSellerAttribute()
     {
       return Seller::where('user_id', Auth::user()->id)->first();
