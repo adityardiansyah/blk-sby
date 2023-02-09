@@ -1,12 +1,12 @@
 <table>
     <tr>
-        <td><b>Report Stock</b></td>
+        <td><b>Report Sales</b></td>
     </tr>
     <tr>
         <td>Store : {{ $shop }}</td>
     </tr>
     <tr>
-        <td>Date : {{ $date_start }} / {{ $date_end }}</td>
+        <td>Date : {{ date('d m Y', strtotime($date_start)) }} / {{ date('d m Y', strtotime($date_end)) }}</td>
     </tr>
     <tr>
         <td>User : </td>
@@ -17,11 +17,16 @@
     <thead>
     <tr>
         <th rowspan="2" style="text-align: center; background-color: #40c668;"><b>No</b></th>
+        <th rowspan="2" style="text-align: center; background-color: #40c668;"><b>Tanggal</b></th>
         <th rowspan="2" style="text-align: center; background-color: #40c668;"><b>Nama Master</b></th>
         <th rowspan="2" style="text-align: center; background-color: #40c668;"><b>Nama SKU</b></th>
         <th colspan="6" style="text-align: center; background-color: #40c668;"><b>Category</b></th>
-        <th colspan="4" style="text-align: center; background-color: #40c668;"><b>Qty (pcs)</b></th>
+        <th rowspan="2" style="text-align: center; background-color: #40c668;"><b>Qty Sales (pcs)</b></th>
         <th rowspan="2" style="text-align: center; background-color: #40c668;"><b>Harga Jual</b></th>
+        <th rowspan="2" style="text-align: center; background-color: #40c668;"><b>Disc.</b></th>
+        <th rowspan="2" style="text-align: center; background-color: #40c668;"><b>Additional Disc.</b></th>
+        <th rowspan="2" style="text-align: center; background-color: #40c668;"><b>Harga Jual Nett</b></th>
+        <th rowspan="2" style="text-align: center; background-color: #40c668;"><b>Total</b></th>
     </tr>
     <tr>
         <th style="text-align: center; background-color: #40c668;"><b>Group</b></th>
@@ -30,23 +35,18 @@
         <th style="text-align: center; background-color: #40c668;"><b>Motive</b></th>
         <th style="text-align: center; background-color: #40c668;"><b>Warna</b></th>
         <th style="text-align: center; background-color: #40c668;"><b>Size</b></th>
-        <th style="text-align: center; background-color: #40c668;"><b>Last Month</b></th>
-        <th style="text-align: center; background-color: #40c668;"><b>Received</b></th>
-        <th style="text-align: center; background-color: #40c668;"><b>Sales</b></th>
-        <th style="text-align: center; background-color: #40c668;"><b>Stock on Hand</b></th>
     </tr>
     </thead>
     <tbody>
         @php
-            $total_last_month = 0;
-            $total_gr = 0;
-            $total_sales = 0;
-            $total_qty_on_hand = 0;
+            $qty = 0;
+            $total = 0;
         @endphp
         @foreach ($data as $key => $item)
         <tr>
             <td>{{ $key+1 }}</td>
-            <td>{{ $item->name_item }}</td>
+            <td>{{ $item->trans_date }}</td>
+            <td>{{ $item->item_name }}</td>
             <td>{{ $item->sku }}</td>
             <td>{{ $item->group }}</td>
             <td>{{ $item->brand }}</td>
@@ -54,26 +54,26 @@
             <td>{{ $item->motive }}</td>
             <td>{{ $item->color }}</td>
             <td>{{ $item->size }}</td>
-            <td>{{ $item->last_month }}</td>
-            <td>{{ $item->gr }}</td>
-            <td>{{ $item->sales }}</td>
-            <td>{{ $item->qty_on_hand }}</td>
-            <td>{{ $item->price }}</td>
+            <td>{{ $item->qty }}</td>
+            <td>{{ $item->unit_price }}</td>
+            <td>{{ $item->disc }}</td>
+            <td>{{ $item->add_disc }}</td>
+            <td>{{ $item->bruto_price }}</td>
+            <td>{{ $item->total }}</td>
+            @php
+                $qty += $item->qty;
+                $total += $item->total;
+            @endphp
         </tr>
-        @php
-            $total_last_month += $item->last_month;
-            $total_gr += $item->gr;
-            $total_sales += $item->sales;
-            $total_qty_on_hand += $item->qty_on_hand;
-        @endphp
         @endforeach
         <tr>
-            <td colspan="9" style="background-color: #b6b6b6;"><b>Total</b></td>
-            <td style="background-color: #b6b6b6;"><b>{{ $total_last_month }}</b></td>
-            <td style="background-color: #b6b6b6;"><b>{{ $total_gr }}</b></td>
-            <td style="background-color: #b6b6b6;"><b>{{ $total_sales }}</b></td>
-            <td style="background-color: #b6b6b6;"><b>{{ $total_qty_on_hand }}</b></td>
+            <td colspan="10" style="background-color: #b6b6b6;"><b>Total</b></td>
+            <td style="background-color: #b6b6b6;"><b>{{ $qty }}</b></td>
             <td style="background-color: #b6b6b6;"></td>
+            <td style="background-color: #b6b6b6;"></td>
+            <td style="background-color: #b6b6b6;"></td>
+            <td style="background-color: #b6b6b6;"></td>
+            <td style="background-color: #b6b6b6;"><b>{{ $total }}</b></td>
         </tr>
     </tbody>
 </table>

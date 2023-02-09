@@ -74,4 +74,20 @@ class ReportRepository{
         return $data;
     }
 
+    public function get_all_sales_by_shop($shop_id, $date_start, $date_end)
+    {
+        $data = DB::select("
+            SELECT s.trans_date, ds.item_name, ds.sku, pm.`group`, pm.brand, pm.variant, pm.motive, c.color, 
+            c.`size`, ds.qty, ds.unit_price, 0 disc, 0 add_disc, ds.bruto_price, ds.bruto_price total
+            from sales s 
+            join detail_sales ds on ds.sales_id = s.id 
+            join conversions c on c.id = ds.conversion_id 
+            join product_masters pm on pm.id = c.product_master_id 
+            where s.shop_id = $shop_id
+            and s.trans_date BETWEEN '$date_start' and '$date_end'
+            order by s.trans_date asc
+        ");
+        return $data;
+    }
+
 }
