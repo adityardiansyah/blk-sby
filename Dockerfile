@@ -35,23 +35,9 @@ RUN composer install  \
 
 RUN sudo apt-get install -y nodejs npm
 
-RUN npm install \
-    && npm update
+RUN npm install n -g \
+    && n stable
 
 RUN php artisan cache:clear
 RUN php artisan view:clear
 RUN php artisan route:clear
-
-RUN npm run prod \
-    && npm run production
-
-# RUN sudo composer require doctrine/dbal
-# RUN sudo apt-get -y install mysql-server mysql-client
-# RUN sudo php ./artisan migrate:fresh
-# RUN sudo php ./artisan db:seed --class=CreateUserSeeder
-# RUN sudo php artisan migrate
-# RUN sudo composer require laravel/passport
-# RUN sudo php artisan passport:install
-# RUN sudo php artisan passport:keys
-
-#CMD [ "php", "./artisan", "serve","--host=0.0.0.0", "--port=8080" ]
