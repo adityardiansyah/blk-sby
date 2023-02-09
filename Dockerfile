@@ -35,8 +35,8 @@ RUN composer install  \
 
 RUN sudo apt-get install -y nodejs npm
 
-RUN npm install n -g \
-    && n stable
+RUN npm install \
+    && npm update
 
 RUN php artisan cache:clear
 RUN php artisan view:clear

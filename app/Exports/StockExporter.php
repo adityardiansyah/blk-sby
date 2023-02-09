@@ -8,6 +8,7 @@ use App\Models\Shop;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Events\AfterSheet;
 
 class StockExporter implements FromView
 {
@@ -31,5 +32,18 @@ class StockExporter implements FromView
             'date_end' => $this->date_end,
             'shop' => $shop->name
         ]);
+    }
+
+    public function registerEvents(): array
+    {
+        return [
+            AfterSheet::class    => function(AfterSheet $event) {
+   
+                $event->sheet->getDelegate()->getStyle('A7:N8')
+                                ->getFont()
+                                ->setBold(true);
+   
+            },
+        ];
     }
 }

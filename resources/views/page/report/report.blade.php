@@ -112,5 +112,33 @@
             $('#modal_laporan').modal('show');
             $("#attachment").attr('src', url);
         }
+
+        function export_excel(params) {
+            var date_start = $('#date_start').val();
+            var date_end = $('#date_end').val();
+            var shop_id = $('select[name=shop_id] option').filter(':selected').val();
+            if(date_start == null || date_start == ""){
+                message("Tanggal awal belum diisi!", false);
+                return;
+            }
+            if(date_end == null || date_end == ""){
+                message("Tanggal akhir belum diisi!", false);
+                return;
+            }
+            if(shop_id == null || shop_id == ""){
+                message("Cabang Toko belum pilih!", false);
+                return;
+            }
+
+            let url;
+            if(params === 'laporan_stock'){
+                url = "{{ route('laporan.excel.stock', [':date_start',':date_end',':shop_id']) }}";
+                url = url.replace(':date_start', date_start);
+                url = url.replace(':date_end', date_end);
+                url = url.replace(':shop_id', shop_id);
+            }
+            console.log(url);
+            window.open(url);
+        }
     </script>
 @endpush
