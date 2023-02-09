@@ -33,7 +33,7 @@ RUN sudo chown -R docker:docker /var/www
 RUN composer install  \
     && composer update
 
-RUN apt-get install -y nodejs npm
+RUN sudo apt-get install -y nodejs npm
 
 RUN npm install \
     && npm update
