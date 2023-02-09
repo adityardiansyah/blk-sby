@@ -1,7 +1,6 @@
 #LARAVEL via artisan
 
 FROM thecodingmachine/php:8.1-v4-apache
-FROM node:16.13.1
 ARG PHP_VER=8.1
 
 #ENV APACHE_RUN_USER=www-data \
@@ -33,6 +32,9 @@ RUN sudo chown -R docker:docker /var/www
 
 RUN composer install  \
     && composer update
+
+RUN curl -sL https://deb.nodesource.com/setup_12.x| bash -
+RUN apt-get install -y nodejs npm
 
 RUN npm install \
     && npm update

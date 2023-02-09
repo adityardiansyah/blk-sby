@@ -64,9 +64,10 @@ class AuthController extends Controller
     {
         try {
             $user = Auth::user();
-            $data = Seller::where('user_id', $user->id)->first();
+            $data = Seller::with('shop')->where('user_id', $user->id)->first();
             $data->username = $user->username;
             $data->seller_id = $user->id;
+            $data->shop = $data->shop;
     
             return response()->json([
                 'message' => 'Data berhasil ditemukan',
