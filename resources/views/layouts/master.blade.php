@@ -186,6 +186,21 @@
             }).showToast();
         }
     </script>
+    @if(session()->has('message'))
+    @php
+        $message = Session::get('message');
+    @endphp
+    <script>
+        Toastify({
+            text: "{{ $message['content'] }}",
+            duration: 7000,
+            close:true,
+            gravity:"top",
+            position: "right",
+            backgroundColor: ("{{ $message['type'] }}" == 'success')? "#61876E": "#F55050",
+        }).showToast();
+    </script>
+    @endif
 
     @stack('js')
 </body>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ReportController;
@@ -7,6 +8,7 @@ use App\Http\Controllers\SellerController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\UserController;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
@@ -14,7 +16,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
 
-Auth::routes();
+Route::get('login', [LoginController::class, 'login']);
+Route::post('login', [LoginController::class, 'check_login'])->name('login'); 
+Route::post('logout', [LoginController::class, 'logout'])->name('logout'); 
 
 // URL::forceScheme('https');
 Route::middleware(['auth'])->group(function () {
@@ -31,8 +35,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('laporan', [ReportController::class, 'index'])->name('laporan.index');
     Route::get('laporan/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'laporan_stock'])->name('laporan.stock');
     Route::get('laporan-excel/{type}/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'download_excel'])->name('laporan.excel');
-    Route::get('test', function(){
-        return view('exports.stock');
-    });
 });
 
