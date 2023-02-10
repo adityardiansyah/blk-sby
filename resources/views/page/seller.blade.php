@@ -114,6 +114,15 @@
                         <input type="password" placeholder="Ulangi Password"
                             class="form-control" name="repassword" required value="{{ old('repassword') }}">
                     </div>
+                    <label>Hak Akses</label>
+                    <div class="form-group">
+                        <select name="group_id" id="" class="form-control" required value="{{ old('group_id') }}">
+                            <option value="">-- Pilih Hak Akses --</option>
+                            @foreach ($role as $item)
+                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-secondary"
@@ -152,6 +161,7 @@
         let phone = $("input[name=phone]").val();
         let photo = $("input[name=photo]")[0].files[0];
         let shop_id = $('select[name=shop_id] option').filter(':selected').val();
+        let group_id = $('select[name=group_id] option').filter(':selected').val();
         let token = $('input[name="_token"]').val();
 
         if(password !== repassword){
@@ -168,6 +178,7 @@
         fd.append('repassword', repassword);
         fd.append('img', photo);
         fd.append('email', email);
+        fd.append('group_id', group_id);
 
         $.ajax({
             type:'POST',

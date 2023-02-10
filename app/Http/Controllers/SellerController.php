@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Repository\SellerRepository;
 use App\Http\Repository\ShopRepository;
 use App\Http\Repository\UserRepository;
+use App\Models\Group;
+use App\Models\UserGroup;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -25,8 +27,9 @@ class SellerController extends Controller
     {
         $data = $this->sellerRepository->get_all();
         $shop = $this->shopRepository->get_all();
+        $role = Group::where('id','<>',1)->get();
 
-        return view('page.seller', compact('data','shop'));
+        return view('page.seller', compact('data','shop', 'role'));
     }
 
     public function store(Request $request)
@@ -55,6 +58,10 @@ class SellerController extends Controller
         $request->merge(['photo' => $img]);
 
         $this->sellerRepository->create($request->all());
+        UserGroup::create([
+            'user_id' => $user->id,
+            'group_id' => $request->group_id
+        ]);
         
         return response()->json([
             'success'=>true,
