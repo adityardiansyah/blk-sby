@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\MasterColor;
+use App\Models\MasterSize;
 use App\Models\ProductMaster;
 use Illuminate\Http\Request;
 
@@ -15,16 +17,20 @@ class ProductMasterController extends Controller
             $data_db = $productMaster->count();
             if(count($data_erp) > $data_db){
                 foreach ($data_erp as $key => $value) {
-                    $check = ProductMaster::where('code', $value->code)
-                                            ->where('name', $value->name)->first();
-                    if(empty($check)){
-                        $arr = [
-                            'code' => $value->code,
-                            'name' => $value->name,
-                            'name_warehouse' => $value->name_warehouse
-                        ];
-                        ProductMaster::create($arr);
-                    }
+                    $match = [
+                        'code' => $value->code,
+                        'name' => $value->name,
+                        'name_warehouse' => $value->name_warehouse,
+                    ];
+
+                    $arr = [
+                        'group' => $value->group,
+                        'brand' => $value->brand,
+                        'variant' => $value->variant,
+                        'motive' => $value->motive,
+                    ];
+                    ProductMaster::updateOrCreate($match, $arr);
+                    
                 }
             }
             return response()->json(['message' => 'success', 'date' => date('Y-m-d H:i:s')]);
@@ -38,53 +44,75 @@ class ProductMasterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return ProductMaster::get();
+        try{
+            $data = [];
+            $message = "";
+            $query = $request['query'];
+            if($query !== null){
+                $data = ProductMaster::where('name','like','%'.$query.'%')->get();
+                if(!empty($data)){
+                    $message = "Data ditemukan";
+                }else{
+                    $message = "Data tidak ditemukan!";
+                }
+            }
+            return response()->json([
+                'message' => $message,
+                'data' => $data,
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => $th->getMessage(),
+                'data' => [],
+            ], 400);
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function get_color()
     {
-        //
+        try{
+            $data = [];
+            $message = "";
+            $data = MasterColor::orderBy('name','asc')->get();
+            if(!empty($data)){
+                $message = "Data ditemukan";
+            }else{
+                $message = "Data tidak ditemukan!";
+            }
+            return response()->json([
+                'message' => $message,
+                'data' => $data,
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => $th->getMessage(),
+                'data' => [],
+            ], 400);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function get_sizes()
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        try{
+            $data = [];
+            $message = "";
+            $data = MasterSize::orderBy('name','asc')->get();
+            if(!empty($data)){
+                $message = "Data ditemukan";
+            }else{
+                $message = "Data tidak ditemukan!";
+            }
+            return response()->json([
+                'message' => $message,
+                'data' => $data,
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => $th->getMessage(),
+                'data' => [],
+            ], 400);
+        }
     }
 }

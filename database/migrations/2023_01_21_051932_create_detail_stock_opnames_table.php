@@ -15,14 +15,12 @@ class CreateDetailStockOpnamesTable extends Migration
     {
         Schema::create('detail_stock_opname', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('seller_id');
-            $table->unsignedBigInteger('shop_id');
+            $table->unsignedBigInteger('stock_opname_id');
             $table->unsignedBigInteger('conversion_id');
             $table->string('item_name');
             $table->string('sku');
             $table->integer('qty');
-            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
-            $table->foreign('shop_id')->references('id')->on('shop')->onDelete('cascade');
+            $table->foreign('stock_opname_id')->references('id')->on('stock_opname')->onDelete('cascade');
             $table->foreign('conversion_id')->references('id')->on('conversions')->onDelete('cascade');
             $table->timestamps();
         });

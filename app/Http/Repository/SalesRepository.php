@@ -2,6 +2,7 @@
 namespace App\Http\Repository;
 
 use App\Models\Sale;
+use Illuminate\Support\Facades\Auth;
 
 class SalesRepository{
     protected $sale;
@@ -12,7 +13,7 @@ class SalesRepository{
 
     public function get_data_by_shop($id)
     {
-        return $this->sale->with('detail')->where('shop_id', $id)->get();
+        return $this->sale->with('detail')->where('shop_id', $id)->orderBy('created_at', 'desc')->get();
     }
 
     public function get_data_by_id($id)
@@ -23,12 +24,15 @@ class SalesRepository{
     public function create($data)
     {
         $arr = [
-            "seller_id" => $data['seller_id'],
-            "shop_id" => $data['shop_id'],
+            "seller_id" => Auth::user()->seller->id,
+            "shop_id" => Auth::user()->seller->shop_id,
             "invoice" => $this->generate_invoice($data['trans_date']),
             "trans_date" => $data['trans_date'],
             "include_tax" => $data['include_tax'],
             "tax_persen" => $data['tax_persen'],
+            "total_price" => 0,
+            "total_tax" => 0,
+            "total_discount" => 0,
             "notes" => $data['notes'],
         ];
         return $this->sale->create($arr);
@@ -54,7 +58,7 @@ class SalesRepository{
     {
         $year = date('Y', strtotime($date));
         $month = date('m', strtotime($date));
-        $format = 'INV-';
+        $format = 'INV-'.date('m').'-';
         $check_order = $this->sale->whereYear('trans_date', $year)->whereMonth('trans_date', $month)->get()->count();
         $no = $check_order + 1;
         if($check_order === 0){

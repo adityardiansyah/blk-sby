@@ -21,8 +21,13 @@ class GoodsReceive extends Model
         return $this->belongsTo(Seller::class);
     }
 
-    public function detailGR()
+    public function detail()
     {
         return $this->hasMany(GoodsReceiveDetail::class);
+    }
+
+    public function file_attachment()
+    {
+        return $this->hasMany(FileGoodsReceived::class);
     }
 }

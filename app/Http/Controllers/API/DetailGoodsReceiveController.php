@@ -72,13 +72,14 @@ class DetailGoodsReceiveController extends Controller
             }
             return response()->json([
                 'message' => 'success deleted',
+                'data' => []
             ]);
 
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => $th->getMessage(),
-                "error" => 500
-            ]);
+                'data' => []
+            ], 400);
         }
     }
 }

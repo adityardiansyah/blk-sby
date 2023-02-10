@@ -23,6 +23,11 @@ class ChangeSalesTable extends Migration
             $table->integer('discount')->nullable()->change();
             $table->longText('notes')->nullable()->change();
         });
+
+        Schema::table('return_sales', function (Blueprint $table) {
+            $table->integer('discount')->nullable()->change();
+            $table->longText('notes')->nullable()->change();
+        });
     }
 
     /**
@@ -40,6 +45,11 @@ class ChangeSalesTable extends Migration
         Schema::table('detail_sales', function (Blueprint $table) {
             $table->integer('discount');
             $table->bigInteger('notes');
+        });
+
+        Schema::table('return_sales', function (Blueprint $table) {
+            $table->integer('discount');
+            $table->longText('notes');
         });
     }
 }

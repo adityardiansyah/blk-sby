@@ -2,6 +2,7 @@
 namespace App\Http\Repository;
 
 use App\Models\GoodsReceive;
+use Illuminate\Support\Facades\Auth;
 
 class GoodsReceiveRepository{
     protected $goodsReceive;
@@ -12,18 +13,25 @@ class GoodsReceiveRepository{
 
     public function get_data_by_shop($shop_id)
     {
-        return $this->goodsReceive->with('detailGR')->where('shop_id', $shop_id)->get();
+        return $this->goodsReceive->with('detail')->with('file_attachment')->where('shop_id', $shop_id)->orderBy('created_at', 'desc')->get();
+    }
+
+    public function get_data_by_id($id)
+    {
+        return $this->goodsReceive->with('detail')->with('file_attachment')->where('id', $id)->first();
     }
 
     public function create($data, $file)
     {
+        $user = Auth::user()->seller;
+        $date_now = date('Y-m-d');
         $arr = [
-            'seller_id' => $data['seller_id'],
-            'shop_id' => $data['shop_id'],
+            'seller_id' => $user->id,
+            'shop_id' => $user->shop_id,
             'no_sj_from' => $data['no_sj_from'],
-            'no_sj_receive' => $this->generate_number_trans($data['receive_date']),
+            'no_sj_receive' => $this->generate_number_trans($date_now),
             'sent_date' => $data['sent_date'],
-            'receive_date' => $data['receive_date'],
+            'receive_date' => $date_now,
             'notes' => $data['notes'],
             'file_attachment' => $file,
             'status' => 'open'
@@ -37,7 +45,6 @@ class GoodsReceiveRepository{
         $arr = [
             'no_sj_from' => $data['no_sj_from'],
             'sent_date' => $data['sent_date'],
-            'receive_date' => $data['receive_date'],
             'notes' => $data['notes'],
             'file_attachment' => $file
         ];

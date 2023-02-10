@@ -21,7 +21,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-      'name', 'username', 'password',
+      'name', 'username', 'password','status'
   ];
 
     /**
@@ -41,6 +41,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function user_group()
+    {
+        return $this->hasMany(UserGroup::class, 'user_id', 'id');
+    }
 
     public function getSellerAttribute()
     {

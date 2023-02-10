@@ -7,13 +7,16 @@
     "platform-check": false,
     "require": {
         "php": "^7.3|^8.0",
+        "barryvdh/laravel-dompdf": "^2.0",
         "doctrine/dbal": "^3.5",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.75",
         "laravel/passport": "*",
         "laravel/sanctum": "*",
-        "laravel/tinker": "^2.5"
+        "laravel/tinker": "^2.5",
+        "laravel/ui": "*",
+        "maatwebsite/excel": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
