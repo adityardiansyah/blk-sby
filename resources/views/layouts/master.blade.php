@@ -41,14 +41,15 @@
                 </div>
                 <div class="sidebar-menu">
                     <ul class="menu">
-                        <li class="sidebar-title">Menu</li>
+                        <li class="sidebar-title">Hi, {{ Auth::user()->name }}</li>
                         <li class="sidebar-item {{ Session::get('menu_active') == 'dashboard'? 'active': '' }} ">
                             <a href="{{ url('/') }}" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
                                 <span>Dashboard</span>
                             </a>
                         </li>
-                        @if (!empty(Auth::user()->user_group[0]))                            
+                        @if (!empty(Auth::user()->user_group[0]))    
+                        @if (Auth::user()->user_group[0]->group_id == 1 || Auth::user()->user_group[0]->group_id == 2)
                         <li class="sidebar-item  has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-diagram-3"></i>
@@ -83,6 +84,7 @@
                                 <span>User</span>
                             </a>
                         </li>
+                        @endif
                         @if (Auth::user()->user_group[0]->group_id == 1)
                         <li class="sidebar-item ">
                             <a href="index.html" class='sidebar-link'>
