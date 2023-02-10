@@ -11,15 +11,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\URL;
 
 Auth::routes();
 Route::middleware(['auth'])->group(function () {
     Route::get('/', function () {
+        Session::put('menu_active','dashboard');
         return view('home');
-    });
-    Route::get('auth', function () {
-        return Auth::user()->load(['user_group']);
     });
     Route::get('shop', [ShopController::class, 'index'])->name('shop.index');
     Route::get('size', [SizeController::class, 'index'])->name('master.size');
