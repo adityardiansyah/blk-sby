@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
 
 Auth::routes();
+
+// URL::forceScheme('https');
 Route::middleware(['auth'])->group(function () {
     Route::get('/', function () {
         Session::put('menu_active','dashboard');
