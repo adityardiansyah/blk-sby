@@ -39,6 +39,7 @@ class ReportRepository{
             where trans_date = LAST_DAY(DATE_ADD('$date_start', INTERVAL - 1 MONTH)) 
             and shop_id = $shop_id 
             and dso.conversion_id = $conversion_id
+            and so.status = 'confirmed'
             group by dso.conversion_id 
             limit 1
         ");
@@ -54,6 +55,7 @@ class ReportRepository{
             gr.shop_id = $shop_id
             and grd.conversion_id = $conversion_id
             and gr.receive_date BETWEEN '$date_start' and '$date_end'
+            and gr.status = 'confirmed'
             group by grd.conversion_id 
             limit 1
         ");
@@ -68,6 +70,7 @@ class ReportRepository{
             where s.shop_id = $shop_id
             and ds.conversion_id = $conversion_id
             and s.trans_date BETWEEN '$date_start' and '$date_end'
+            and s.status = 'confirmed'
             group by ds.conversion_id 
             limit 1
         ");
@@ -85,6 +88,7 @@ class ReportRepository{
             join product_masters pm on pm.id = c.product_master_id 
             where s.shop_id = $shop_id
             and s.trans_date BETWEEN '$date_start' and '$date_end'
+            and s.status = 'confirmed'
             order by s.trans_date asc
         ");
         return $data;

@@ -30,8 +30,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('seller', [SellerController::class, 'store'])->name('seller.store');
     Route::get('laporan', [ReportController::class, 'index'])->name('laporan.index');
     Route::get('laporan/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'laporan_stock'])->name('laporan.stock');
-    Route::get('laporan-excel/stock/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'download_excel_stock'])->name('laporan.excel.stock');
-    Route::get('laporan-excel/sales/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'download_excel_sales'])->name('laporan.excel.sales');
+    Route::get('laporan-excel/{type}/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'download_excel'])->name('laporan.excel');
     Route::get('test', function(){
         return view('exports.stock');
     });

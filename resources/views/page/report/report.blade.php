@@ -132,15 +132,16 @@
 
             let url;
             if(params === 'laporan_stock'){
-                url = "{{ route('laporan.excel.stock', [':date_start',':date_end',':shop_id']) }}";
+                url = "{{ route('laporan.excel', ['stock', ':date_start', ':date_end', ':shop_id']) }}";
             }else if(params === 'laporan_sales'){
-                url = "{{ route('laporan.excel.sales', [':date_start',':date_end',':shop_id']) }}";
+                url = "{{ route('laporan.excel', ['sales', ':date_start', ':date_end', ':shop_id']) }}";
             }
             url = url.replace(':date_start', date_start);
             url = url.replace(':date_end', date_end);
             url = url.replace(':shop_id', shop_id);
             
             window.open(url);
+            console.log(url);
         }
     </script>
 @endpush
