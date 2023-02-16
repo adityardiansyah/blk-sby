@@ -85,7 +85,7 @@ class ConversionRepository{
                 $arr = $this->conversion->where('id', $value->conversion_id)->first();
                 if(!empty($arr)){
                     if($type == 'OUT'){
-                        if($arr->qty_final <= $value->qty){
+                        if($arr->qty_final < $value->qty){
                             return ['error' => true, 'data'=>$arr->sku];
                         }
                     }

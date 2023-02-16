@@ -41,14 +41,15 @@
                 </div>
                 <div class="sidebar-menu">
                     <ul class="menu">
-                        <li class="sidebar-title">Menu</li>
-
+                        <li class="sidebar-title">Hi, {{ Auth::user()->name }}</li>
                         <li class="sidebar-item {{ Session::get('menu_active') == 'dashboard'? 'active': '' }} ">
-                            <a href="index.html" class='sidebar-link'>
+                            <a href="{{ url('/') }}" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
                                 <span>Dashboard</span>
                             </a>
                         </li>
+                        @if (!empty(Auth::user()->user_group[0]))    
+                        @if (Auth::user()->user_group[0]->group_id == 1 || Auth::user()->user_group[0]->group_id == 2)
                         <li class="sidebar-item  has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-diagram-3"></i>
@@ -83,6 +84,8 @@
                                 <span>User</span>
                             </a>
                         </li>
+                        @endif
+                        @if (Auth::user()->user_group[0]->group_id == 1)
                         <li class="sidebar-item ">
                             <a href="index.html" class='sidebar-link'>
                                 <i class="bi bi-funnel"></i>
@@ -119,6 +122,7 @@
                                 <span>Stok Fisik</span>
                             </a>
                         </li>
+                        @endif
 
                         <li class="sidebar-item {{ Session::get('menu_active') == 'laporan'? 'active': '' }}">
                             <a href="{{ route('laporan.index') }}" class='sidebar-link'>
@@ -126,7 +130,7 @@
                                 <span>Laporan</span>
                             </a>
                         </li>
-
+                        @endif
                         <li class="sidebar-item">
                             <a href="{{ route('logout') }}" class='sidebar-link' onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">
@@ -150,7 +154,6 @@
                     <i class="bi bi-justify fs-3"></i>
                 </a>
             </header>
-            
             @yield('content')
 
             <footer>
@@ -185,6 +188,21 @@
             }).showToast();
         }
     </script>
+    @if(session()->has('message'))
+    @php
+        $message = Session::get('message');
+    @endphp
+    <script>
+        Toastify({
+            text: "{{ $message['content'] }}",
+            duration: 7000,
+            close:true,
+            gravity:"top",
+            position: "right",
+            backgroundColor: ("{{ $message['type'] }}" == 'success')? "#61876E": "#F55050",
+        }).showToast();
+    </script>
+    @endif
 
     @stack('js')
 </body>

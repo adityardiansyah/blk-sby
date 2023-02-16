@@ -20,7 +20,7 @@
                             <i class="bi bi-person"></i>
                         </div>
                         @error('username')
-                            <span class="invalid-feedback" role="alert">
+                            <span class="invalid-feedback" role="alert" style="display: inline-block !important;">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
@@ -31,7 +31,7 @@
                             <i class="bi bi-shield-lock"></i>
                         </div>
                         @error('password')
-                            <span class="invalid-feedback" role="alert">
+                            <span class="invalid-feedback" role="alert" style="display: inline-block !important;">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror

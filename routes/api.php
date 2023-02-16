@@ -13,6 +13,7 @@ use App\Http\Controllers\API\ReturnSalesController;
 use App\Http\Controllers\API\ReturnWarehouseController;
 use App\Http\Controllers\API\SalesController;
 use App\Http\Controllers\API\StockOpnameController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,8 @@ Route::get('/sync-product-master', [ProductMasterController::class, 'syncProduct
 
 
 Route::group(['middleware' => ['auth:sanctum']], function(){
+    Route::get('laporan-excel/{type}', [ReportController::class, 'download_excel'])->name('laporan.excel');
+
     Route::get('/profile', [AuthController::class, 'profile']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/get-product-master', [ProductMasterController::class, 'index']);
