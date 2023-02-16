@@ -45,7 +45,7 @@
 
 <div class="modal fade text-left" id="modal_add" tabindex="-1" role="dialog"
     aria-labelledby="myModalLabel33" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+    <div class="modal-dialog modal-dialog-centered"
         role="document">
         <div class="modal-content">
             <div class="modal-header">
