@@ -8,6 +8,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\SizeController;
+use App\Http\Controllers\SKUController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -28,6 +29,9 @@ Route::middleware(['auth'])->group(function () {
         return view('home');
     });
     Route::get('shop', [ShopController::class, 'index'])->name('shop.index');
+    Route::get('sku', [SKUController::class, 'index'])->name('master.sku');
+    Route::get('list-sku', [SKUController::class, 'list_sku'])->name('master.list-sku');
+    Route::post('sku', [SKUController::class, 'store'])->name('master.sku.store');
     Route::get('size', [SizeController::class, 'index'])->name('master.size');
     Route::get('color', [ColorController::class, 'index'])->name('master.color');
     Route::get('users', [UserController::class, 'index'])->name('users.index');

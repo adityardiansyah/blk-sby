@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{{ asset('assets/extensions/simple-datatables/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/pages/simple-datatables.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/extensions/toastify-js/src/toastify.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/extensions/choices.js/public/assets/styles/choices.css') }}">
 </head>
 
 <body>
@@ -55,7 +56,10 @@
                                 <i class="bi bi-diagram-3"></i>
                                 <span>Master</span>
                             </a>
-                            <ul class="submenu {{ in_array(Session::get('menu_active'), ['color','size'])? 'active': '' }}">
+                            <ul class="submenu {{ in_array(Session::get('menu_active'), ['sku','color','size'])? 'active': '' }}">
+                                <li class="submenu-item {{ Session::get('menu_active') == 'sku'? 'active': '' }}">
+                                    <a href="{{ route('master.sku') }}">SKU</a>
+                                </li>
                                 <li class="submenu-item {{ Session::get('menu_active') == 'color'? 'active': '' }}">
                                     <a href="{{ route('master.color') }}">Warna</a>
                                 </li>
@@ -175,6 +179,9 @@
     <script src="{{ asset('assets/js/pages/simple-datatables.js') }}"></script>
     <script src="{{ asset('assets/extensions/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/extensions/toastify-js/src/toastify.js') }}"></script>
+    <script src="{{ asset('assets/extensions/choices.js/public/assets/scripts/choices.js') }}"></script>
+    <script src="{{ asset('assets/js/pages/form-element-select.js') }}"></script>
+
 
     <script>
         function message(title, success='true') {
