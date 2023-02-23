@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="page-heading">
-    <h3>Seller</h3>
+    <h3>Produk Master</h3>
 </div>
 <div class="page-content">
     <section class="section">
@@ -23,7 +23,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($data as $key => $item)
+                        {{-- @foreach ($data as $key => $item)
                             <tr>
                                 <td>{{ $key + 1 }}</td>
                                 <td>{{ $item->no_seller }}</td>
@@ -34,7 +34,7 @@
                                     <span class="">{{ Str::ucfirst($item->status) }}</span>
                                 </td>
                             </tr>
-                        @endforeach
+                        @endforeach --}}
                     </tbody>
                 </table>
             </div>
@@ -86,9 +86,9 @@
                     <div class="form-group">
                         <select name="shop_id" id="" class="form-control" required value="{{ old('shop_id') }}">
                             <option value="">-- Pilih Toko --</option>
-                            @foreach ($shop as $item)
+                            {{-- @foreach ($shop as $item)
                             <option value="{{ $item->id }}">{{ $item->name }}</option>
-                            @endforeach
+                            @endforeach --}}
                         </select>
                     </div>
                     <label>Foto</label>
@@ -118,9 +118,9 @@
                     <div class="form-group">
                         <select name="group_id" id="" class="form-control" required value="{{ old('group_id') }}">
                             <option value="">-- Pilih Hak Akses --</option>
-                            @foreach ($role as $item)
+                            {{-- @foreach ($role as $item)
                             <option value="{{ $item->id }}">{{ $item->name }}</option>
-                            @endforeach
+                            @endforeach --}}
                         </select>
                     </div>
                 </div>

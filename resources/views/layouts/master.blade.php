@@ -86,8 +86,8 @@
                         </li>
                         @endif
                         @if (Auth::user()->user_group[0]->group_id == 1)
-                        <li class="sidebar-item ">
-                            <a href="index.html" class='sidebar-link'>
+                        <li class="sidebar-item {{ Session::get('menu_active') == 'conversion'? 'active': '' }}">
+                            <a href="{{ route('conversion.index') }}" class='sidebar-link'>
                                 <i class="bi bi-funnel"></i>
                                 <span>Konversi SKU</span>
                             </a>
