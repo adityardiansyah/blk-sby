@@ -31,6 +31,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/get-product-master', [ProductMasterController::class, 'index']);
     Route::get('/get-color', [ProductMasterController::class, 'get_color']);
     Route::get('/get-sizes', [ProductMasterController::class, 'get_sizes']);
+    Route::get('/get-product-sku', [ProductMasterController::class, 'get_product_sku']);
     
     Route::apiResource('conversion', ConversionController::class);
     

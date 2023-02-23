@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\MasterColor;
 use App\Models\MasterSize;
 use App\Models\ProductMaster;
+use App\Models\ProductMasterDetail;
 use Illuminate\Http\Request;
 
 class ProductMasterController extends Controller
@@ -100,6 +101,30 @@ class ProductMasterController extends Controller
             $message = "";
             $data = MasterSize::orderBy('name','asc')->get();
             if(!empty($data)){
+                $message = "Data ditemukan";
+            }else{
+                $message = "Data tidak ditemukan!";
+            }
+            return response()->json([
+                'message' => $message,
+                'data' => $data,
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => $th->getMessage(),
+                'data' => [],
+            ], 400);
+        }
+    }
+
+    public function get_product_sku(Request $request)
+    {
+        try{
+            $message = "";
+            $id = $request->product_master_id;
+
+            $data = ProductMasterDetail::select('sku')->where('product_master_id', $id)->orderBy('id','asc')->get();
+            if(count($data) > 0){
                 $message = "Data ditemukan";
             }else{
                 $message = "Data tidak ditemukan!";

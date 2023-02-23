@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ColorController;
+use App\Http\Controllers\ConversionController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SellerController;
@@ -32,6 +33,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('users', [UserController::class, 'index'])->name('users.index');
     Route::get('seller', [SellerController::class, 'index'])->name('seller.index');
     Route::post('seller', [SellerController::class, 'store'])->name('seller.store');
+    Route::get('conversion', [ConversionController::class, 'index'])->name('conversion.index');
     Route::get('laporan', [ReportController::class, 'index'])->name('laporan.index');
     Route::get('laporan/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'laporan_stock'])->name('laporan.stock');
     Route::get('laporan-excel/{type}/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'download_excel'])->name('laporan.excel');
