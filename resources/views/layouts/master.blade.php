@@ -10,9 +10,10 @@
     <link rel="stylesheet" href="{{ asset('assets/css/main/app-dark.css') }}">
     
     <link rel="stylesheet" href="{{ asset('assets/css/shared/iconly.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/extensions/simple-datatables/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/pages/simple-datatables.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/extensions/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/pages/datatables.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/extensions/toastify-js/src/toastify.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/extensions/choices.js/public/assets/styles/choices.css') }}">
 </head>
 
 <body>
@@ -55,7 +56,10 @@
                                 <i class="bi bi-diagram-3"></i>
                                 <span>Master</span>
                             </a>
-                            <ul class="submenu {{ in_array(Session::get('menu_active'), ['color','size'])? 'active': '' }}">
+                            <ul class="submenu {{ in_array(Session::get('menu_active'), ['sku','color','size'])? 'active': '' }}">
+                                <li class="submenu-item {{ Session::get('menu_active') == 'sku'? 'active': '' }}">
+                                    <a href="{{ route('master.sku') }}">SKU</a>
+                                </li>
                                 <li class="submenu-item {{ Session::get('menu_active') == 'color'? 'active': '' }}">
                                     <a href="{{ route('master.color') }}">Warna</a>
                                 </li>
@@ -86,8 +90,8 @@
                         </li>
                         @endif
                         @if (Auth::user()->user_group[0]->group_id == 1)
-                        <li class="sidebar-item ">
-                            <a href="index.html" class='sidebar-link'>
+                        <li class="sidebar-item {{ Session::get('menu_active') == 'conversion'? 'active': '' }}">
+                            <a href="{{ route('conversion.index') }}" class='sidebar-link'>
                                 <i class="bi bi-funnel"></i>
                                 <span>Konversi SKU</span>
                             </a>
@@ -171,10 +175,13 @@
     </div>
     <script src="{{ asset('assets/js/bootstrap.js') }}"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
-    <script src="{{ asset('assets/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
-    <script src="{{ asset('assets/js/pages/simple-datatables.js') }}"></script>
     <script src="{{ asset('assets/extensions/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/js/datatables.min.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/pages/datatables.js') }}"></script> --}}
     <script src="{{ asset('assets/extensions/toastify-js/src/toastify.js') }}"></script>
+    <script src="{{ asset('assets/extensions/choices.js/public/assets/scripts/choices.js') }}"></script>
+    <script src="{{ asset('assets/js/pages/form-element-select.js') }}"></script>
+
 
     <script>
         function message(title, success='true') {
