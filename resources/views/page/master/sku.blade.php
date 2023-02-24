@@ -11,7 +11,7 @@
                 <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#modal_add"><i class="bi bi-plus"></i> Tambah</button>
             </div>
             <div class="card-body">
-                <table class="table table-striped" id="table1">
+                <table class="table table-striped" id="table-view">
                     <thead>
                         <tr>
                             <th>No.</th>
@@ -20,7 +20,7 @@
                         </tr>
                     </thead>
                     <tbody class="list-sku">
-                        
+                        <tr><td colspan="3"></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -94,7 +94,10 @@
             data: {},
             url : "{{ url('list-sku') }}",
             success:function(data){
-                $('.list-sku').html(data);
+                $('.list-sku').html(data.html);
+            },
+            complete:function() {
+                $("#table-view").DataTable();
             }
         });
     }
@@ -129,15 +132,14 @@
                 $('.btn-simpan').append('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Loading...')
             },
             success:async function(data){
-                message(data.message);
+                message(data.message, data.success);
                 get_data();
             },
             complete: function () {
                 $('.btn-simpan').prop('disabled',false);
                 $('.btn-simpan').html('')
-                $('.btn-simpan').append('Simpan & Buat Lagi')
+                $('.btn-simpan').append('Simpan & Buat Lagi');
                 $("input[name=sku]").val("");
-                $('select[name=product_master_id] option').filter(':selected').val("");
             },
             error:function(params) {
                 let txt = params.responseJSON;
