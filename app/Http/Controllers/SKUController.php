@@ -27,11 +27,20 @@ class SKUController extends Controller
     public function store(Request $request)
     {
         try {
-            ProductMasterDetail::create($request->all());
-            return response()->json([
-                'success' => true,
-                'message' => 'Berhasil ditambahkan!' 
-            ]);
+            $check = ProductMasterDetail::where('sku',$request->sku)->first();
+            if(empty($check)){
+                ProductMasterDetail::create($request->all());
+                $arr = [
+                    'success' => true,
+                    'message' => 'Berhasil ditambahkan!' 
+                ];
+            }else{
+                $arr = [
+                    'success' => false,
+                    'message' => 'SKU sudah ada!' 
+                ];
+            }
+            return response()->json($arr);
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,
@@ -43,6 +52,7 @@ class SKUController extends Controller
     public function list_sku()
     {
         $output = '';
+
         $data = ProductMasterDetail::with('product_master')->orderBy('id','desc')->get();
         foreach ($data as $key => $value) {
             $output .= View::make('components.sku')
@@ -51,8 +61,10 @@ class SKUController extends Controller
                         ->render();
         }
         if (count($data) > 0)
-            return $output;
+            return response()->json([
+                'html' => $output
+            ]);
         else
-            return '<div class="col">No Data</div>';
+            return '<tr><td colspan="3"></td></tr>';
     }
 }
