@@ -104,7 +104,7 @@
     get_data();
 
     $(".btn-simpan").click(function(e){
-  
+
         e.preventDefault();
 
         var sku = $("input[name=sku]").val();

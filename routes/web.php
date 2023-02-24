@@ -34,11 +34,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('sku', [SKUController::class, 'store'])->name('master.sku.store');
     Route::get('size', [SizeController::class, 'index'])->name('master.size');
     Route::get('color', [ColorController::class, 'index'])->name('master.color');
+    Route::post('color', [ColorController::class, 'store'])->name('master.color.store');
     Route::get('users', [UserController::class, 'index'])->name('users.index');
     Route::get('seller', [SellerController::class, 'index'])->name('seller.index');
     Route::post('seller', [SellerController::class, 'store'])->name('seller.store');
     Route::get('conversion', [ConversionController::class, 'index'])->name('conversion.index');
     Route::get('laporan', [ReportController::class, 'index'])->name('laporan.index');
+    Route::delete('color/{id}', [ColorController::class, 'destroy']);
     Route::get('laporan/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'laporan_stock'])->name('laporan.stock');
     Route::get('laporan-excel/{type}/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'download_excel'])->name('laporan.excel');
 });
