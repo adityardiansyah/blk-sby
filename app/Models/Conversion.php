@@ -15,4 +15,9 @@ class Conversion extends Model
     {
         return $this->belongsTo(ProductMaster::class);
     }
+
+    // public function getSkuAttribute()
+    // {
+    //     return $this->sku.' - '.$this->color.' - '.$this->size;
+    // }
 }
