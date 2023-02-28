@@ -104,7 +104,7 @@
     get_data();
 
     $(".btn-simpan").click(function(e){
-  
+
         e.preventDefault();
 
         var sku = $("input[name=sku]").val();
@@ -138,7 +138,7 @@
             complete: function () {
                 $('.btn-simpan').prop('disabled',false);
                 $('.btn-simpan').html('')
-                $('.btn-simpan').append('Simpan & Buat Lagi');
+                $('.btn-simpan').append('Simpan');
                 $("input[name=sku]").val("");
             },
             error:function(params) {
