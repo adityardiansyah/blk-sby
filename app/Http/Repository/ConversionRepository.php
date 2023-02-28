@@ -36,7 +36,10 @@ class ConversionRepository{
             'size' => $data['size']?? ''
         ];
 
-        $check = $this->conversion->where('sku', $data['sku'])->where('shop_id', Auth::user()->seller->shop_id)->first();
+        $check = $this->conversion->where('sku', $data['sku'])
+        ->where('color', $data['color'])
+        ->where('size', $data['size'])
+        ->where('shop_id', Auth::user()->seller->shop_id)->first();
         if(empty($check)){
             $result = $this->conversion->create($arr);
         }else{
