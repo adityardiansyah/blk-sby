@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\UserGroup;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,6 +17,8 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(CreateShop::class);
         $this->call(CreateSeller::class);
+        // $this->call(GroupSeeder::class);
+        // $this->call(UserGroup::class);
         // \App\Models\User::factory(10)->create();
     }
 }
