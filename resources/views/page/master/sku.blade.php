@@ -48,7 +48,7 @@
                             <li>{{ $error }}</li>
                         @endforeach
                     </ul>
-                </div>
+                </div> 
             @endif
             <form action="{{ route('master.sku.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf

@@ -33,6 +33,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('list-sku', [SKUController::class, 'list_sku'])->name('master.list-sku');
     Route::post('sku', [SKUController::class, 'store'])->name('master.sku.store');
     Route::get('size', [SizeController::class, 'index'])->name('master.size');
+    Route::post('size', [SizeController::class, 'store'])->name('master.size.store');
+    Route::delete('size/{id}', [SizeController::class, 'destroy']);
     Route::get('color', [ColorController::class, 'index'])->name('master.color');
     Route::get('users', [UserController::class, 'index'])->name('users.index');
     Route::get('seller', [SellerController::class, 'index'])->name('seller.index');
