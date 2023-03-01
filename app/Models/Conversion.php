@@ -20,4 +20,9 @@ class Conversion extends Model
     // {
     //     return $this->sku.' - '.$this->color.' - '.$this->size;
     // }
+
+    // public function MasterColor()
+    // {
+    //     return $this->belongsTo('App\Models\MasterColor', 'color');
+    // }
 }

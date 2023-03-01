@@ -43,6 +43,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('conversion', [ConversionController::class, 'index'])->name('conversion.index');
     Route::get('laporan', [ReportController::class, 'index'])->name('laporan.index');
     Route::delete('color/{id}', [ColorController::class, 'destroy']);
+    // Route::delete('color/{id}', [ColorController::class, 'deleteData']);
     Route::get('laporan/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'laporan_stock'])->name('laporan.stock');
     Route::get('laporan-excel/{type}/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'download_excel'])->name('laporan.excel');
 });

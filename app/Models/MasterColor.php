@@ -10,4 +10,8 @@ class MasterColor extends Model
     use HasFactory;
     protected $fillable = ['name'];
     
+    public function conversion()
+    {
+        return $this->hasMany('App\Models\Conversion', 'color');
+    }
 }
