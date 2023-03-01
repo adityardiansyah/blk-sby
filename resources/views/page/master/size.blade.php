@@ -20,7 +20,10 @@
                             <th>No.</th>
                             <th>Ukuran</th>
                             <th>Tgl. dibuat</th>
-                            <th>action</th>
+                            <th>
+                            @if (Auth::user()->id == 1) 
+                            action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -32,12 +35,13 @@
                                 {{-- <td>
                                     <span class="">{{ Str::ucfirst($item->status) }}</span>
                                 </td> --}}
-                                <td>
+                                <td  >
                                 <form onsubmit="return confirm(Hapus Data?)" class='d-inline' action=" {{ url ('/size/' .$item->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                
-                                <button type="submit" name="submit" class="btn btn-danger btn-sm">Delete</button>
+                                @if (Auth::user()->id == 1) 
+                                <button type="submit" name="submit" class="btn btn-danger btn-sm" > Delete</button>
+                                @endif
                                 </form>
                                 </td>
                             </tr>
@@ -102,7 +106,7 @@
         </div>
     </div>
 </div>
- @endsection
+@endsection
 @push('js')
 <script>
     function get_data(){
@@ -130,6 +134,10 @@
         let fd = new FormData();
         fd.append('_token', token);
         fd.append('name', name);
+
+        setTimeout(() => {
+            window.location=window.location;
+        }, 1200);
 
         $.ajax({
             type:'POST',
