@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Shop;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Session;
 
 class ShopController extends Controller
@@ -48,20 +49,65 @@ class ShopController extends Controller
                 'message' => 'Gagal ditambahkan!' 
             ]);
         }
-    //     $request->validate([
-    //         'nama_toko' => 'required|unique:toko'
-    //     ]);
-    //     Shop::create($data);
-    //     if ($validator->fails()) {
-    //         return redirect('tambah-toko')
-    //                     ->withErrors($validator)
-    //                     ->withInput();
-    //     }
-    //     $toko = new Shop;
-    //     $toko->nama_toko = $request->nama_toko;
-    //     $toko->save();
-    //     return redirect()->to('/shop')->with('message', ['type' => 'success', 'content' => 'Berhasil ditambahkan']);
-        
-    // }
+    }
+
+    public function edit($id) {
+    
+        $data = Shop::find($id);
+        if(!empty($data)){
+            return response()->json([
+                'success' => true,
+                'data' => $data 
+            ]);
+        }else{
+            return response()->json([
+                'success' => false,
+                'data' => [] 
+            ]);
+        }
+        // return view('/shop',['Shop'=>$data]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'location' => 'required',
+            'address' => 'required',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric'
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()]);
+        } else {
+            $shop = Shop::find($id);
+            $shop->name = $request->name;
+            $shop->location = $request->location;
+            $shop->address = $request->address;
+            $shop->latitude = $request->latitude;
+            $shop->longitude = $request->longitude;
+            $shop->save();
+    
+            return response()->json(['success' => 'Data has been updated successfully']);
+        }
+        // $request->merge(['status'=>'active']) ;
+        // $request->validate([
+        //     'name'=> $data,
+        //     'location'=>'required',
+        //     'address'=>'required',
+        //     'longitude'=>'required',
+        //     'latitude'=>'required',    
+        // ]); 
+        // $data = [
+
+        // 'name'=> $request->name,
+        // 'location'=> $request->location,
+        // 'address'=> $request->address,
+        // 'latitude'=> $request->latitude,
+        // 'longitude'=> $request->longitude
+        // ];
+        // Shop::where('name',$id)->update($data);
+        // return redirect()->to('/shop')->with('success','Berhasil update data');
     }
 }

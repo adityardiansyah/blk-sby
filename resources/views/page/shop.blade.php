@@ -2,7 +2,8 @@
 
 @section('content')
 <div class="page-heading">
-    <h3>Toko {{ Session::get('menu_active') }}</h3>
+    {{-- {{ Session::get('menu_active') }} --}}
+    <h3> TOKO </h3>
 </div>
 <div class="page-content">
     <section class="section">
@@ -20,6 +21,7 @@
                             <th>Lokasi</th>
                             <th>Alamat</th>
                             <th>Status</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -32,6 +34,12 @@
                             <td>
                                 <span class="">{{ Str::ucfirst($item->status) }}</span>
                             </td>
+                            {{-- <td><a href="{{ url('/shop'.$item->name.'/shop') }}" class="btn btn-warning btn-sm">Edit</a></td> --}}
+                            <td>
+                            {{-- <button class="btn btn-warning btn-sm edit-btn" data-id="{{ $item->id }}" data-bs-toggle="modal" data-bs-target="#modaledit">Edit</button> --}}
+                                <button type="button" class="btn btn-warning btn-sm" onclick="edit_data({{ $item->id }})">Edit</button>
+                                {{-- <button type="button" class="btn btn-warning btn-sm" onclick="edit_data({{ $item->id }})"><i class="bi bi-pencil"></i></button> --}}
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -39,9 +47,9 @@
             </div>
             </div>
         </div>
-
     </section>
 </div>
+
 <div class="modal fade text-left" id="modal_add" tabindex="-1" role="dialog"
     aria-labelledby="myModalLabel33" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered"
@@ -106,17 +114,134 @@
         </div>
     </div>
 </div>
+</div>
+
+<div class="modal fade text-left" id="modal_edit" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel33" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered"
+        role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel33">Edit Data </h4>
+                <button type="button" class="close" data-bs-dismiss="modal"
+                    aria-label="Close">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            <form action="{{ route('seller.store') }}" method="POST"  class="edit-form" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+                <div class="modal-body">
+                    <label>Nama Toko</label>
+                    <div class="form-group">
+                        <input type="text" placeholder="nama toko"
+                            class="form-control" name="name" id="shop_edit" required value="{{ old('name') }}">
+                    </div>
+                    <label>Lokasi</label>
+                    <div class="form-group">
+                        <input type="text" placeholder="Lokasi"
+                            class="form-control" name="location" id="shop_edit" required value="{{ old('location') }}">
+                    </div>
+                    <label>Alamat</label>
+                    <div class="form-group">
+                        <input type="text" placeholder="Alamat"
+                            class="form-control" name="address" id="shop_edit" required value="{{ old('address') }}">
+                    </div>
+                    <label>Latitude</label>
+                    <div class="form-group">
+                        <input type="text" placeholder="latitude"
+                            class="form-control" name="latitude" id="shop_edit" required value="{{ old('latitude') }}">
+                    </div>
+                    <label>Longitude</label>
+                    <div class="form-group">
+                        <input type="text" placeholder="longitude"
+                            class="form-control" name="longitude" id="shop_edit" required value="{{ old('longitude') }}">
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-secondary"
+                        data-bs-dismiss="modal">
+                        <i class="bx bx-x d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Tutup</span>
+                    </button>
+                    <button type="button" class="btn btn-primary ml-1 btn-simpan">
+                        <i class="bx bx-check d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Simpan</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 @endsection
 
 @push('js')
 <script>
+    function edit_data(id) {
+        $('#modal_edit').modal('show');
+
+        $.ajax({
+        type :'get',
+        data :{},
+        url :"{{ url('shop/edit') }}/"+id,
+        success:function(data){
+        console.log(data);
+        $('#shop_edit').val(data.data.shop);
+        $('#id').val(data.data.id);
+        },
+        complete:function() {
+        }
+    });
+}
+    // function edit_data(id){
+    //     $('#modal_edit').modal('show');
+    //     console.log('ok');
+
+//         function update_data(){
+//         update_data();
+//         $(document).on('submit', '.edit-form', function(e){
+//         e.preventDefault();
+//         var formData = $(this).serialize();
+//         var url = $(this).attr('action');
+        
+//         $.ajax({
+//         url :"{{ url('shop/update') }}/"+id,
+//         method: 'PUT',
+//         data: formData,
+//         success: function(response){
+//             $('#modal_edit').modal('hide');
+//             toastr.success(response.success, 'Success!');
+//             setTimeout(function(){
+//                 location.reload();
+//             }, 1000);
+//         },
+//         error: function(response){
+//             var errors = response.responseJSON.errors;
+//             $.each(errors, function(key, value){
+//                 toastr.error(value, 'Error!');
+//             });
+//         }
+//     });
+// });
+// }
+
     function get_data(){
         $.ajax({
             type : 'get',
             data: {},
             url : "{{ url('/shop') }}",
             success:function(data){ 
-                $('/shop').html(data.html);
+                $('#shop').html(data.html);
             },
             complete:function() {
                 $("#table-view").DataTable();
@@ -186,3 +311,7 @@
 
 </script>
 @endpush
+
+
+
+

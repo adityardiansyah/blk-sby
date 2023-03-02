@@ -30,6 +30,8 @@ Route::middleware(['auth'])->group(function () {
     });
     Route::get('shop', [ShopController::class, 'index'])->name('shop.index');
     Route::post('shop', [ShopController::class, 'store'])->name('master.shop.store');
+    Route::get('shop/edit/{id}', [ShopController::class, 'edit']);
+    // Route::put('shop/update/{id}', [ShopController::class,'update'])->name('master.shop.update');
     Route::get('sku', [SKUController::class, 'index'])->name('master.sku');
     Route::get('list-sku', [SKUController::class, 'list_sku'])->name('master.list-sku');
     Route::post('sku', [SKUController::class, 'store'])->name('master.sku.store');
