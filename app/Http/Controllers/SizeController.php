@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Conversion;
 use App\Models\MasterSize;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -20,16 +21,21 @@ class SizeController extends Controller
     public function index(){
         $data = MasterSize::all();
 
+        $data =MasterSize::orderBy('id','desc')->get();
         return view('page.master.size', compact('data'));
     }
 
     public function destroy($id)
     {
         $data = MasterSize::find($id);
-        $data ->delete();
-        return redirect()->to('/size')->with('message', ['type' => 'success','content' => 'Berhasil dihapus']);
-        
-        }
+
+    if ( Conversion::where('size', $data->name)->exists()) {
+        return redirect()->to('/size')->with('message', ['type' => 'success', 'content' => 'Data tidak dapat dihapus']);
+    } else {
+        $data->delete();
+        return redirect()->to('/size')->with('message', ['type' => 'success', 'content' => 'Berhasil dihapus']);
+    }
+    }
 
     public function store(Request $request)
         {
@@ -55,6 +61,14 @@ class SizeController extends Controller
                 ]);
             }
     }
-    
+
+//     public function autoRefresh()
+// {
+//     $data = route('auto-refresh'); // URL yang ingin di-refresh
+//     $delay = 5; // Waktu delay dalam hitungan detik
+
+//     return redirect($data)
+//         ->header('Refresh', $delay);
+// }
     
 }

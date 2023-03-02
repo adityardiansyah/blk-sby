@@ -29,6 +29,7 @@ Route::middleware(['auth'])->group(function () {
         return view('home');
     });
     Route::get('shop', [ShopController::class, 'index'])->name('shop.index');
+    Route::post('shop', [ShopController::class, 'store'])->name('master.shop.store');
     Route::get('sku', [SKUController::class, 'index'])->name('master.sku');
     Route::get('list-sku', [SKUController::class, 'list_sku'])->name('master.list-sku');
     Route::post('sku', [SKUController::class, 'store'])->name('master.sku.store');
@@ -43,6 +44,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('conversion', [ConversionController::class, 'index'])->name('conversion.index');
     Route::get('laporan', [ReportController::class, 'index'])->name('laporan.index');
     Route::delete('color/{id}', [ColorController::class, 'destroy']);
+    Route::delete('sku/{id}', [SKUController::class, 'destroy']);
     Route::get('laporan/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'laporan_stock'])->name('laporan.stock');
     Route::get('laporan-excel/{type}/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'download_excel'])->name('laporan.excel');
 });

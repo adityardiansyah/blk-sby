@@ -17,10 +17,13 @@
                             <th>No.</th>
                             <th>Nama Pilang</th>
                             <th>SKU</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody class="list-sku">
-                        <tr><td colspan="3"></td></tr>
+                        <tr>
+                            <td colspan="3"></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
