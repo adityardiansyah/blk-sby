@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Conversion;
 use App\Models\ProductMaster;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,10 +17,10 @@ class Conversion extends Model
     // {
     //     return $this->sku.' - '.$this->color.' - '.$this->size;
     // }
-    // class Conversion extends Mode
-    
-        
-    
 
+    // public function MasterColor()
+    // {
+    //     return $this->belongsTo('App\Models\MasterColor', 'color');
+    // }
 }
 
