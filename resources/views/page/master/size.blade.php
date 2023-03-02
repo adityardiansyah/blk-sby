@@ -22,7 +22,7 @@
                             <th>Tgl. dibuat</th>
                             <th>
                             @if (Auth::user()->id == 1) 
-                            action</th>
+                            Action</th>
                             @endif
                         </tr>
                     </thead>
@@ -114,7 +114,7 @@
             type : 'get',
             data: {},
             url : "{{ url('list-size') }}",
-            success:function(data){
+            success:function(data){ 
                 $('.list-size').html(data.html);
             },
             complete:function() {
