@@ -21,7 +21,7 @@ class ConversionRepository{
                 'seller_id' => $con->seller_id,
                 'shop_id' => $con->shop_id,
                 'name_item' => $con->name_item,
-                'sku' => $con->sku.' - '.$con->color.' - '.$con->size,
+                'sku' => $con->sku,
                 'qty_final' => $con->qty_final,
                 'price' => $con->price,
                 'color' => $con->color,
