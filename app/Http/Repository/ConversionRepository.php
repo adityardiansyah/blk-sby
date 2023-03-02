@@ -13,7 +13,23 @@ class ConversionRepository{
 
     public function get_data_by_shop($id)
     {
-        return $this->conversion->with('productMaster')->where('shop_id', $id)->orderBy('created_at','desc')->get();
+        $data = $this->conversion->with('productMaster')->where('shop_id', $id)->orderBy('created_at','desc')->get();
+        $res = $data->map(function($con){
+            return collect([
+                'id' => $con->id,
+                'product_master_id' => $con->product_master_id,
+                'seller_id' => $con->seller_id,
+                'shop_id' => $con->shop_id,
+                'name_item' => $con->name_item,
+                'sku' => $con->sku.' - '.$con->color.' - '.$con->size,
+                'qty_final' => $con->qty_final,
+                'price' => $con->price,
+                'color' => $con->color,
+                'size' => $con->size,
+                'product_master' => $con->productMaster
+            ]);
+        });
+        return $res;
     }
 
     public function get_data_by_id($id)
@@ -36,7 +52,10 @@ class ConversionRepository{
             'size' => $data['size']?? ''
         ];
 
-        $check = $this->conversion->where('sku', $data['sku'])->where('shop_id', Auth::user()->seller->shop_id)->first();
+        $check = $this->conversion->where('sku', $data['sku'])
+        ->where('color', $data['color'])
+        ->where('size', $data['size'])
+        ->where('shop_id', Auth::user()->seller->shop_id)->first();
         if(empty($check)){
             $result = $this->conversion->create($arr);
         }else{
