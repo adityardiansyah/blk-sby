@@ -28,7 +28,6 @@
                 </table>
             </div>
         </div>
-
     </section>
 </div>
 
@@ -87,7 +86,57 @@
         </div>
     </div>
 </div>
+
+{{-- Edit --}}
+<div class="modal fade text-left" id="modal_edit" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel33" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered"
+        role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel33">Edit SKU</h4>
+                <button type="button" class="close btn-tutup" data-bs-dismiss="modal"
+                    aria-label="Close">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div> 
+            @endif
+            <form action="{{ route('master.sku.update', ['id' => $item->id]) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <input type="hidden" name="id" id="id">
+                <div class="modal-body">
+                    <label> SKU </label>
+                    <div class="form-group">
+                        <input type="text" placeholder="SKU"
+                            class="form-control" name="sku" id="sku_edit" required value="{{ old('sku') }}">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-secondary btn-tutup"
+                        data-bs-dismiss="modal">
+                        <i class="bx bx-x d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Tutup</span>
+                    </button>
+                    <button type="button" class="btn btn-primary ml-1 btn-simpan">
+                        <i class="bx bx-check d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Simpan</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
+
+
 
 @push('js')
 <script>
@@ -153,6 +202,24 @@
         });
 
     });
+
+    function edit_data(id){
+        $('#modal_edit').modal('show');
+
+        $.ajax({
+            type : 'get',
+            data: {},
+            url : "{{ url('sku/edit') }}/"+id,
+            success:function(data){
+                console.log(data);
+                $('#sku_edit').val(data.data.sku);
+                $('#id').val(data.data.id);
+            },
+            complete:function() {
+
+            }
+        });
+    }
 
 </script>
 @endpush

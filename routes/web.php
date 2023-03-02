@@ -44,6 +44,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('laporan', [ReportController::class, 'index'])->name('laporan.index');
     Route::delete('color/{id}', [ColorController::class, 'destroy']);
     Route::delete('sku/{id}', [SKUController::class, 'destroy']);
+    Route::get('sku/edit/{id}', [SKUController::class, 'edit']);
+    Route::put('/sku/update/{id}', [SKUController::class, 'update'])->name('master.sku.update');
     Route::get('laporan/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'laporan_stock'])->name('laporan.stock');
     Route::get('laporan-excel/{type}/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'download_excel'])->name('laporan.excel');
 });
