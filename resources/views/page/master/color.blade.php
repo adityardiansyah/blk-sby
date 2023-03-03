@@ -18,7 +18,10 @@
                             <th>No.</th>
                             <th>Warna</th>
                             <th>Tgl. dibuat</th>
-                            <th>Action</th>
+                            <th>
+                                @if (Auth::user()->id == 1)
+                                Action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -30,12 +33,15 @@
                                 {{-- <td>
                                     <span class="">{{ Str::ucfirst($item->status) }}</span>
                                 </td> --}}
+                                
                                 <td>
                                     <form onsubmit="return confirm(Hapus Data?)" class='d-inline' action=" {{ url ('/color/' .$item->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         
-                                        <button type="submit" name="submit" class="btn btn-danger btn-sm">Delete</button>
+                                        @if (Auth::user()->id == 1)
+                                            <button type="submit" name="submit" class="btn btn-danger btn-sm">Delete</button>
+                                        @endif
                                         </form>
                                 </td>
                             </tr>
@@ -121,6 +127,11 @@ $(".btn-simpan").click(function(e){
     let fd = new FormData();
     fd.append('_token', token);
     fd.append('name', name);
+
+    // auto refresh
+    setTimeout(() => {
+        window.location=window.location;
+    }, 1200);
 
     $.ajax({
         type:'POST',

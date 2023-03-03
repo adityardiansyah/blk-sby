@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 use App\Models\MasterColor;
+use App\Models\Conversion;
+use Illuminate\Support\Facades\DB;
 
 class ColorController extends Controller
 {
@@ -18,6 +20,7 @@ class ColorController extends Controller
 
     public function index(){
         $data = MasterColor::all();
+        $data = MasterColor::orderBy('id','desc')->get();
 
         return view('page.master.color', compact('data'));
     }
@@ -47,11 +50,24 @@ class ColorController extends Controller
         }
     }
 
-    public function destroy($id)
+    // public function destroy($id)
+    // {
+    //     $data = MasterColor::find($id);
+    //     $data ->delete();
+    //     return redirect()->to('/color')->with('message', ['type' => 'success','content' => 'Berhasil dihapus']);
+    // }
+
+    public function destroy(Request $request, $id)
     {
-        $data = MasterColor::find($id);
-        $data ->delete();
-        return redirect()->to('/color')->with('message', ['type' => 'success','content' => 'Berhasil dihapus']);
+        $data = MasterColor::findOrFail($id);
         
+        // periksa apakah data yang akan dihapus telah digunakan di tabel conversions
+        if (Conversion::where('color', $data->name)->exists()) {
+            return redirect()->to('/color')->with('message', ['type' => 'danger','content' => 'Data tidak dapat dihapus']);
+        } else {
+            $data->delete();
+            return redirect()->to('/color')->with('message', ['type' => 'success','content' => 'Berhasil dihapus']);
         }
+    }
 }
+
