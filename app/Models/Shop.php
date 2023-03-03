@@ -9,4 +9,5 @@ class Shop extends Model
 {
     use HasFactory;
     protected $table = 'shop';
+    protected $fillable =['name','address','location','latitude','longitude','status'];
 }

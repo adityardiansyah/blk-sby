@@ -29,6 +29,7 @@ Route::middleware(['auth'])->group(function () {
         return view('home');
     });
     Route::get('shop', [ShopController::class, 'index'])->name('shop.index');
+    Route::post('shop', [ShopController::class, 'store'])->name('master.shop.store');
     Route::get('sku', [SKUController::class, 'index'])->name('master.sku');
     Route::get('list-sku', [SKUController::class, 'list_sku'])->name('master.list-sku');
     Route::post('sku', [SKUController::class, 'store'])->name('master.sku.store');
