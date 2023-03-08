@@ -32,7 +32,7 @@
     </section>
 </div>
 
-<div class="modal fade text-left" id="modal_add" tabindex="-1" role="dialog"
+<div class="modal fade text-left" id="modal_add" role="dialog"
     aria-labelledby="myModalLabel33" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered"
         role="document">
@@ -58,7 +58,7 @@
                 <div class="modal-body">
                     <label>Nama Pilang</label>
                     <div class="form-group">
-                        <select name="product_master_id" id="" class="form-control choices" required value="{{ old('shop_id') }}">
+                        <select name="product_master_id" id="" class="form-control select2" required value="{{ old('shop_id') }}">
                             <option value="">-- Pilih Nama Pilang --</option>
                             @foreach ($master as $item)
                             <option value="{{ $item->id }}">{{ $item->name }}</option>
