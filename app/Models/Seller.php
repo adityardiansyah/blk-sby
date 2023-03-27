@@ -14,4 +14,9 @@ class Seller extends Model
     {
         return $this->belongsTo(Shop::class);
     }
+
+    public function goodsReceives()
+    {
+        return $this->hasOne(GoodsReceive::class);
+    }
 }

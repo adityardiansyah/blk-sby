@@ -97,7 +97,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item ">
-                            <a href="index.html" class='sidebar-link'>
+                            <a href="{{ route('goodsreceive.index') }}" class='sidebar-link'>
                                 <i class="bi bi-box-seam"></i>
                                 <span>Penerimaan Barang</span>
                             </a>

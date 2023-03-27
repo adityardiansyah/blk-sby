@@ -111,6 +111,7 @@
             @endif
             <form action="{{ route('master.sku.update', ['id' => $item->id]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
                 <input type="hidden" name="id" id="id">
                 <div class="modal-body">
                     <label> SKU </label>

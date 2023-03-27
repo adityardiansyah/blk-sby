@@ -10,6 +10,7 @@ use App\Http\Controllers\ShopController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\SKUController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\GoodsReceiveController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -47,6 +48,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('sku/{id}', [SKUController::class, 'destroy']);
     Route::get('sku/edit/{id}', [SKUController::class, 'edit']);
     Route::put('/sku/update/{id}', [SKUController::class, 'update'])->name('master.sku.update');
+    Route::get('goodsreceive', [GoodsReceiveController::class, 'index'])->name('goodsreceive.index');
     Route::get('laporan/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'laporan_stock'])->name('laporan.stock');
     Route::get('laporan-excel/{type}/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'download_excel'])->name('laporan.excel');
 });
