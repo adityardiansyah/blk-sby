@@ -14,6 +14,12 @@
     <link rel="stylesheet" href="{{ asset('assets/css/pages/datatables.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/extensions/toastify-js/src/toastify.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/extensions/choices.js/public/assets/styles/choices.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+        .select2-container{
+            width: 100%!important;
+        }
+    </style>
 </head>
 
 <body>
@@ -181,9 +187,14 @@
     <script src="{{ asset('assets/extensions/toastify-js/src/toastify.js') }}"></script>
     <script src="{{ asset('assets/extensions/choices.js/public/assets/scripts/choices.js') }}"></script>
     <script src="{{ asset('assets/js/pages/form-element-select.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/select2.min.js') }}"></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 
     <script>
+        $('.select2').select2({
+            dropdownParent: $("#modal_add"),
+        });
         function message(title, success='true') {
             Toastify({
                 text: title,
