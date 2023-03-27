@@ -7,10 +7,14 @@ use Illuminate\Support\Facades\Auth;
 class SalesRepository{
     protected $sale;
 
+
     public function __construct(Sale $con) {
         $this->sale = $con;
     }
-
+    public function get_data_all()
+    {
+        return $this->sale->with('detail')->orderBy('created_at', 'desc')->get();
+    }
     public function get_data_by_shop($id)
     {
         return $this->sale->with('detail')->where('shop_id', $id)->orderBy('created_at', 'desc')->get();

@@ -115,7 +115,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item ">
-                            <a href="index.html" class='sidebar-link'>
+                            <a href="{{ route('sales.index') }}" class='sidebar-link'>
                                 <i class="bi bi-cart-check"></i>
                                 <span>Penjualan</span>
                             </a>

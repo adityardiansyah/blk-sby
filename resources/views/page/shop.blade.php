@@ -37,10 +37,10 @@
                             {{-- <td><a href="{{ url('/shop'.$item->name.'/shop') }}" class="btn btn-warning btn-sm">Edit</a></td> --}}
                             <td>
                             {{-- <button class="btn btn-warning btn-sm edit-btn" data-id="{{ $item->id }}" data-bs-toggle="modal" data-bs-target="#modaledit">Edit</button> --}}
-                                <button type="button" class="btn btn-warning btn-sm" onclick="edit_data({{ $item->id }})">Edit</button>
+                                <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modal_edit" onclick="edit_data({{ $item->id }})">Edit</button>
                                 {{-- <button type="button" class="btn btn-warning btn-sm" onclick="edit_data({{ $item->id }})"><i class="bi bi-pencil"></i></button> --}}
                             </td>
-                        </tr>
+                        </tr> 
                         @endforeach
                     </tbody>
                 </table>
@@ -48,7 +48,6 @@
             </div>
         </div>
     </section>
-</div>
 
 <div class="modal fade text-left" id="modal_add" tabindex="-1" role="dialog"
     aria-labelledby="myModalLabel33" aria-hidden="true">
@@ -137,35 +136,37 @@
                     </ul>
                 </div>
             @endif
-            <form action="{{ route('seller.store') }}" method="POST"  class="edit-form" enctype="multipart/form-data">
+            <form action="{{ route('master.shop.update', ['id'=> $item->id]) }}" method="POST"  class="edit-form" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
+                <input type="hidden" name="id" id="id">
                 <div class="modal-body">
                     <label>Nama Toko</label>
                     <div class="form-group">
                         <input type="text" placeholder="nama toko"
-                            class="form-control" name="name" id="shop_edit" required value="{{ old('name') }}">
+                            class="form-control" name="name" id="shop_name" required value="{{ old('name') }}">
                     </div>
                     <label>Lokasi</label>
                     <div class="form-group">
                         <input type="text" placeholder="Lokasi"
-                            class="form-control" name="location" id="shop_edit" required value="{{ old('location') }}">
+                            class="form-control" name="location" id="shop_location" required value="{{ old('location') }}">
                     </div>
                     <label>Alamat</label>
                     <div class="form-group">
                         <input type="text" placeholder="Alamat"
-                            class="form-control" name="address" id="shop_edit" required value="{{ old('address') }}">
+                            class="form-control" name="address" id="shop_address" required value="{{ old('address') }}">
                     </div>
                     <label>Latitude</label>
                     <div class="form-group">
                         <input type="text" placeholder="latitude"
-                            class="form-control" name="latitude" id="shop_edit" required value="{{ old('latitude') }}">
+                            class="form-control" name="latitude" id="shop_latitude" required value="{{ old('latitude') }}">
                     </div>
                     <label>Longitude</label>
                     <div class="form-group">
                         <input type="text" placeholder="longitude"
-                            class="form-control" name="longitude" id="shop_edit" required value="{{ old('longitude') }}">
+                            class="form-control" name="longitude" id="shop_longitute" required value="{{ old('longitude') }}">
                     </div>
+                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-secondary"
                         data-bs-dismiss="modal">
@@ -181,60 +182,12 @@
         </div>
     </div>
 </div>
-
-
 @endsection
 
 @push('js')
 <script>
-    function edit_data(id) {
-        $('#modal_edit').modal('show');
 
-        $.ajax({
-        type :'get',
-        data :{},
-        url :"{{ url('shop/edit') }}/"+id,
-        success:function(data){
-        console.log(data);
-        $('#shop_edit').val(data.data.shop);
-        $('#id').val(data.data.id);
-        },
-        complete:function() {
-        }
-    });
-}
-    // function edit_data(id){
-    //     $('#modal_edit').modal('show');
-    //     console.log('ok');
-
-//         function update_data(){
-//         update_data();
-//         $(document).on('submit', '.edit-form', function(e){
-//         e.preventDefault();
-//         var formData = $(this).serialize();
-//         var url = $(this).attr('action');
-        
-//         $.ajax({
-//         url :"{{ url('shop/update') }}/"+id,
-//         method: 'PUT',
-//         data: formData,
-//         success: function(response){
-//             $('#modal_edit').modal('hide');
-//             toastr.success(response.success, 'Success!');
-//             setTimeout(function(){
-//                 location.reload();
-//             }, 1000);
-//         },
-//         error: function(response){
-//             var errors = response.responseJSON.errors;
-//             $.each(errors, function(key, value){
-//                 toastr.error(value, 'Error!');
-//             });
-//         }
-//     });
-// });
-// }
-
+//tambah
     function get_data(){
         $.ajax({
             type : 'get',
@@ -309,6 +262,169 @@
 
     });
 
+//edit
+        function edit_data(id){
+        $('#modal_edit').modal('show');
+
+        $.ajax({
+            type : 'get',
+            data: {},
+            url : "{{ url('shop/edit') }}/"+id,
+            success:function(data){
+                console.log(data);
+                $('#shop_name').val(data.data.name);
+                $('#shop_address').val(data.data.address);
+                $('#shop_location').val(data.data.location);
+                $('#shop_latitude').val(data.data.latitude);
+                $('#shop_longitude').val(data.data.longitude);
+            },
+            complete:function() {
+            }
+            });
+        }
+            edit_data();
+            $(".btn-simpan").click(function(e){
+
+            e.preventDefault();
+
+            var name = $("input[name=name]").val(data.data.name);
+            var location = $("input[name=location]").val(data.data.location);
+            var address = $("input[name=address]").val(data.data.address);
+            var latitude = $("input[name=latitude]").val(data.data.latitude);
+            var longitude = $("input[name=longitude]").val(data.data.longitude);
+            let token = $('input[name="_token"]').val(data.data.token);
+
+            let fd = new FormData();
+            fd.append('_token', token);
+            fd.append('name', name);
+            fd.append('address', address);
+            fd.append('location', location);
+            fd.append('latitude', latitude);
+            fd.append('longitude', longitude);
+
+            // setTimeout(() => {
+            //     window.location=window.location;
+            // }, 1200);
+
+            $.ajax({
+                type:'POST',
+                url:"{{ route('master.shop.update') }}",
+                headers: {
+                    'X-CSRF-TOKEN' : token
+                },
+                data:fd,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                beforeSend: function () {
+                    $('.btn-simpan').prop('disabled',true);
+                    $('.btn-simpan').html('')
+                    $('.btn-simpan').append('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Loading...')
+                },
+                success:async function(data){
+                    message(data.message, data.success);
+                    get_data();
+                },
+                complete: function () {
+                    $('.btn-simpan').prop('disabled',false);
+                    $('.btn-simpan').html('')
+                    $('.btn-simpan').append('Simpan');
+                    $("input[name=size]").val("");
+                },
+                error:function(params) {
+                    let txt = params.responseJSON;
+                    $.each(txt.errors,function (k,v) {
+                        message(v, false);
+                    });
+                }
+            });
+
+        });
+
+    //update
+        function update_data(id){
+            $.ajax({
+            type: 'PUT',
+            url: "{{ url('shop/update') }}",
+            data: {
+                $('#shop_name').val(data.data.name);
+                $('#shop_address').val(data.data.address);
+                $('#shop_location').val(data.data.location);
+                $('#shop_latitude').val(data.data.latitude);
+                $('#shop_longitude').val(data.data.longitude);
+            _token: '{{ csrf_token() }}'
+        },
+            success :function(data){
+                console.log(data);
+            $('#shop_name').val(data.data.name),
+            $('#shop_address').val(data.data.address),
+            $('#shop_location').val(data.data.location),
+            $('#shop_latitude').val(data.data.latitude),
+            $('#shop_longitudee').val(data.data.longitude)
+            '{{ csrf_token() }}'
+        },
+        complete:function() {
+            }
+            });
+        }  
+            update_data();
+            $(".btn-simpan").click(function(e){
+
+            e.preventDefault();
+
+            var name = $("input[name=name]").val();
+            var location = $("input[name=location]").val();
+            var address = $("input[name=address]").val();
+            var address = $("input[name=address]").val();
+            var latitude = $("input[name=latitude]").val();
+            var longitude = $("input[name=longitude]").val();
+            let token = $('input[name="_token"]').val();
+
+            let fd = new FormData();
+            fd.append('_token', token);
+            fd.append('name', name);
+            fd.append('address', address);
+            fd.append('location', location);
+            fd.append('latitude', latitude);
+            fd.append('longitude', longitude);
+
+            // setTimeout(() => {
+            //     window.location=window.location;
+            // }, 1200);
+
+            $.ajax({
+                type:'POST',
+                url:"{{ route('master.shop.update') }}",
+                headers: {
+                    'X-CSRF-TOKEN' : token  
+                },
+                data:fd,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                beforeSend: function () {
+                    $('.btn-simpan').prop('disabled',true);
+                    $('.btn-simpan').html('')
+                    $('.btn-simpan').append('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Loading...')
+                },
+                success:async function(data){
+                    message(data.message, data.success);
+                    get_data();
+                },
+                complete: function () {
+                    $('.btn-simpan').prop('disabled',false);
+                    $('.btn-simpan').html('')
+                    $('.btn-simpan').append('Simpan');
+                    $("input[name=size]").val("");
+                },
+                error:function(params) {
+                    let txt = params.responseJSON;
+                    $.each(txt.errors,function (k,v) {
+                        message(v, false);
+                    });
+                }
+            });
+        });
 </script>
 @endpush
 

@@ -23,13 +23,56 @@ class ShopController extends Controller
     }
 
     public function store(Request $request)
-    {
+    {   
+        // $request->merge(['status'=>'active']) ;
+        // $validator = Validator::make($request->all(), [ 
+        //     'name' => 'required',
+        //     'location' => 'required',
+        //     'address' => 'required',
+        //     'latitude' => 'required|numeric',
+        //     'longitude' => 'required|numeric'
+        // ]);
+        
+        // if ($validator->fails()) {
+        //     return response()->json($validator->errors(),422);
+        // }
+
+        // $check = Shop::where('name',$request->name)->first();
+    
+        //     if(empty($check)){
+        //         return response()->json([
+        //             'success' => true,
+        //             'type' => 'error',
+        //             'icon' => 'warning',
+        //             'message' => 'Toko Sudah Ada',
+        //             'data' => $data
+        //         ]);
+        //     }else {
+                
+        //         $data = Shop::create([
+        //         $data->name = $request->name,
+        //         $data->location = $request->location,
+        //         $data->address = $request->address,
+        //         $data->latitude = $request->latitude,
+        //         $data->longitude = $request->longitude,
+        //         $data->save()
+        //         ]);
+        //     return response()->json([
+        //         'success' => true,
+        //         'type' => 'success',
+        //         'icon' => 'success',
+        //         'message' => 'berhasil ditamabah',
+        //         'data' => $data
+        //     ]);
+        // }
+                
         try {
+            // $shop=new Shop;
             // return $request->all();
             $check = Shop::where('name',$request->name)->first();
             if(empty($check)){
                 $request->merge(['status'=>'active']) ;
-
+                
                 Shop::create($request->all());
 
                 $arr = [
@@ -48,11 +91,10 @@ class ShopController extends Controller
                 'success' => false,
                 'message' => 'Gagal ditambahkan!' 
             ]);
-        }
+        };
     }
 
     public function edit($id) {
-    
         $data = Shop::find($id);
         if(!empty($data)){
             return response()->json([
@@ -65,49 +107,65 @@ class ShopController extends Controller
                 'data' => [] 
             ]);
         }
-        // return view('/shop',['Shop'=>$data]);
     }
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
+        // return $id;\
+        $data = Shop::find($id);
+        $request->merge(['status'=>'active']);
+        $validator = Validator::make($request->all(), [ 
             'name' => 'required',
             'location' => 'required',
             'address' => 'required',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric'
         ]);
-    
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()]);
         } else {
-            $shop = Shop::find($id);
-            $shop->name = $request->name;
-            $shop->location = $request->location;
-            $shop->address = $request->address;
-            $shop->latitude = $request->latitude;
-            $shop->longitude = $request->longitude;
-            $shop->save();
+            $data->name = $request->name;
+            $data->location = $request->location;
+            $data->address = $request->address;
+            $data->latitude = $request->latitude;
+            $data->longitude = $request->longitude;
+            $data->save();
     
-            return response()->json(['success' => 'Data has been updated successfully']);
-        }
-        // $request->merge(['status'=>'active']) ;
-        // $request->validate([
-        //     'name'=> $data,
-        //     'location'=>'required',
-        //     'address'=>'required',
-        //     'longitude'=>'required',
-        //     'latitude'=>'required',    
-        // ]); 
-        // $data = [
+            $arr =[
+                'success' => true,
+                'message' => 'Data berhasil diupdate',
+                'data' => $data
+            ];
 
-        // 'name'=> $request->name,
-        // 'location'=> $request->location,
-        // 'address'=> $request->address,
-        // 'latitude'=> $request->latitude,
-        // 'longitude'=> $request->longitude
-        // ];
-        // Shop::where('name',$id)->update($data);
-        // return redirect()->to('/shop')->with('success','Berhasil update data');
+            return response()->json($arr);
+            redirect()->route('/shop');
+                }
+            } 
+        
+        
+            // return $request->all();
+            // $check = Shop::where('name',$request->name)->first();
+            // $validator = Validator::make($request->all(), [ 
+            //         'name' => 'required',
+            //         'location' => 'required',
+            //         'address' => 'required',
+            //         'latitude' => 'required|numeric',
+            //         'longitude' => 'required|numeric'
+            //     ]);
+            // if ($validator-> fails ()) {
+            //     return response()->json($validator->errors(), 422);
+            // }
+            // $data->find($request->id)->update([
+            // $data->name = $request->name,
+            // $data->location = $request->location,
+            // $data->address = $request->address,
+            // $data->latitude = $request->latitude,
+            // $data->longitude = $request->longitude
+            // ]);
+
+            // return response()->json([
+            //     'success' => true,
+            //     'message' => 'Data Berhasil Diupdate!.',
+            // ]); 
     }
-}
+

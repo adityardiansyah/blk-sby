@@ -10,6 +10,7 @@ use App\Http\Controllers\ShopController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\SKUController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SalesController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -31,7 +32,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('shop', [ShopController::class, 'index'])->name('shop.index');
     Route::post('shop', [ShopController::class, 'store'])->name('master.shop.store');
     Route::get('shop/edit/{id}', [ShopController::class, 'edit']);
-    // Route::put('shop/update/{id}', [ShopController::class,'update'])->name('master.shop.update');
+    Route::put('shop/update', [ShopController::class,'update'])->name('master.shop.update');
     Route::get('sku', [SKUController::class, 'index'])->name('master.sku');
     Route::get('list-sku', [SKUController::class, 'list_sku'])->name('master.list-sku');
     Route::post('sku', [SKUController::class, 'store'])->name('master.sku.store');
@@ -43,6 +44,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('users', [UserController::class, 'index'])->name('users.index');
     Route::get('seller', [SellerController::class, 'index'])->name('seller.index');
     Route::post('seller', [SellerController::class, 'store'])->name('seller.store');
+    Route::get('sales', [SalesController::class, 'index'])->name('sales.index');
     Route::get('conversion', [ConversionController::class, 'index'])->name('conversion.index');
     Route::get('laporan', [ReportController::class, 'index'])->name('laporan.index');
     Route::delete('color/{id}', [ColorController::class, 'destroy']);
@@ -50,4 +52,3 @@ Route::middleware(['auth'])->group(function () {
     Route::get('laporan/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'laporan_stock'])->name('laporan.stock');
     Route::get('laporan-excel/{type}/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'download_excel'])->name('laporan.excel');
 });
-
