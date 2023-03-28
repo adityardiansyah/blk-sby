@@ -49,6 +49,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('sku/edit/{id}', [SKUController::class, 'edit']);
     Route::put('/sku/update/{id}', [SKUController::class, 'update'])->name('master.sku.update');
     Route::get('goodsreceive', [GoodsReceiveController::class, 'index'])->name('goodsreceive.index');
+    Route::get('goodsreceive/{id}', [GoodsReceiveController::class, 'show'])->name('goodsreceive.show');
     Route::get('laporan/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'laporan_stock'])->name('laporan.stock');
     Route::get('laporan-excel/{type}/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'download_excel'])->name('laporan.excel');
 });

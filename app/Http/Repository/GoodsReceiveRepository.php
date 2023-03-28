@@ -23,7 +23,7 @@ class GoodsReceiveRepository{
 
     public function get_data_by_id($id)
     {
-        return $this->goodsReceive->with('detail')->with('file_attachment')->where('id', $id)->first();
+        return $this->goodsReceive->with('detail')->with('file_attachment')->with('seller')->with('shop')->where('id', $id)->first();
     }
 
     public function create($data, $file)

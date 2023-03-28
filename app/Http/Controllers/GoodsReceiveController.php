@@ -24,4 +24,19 @@ class GoodsReceiveController extends Controller
 
         return view('page.goodsreceive', compact('data'));
     }
+
+    public function show($id) {
+        $data = $this->goodsReceiveRepository->get_data_by_id($id);
+        if(!empty($data)){
+            return response()->json([
+                'success' => true,
+                'data' => $data
+            ]);
+        }else{
+            return response()->json([
+                'success' => false,
+                'data' => []
+            ]);
+        }
+    }
 }

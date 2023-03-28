@@ -102,7 +102,7 @@
                                 <span>Konversi SKU</span>
                             </a>
                         </li>
-                        <li class="sidebar-item ">
+                        <li class="sidebar-item {{ Session::get('menu_active') == 'goodsreceive'? 'active': '' }}">
                             <a href="{{ route('goodsreceive.index') }}" class='sidebar-link'>
                                 <i class="bi bi-box-seam"></i>
                                 <span>Penerimaan Barang</span>
