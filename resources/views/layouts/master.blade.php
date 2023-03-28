@@ -18,7 +18,7 @@
     <style>
         .select2-container{
             width: 100%!important;
-        }
+        } 
     </style>
 </head>
 
@@ -114,7 +114,7 @@
                                 <span>Retur Gudang</span>
                             </a>
                         </li>
-                        <li class="sidebar-item ">
+                        <li class="sidebar-item  {{ Session::get('menu_active') == 'sales'? 'active': '' }}">
                             <a href="{{ route('sales.index') }}" class='sidebar-link'>
                                 <i class="bi bi-cart-check"></i>
                                 <span>Penjualan</span>

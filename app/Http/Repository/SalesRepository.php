@@ -19,10 +19,9 @@ class SalesRepository{
     {
         return $this->sale->with('detail')->where('shop_id', $id)->orderBy('created_at', 'desc')->get();
     }
-
     public function get_data_by_id($id)
     {
-        return $this->sale->with('detail')->where('id', $id)->first();
+        return $this->sale->with('detail')->with('shop')->with('seller')->where('id', $id)->first();
     }
 
     public function create($data)

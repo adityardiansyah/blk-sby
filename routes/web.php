@@ -28,6 +28,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', function () {
         Session::put('menu_active','dashboard');
         return view('home');
+// Route::get('/sales', 'Controller@fungsi')->middleware([Auth::user()->id == 1]);
+
     });
     Route::get('shop', [ShopController::class, 'index'])->name('shop.index');
     Route::post('shop', [ShopController::class, 'store'])->name('master.shop.store');
@@ -45,6 +47,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('seller', [SellerController::class, 'index'])->name('seller.index');
     Route::post('seller', [SellerController::class, 'store'])->name('seller.store');
     Route::get('sales', [SalesController::class, 'index'])->name('sales.index');
+    Route::get('sales/{id}', [SalesController::class, 'show'])->name('sales.show');
     Route::get('conversion', [ConversionController::class, 'index'])->name('conversion.index');
     Route::get('laporan', [ReportController::class, 'index'])->name('laporan.index');
     Route::delete('color/{id}', [ColorController::class, 'destroy']);

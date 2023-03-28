@@ -14,7 +14,7 @@
                         <tr>
                             <th>No.</th>
                             <th>Invoice</th>
-                            <th>Tgl Trans</th>
+                            <th>Tgl Transaksi</th>
                             <th>Nama Toko</th>
                             <th>Nama Seller</th>
                             <th>Total Harga</th>
@@ -35,11 +35,10 @@
                                 <td>{{ $item->notes }}</td>
                                 <td>{{ $item->status }}</td>
                                 <td>
-                                    @if (Auth::user()->id == 1) 
-                                    <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modal_edit" onclick="edit_data({{ $item->id }})">Edit</button>
-                                    @elseif (auth()->user()->id == 2 && $status == '')
-                                    <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modal_edit" onclick="edit_data({{ $item->id }})">Edit</button>
-                                    @endif
+                                    {{-- @if (Auth::user()->id == 1 && $item->status == 'confirmed')  --}}
+                                    {{-- <button type="button" class="btn btn-primary btn-sm" onclick="show({{ $item->id }})" >Detail</button> --}}
+                                    <button type="button" class="btn btn-primary btn-sm"  onclick="show({{ $item->id }})">Detail</button>
+                                    {{-- @endif --}}
                                 </td>
                             </tr>
                         @endforeach
@@ -51,13 +50,13 @@
     </section>
 </div>
 
-{{-- <div class="modal fade text-left" id="modal_add" tabindex="-1" role="dialog"
+<div class="modal fade text-left modal-xl" id="modal_show" tabindex="-1" role="dialog"
     aria-labelledby="myModalLabel33" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered"
         role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel33">Tambah Data </h4>
+                <h4 class="modal-title" id="myModalLabel33">Detail Penjualan </h4>
                 <button type="button" class="close" data-bs-dismiss="modal"
                     aria-label="Close">
                     <i data-feather="x"></i>
@@ -72,143 +71,77 @@
                     </ul>
                 </div>
             @endif
-            <form action="{{ route('seller.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="modal-body">
-                    <label>Nama Lengkap</label>
-                    <div class="form-group">
-                        <input type="text" placeholder="Nama Lengkap"
-                            class="form-control" name="name" required value="{{ old('name') }}">
-                    </div>
-                    <label>Email</label>
-                    <div class="form-group">
-                        <input type="email" placeholder="Email"
-                            class="form-control" name="email" required value="{{ old('email') }}">
-                    </div>
-                    <label>No. Telepon</label>
-                    <div class="form-group">
-                        <input type="text" placeholder="No. Telepon"
-                            class="form-control" name="phone" required value="{{ old('phone') }}">
-                    </div>
-                    <label>Cabang Toko</label>
-                    <div class="form-group">
-                        <select name="shop_id" id="" class="form-control" required value="{{ old('shop_id') }}">
-                            <option value="">-- Pilih Toko --</option>
-                            @foreach ($data as $item)
-                            <option value="{{ $item->id }}">{{ $item->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <label>Foto</label>
-                    <div class="form-group">
-                        <input type="file" placeholder="Foto"
-                            class="form-control" name="photo">
-                    </div>
-                    <hr>
-                    <label><b>Akun Login</b></label>
-                    <br>
-                    <label>Username</label>
-                    <div class="form-group">
-                        <input type="text" placeholder="Username"
-                            class="form-control" name="username" required value="{{ old('username') }}">
-                    </div>
-                    <label>Password: </label>
-                    <div class="form-group">
-                        <input type="password" placeholder="Password"
-                            class="form-control" name="password" required value="{{ old('password') }}">
-                    </div>
-                    <label>Ulangi Password: </label>
-                    <div class="form-group">
-                        <input type="password" placeholder="Ulangi Password"
-                            class="form-control" name="repassword" required value="{{ old('repassword') }}">
-                    </div>
-                    <label>Hak Akses</label>
-                    <div class="form-group">
-                        <select name="group_id" id="" class="form-control" required value="{{ old('group_id') }}">
-                            <option value="">-- Pilih Hak Akses --</option>
-                            @foreach ($data as $item)
-                            <option value="{{ $item->id }}">{{ $item->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light-secondary"
-                        data-bs-dismiss="modal">
-                        <i class="bx bx-x d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Tutup</span>
-                    </button>
-                    <button type="button" class="btn btn-primary ml-1 btn-simpan">
-                        <i class="bx bx-check d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Simpan</span>
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div> --}}
-
-<div class="modal fade text-left" id="modal_edit" tabindex="-1" role="dialog"
-    aria-labelledby="myModalLabel33" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered"
-        role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel33">Edit Data </h4>
-                <button type="button" class="close" data-bs-dismiss="modal"
-                    aria-label="Close">
-                    <i data-feather="x"></i>
-                </button>
-            </div>
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-            <form action="{{ route('master.shop.update', ['id'=> $item->id]) }}" method="POST"  class="edit-form" enctype="multipart/form-data">
+            <form action="{{ route('sales.show', ['id'=> $item->id]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <input type="hidden" name="id" id="id">
                 <div class="modal-body">
+                    <div class="row">
+                    <div class="col-md-6">
+                    <label>Invoice</label>
+                    <div class="form-group">
+                        <input type="text" readonly placeholder="Invoice"
+                            class="form-control" name="invoice" id="invoice" required value="{{ old('invoice') }}">
+                    </div>
+                    <label>Tanggal Transaksi</label>
+                    <div class="form-group">
+                        <input type="text" readonly placeholder="tanggal transaksi"
+                            class="form-control" name="trans_date" id="trans_date" required value="{{ old('trans_date') }}">
+                    </div>
                     <label>Nama Toko</label>
                     <div class="form-group">
-                        <input type="text" placeholder="nama toko"
-                            class="form-control" name="name" id="shop_name" required value="{{ old('name') }}">
-                    </div>
-                    <label>Lokasi</label>
-                    <div class="form-group">
-                        <input type="text" placeholder="Lokasi"
-                            class="form-control" name="location" id="shop_location" required value="{{ old('location') }}">
-                    </div>
-                    <label>Alamat</label>
-                    <div class="form-group">
-                        <input type="text" placeholder="Alamat"
-                            class="form-control" name="address" id="shop_address" required value="{{ old('address') }}">
-                    </div>
-                    <label>Latitude</label>
-                    <div class="form-group">
-                        <input type="text" placeholder="latitude"
-                            class="form-control" name="latitude" id="shop_latitude" required value="{{ old('latitude') }}">
-                    </div>
-                    <label>Longitude</label>
-                    <div class="form-group">
-                        <input type="text" placeholder="longitude"
-                            class="form-control" name="longitude" id="shop_longitute" required value="{{ old('longitude') }}">
+                        <input type="text" readonly placeholder="nama toko"
+                            class="form-control" name="shop" id="shop" required value="{{ old('shop') }}">
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <label>Nama Seller</label>
+                    <div class="form-group">
+                    <input type="text" readonly placeholder="name penjual"
+                    class="form-control" name="seller" id="seller" required value="{{ old('seller') }}">
+                </div>
+                <label>Total Harga</label>
+                <div class="form-group">
+                    <input type="text" readonly placeholder="total harga"
+                    class="form-control" name="total_tax" id="total_tax" required value="{{ old('total_tax') }}">
+                </div>
+                <label>Notes</label>
+                <div class="form-group">
+                    <input type="text" readonly placeholder="notes"
+                    class="form-control" name="notes" id="notes" required value="{{ old('notes') }}">
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-striped table-bordered" id="table1">
+                    <thead>
+                        <tr>
+                            <th>Nama Item</th>
+                            <th>SKU</th>
+                            <th>Jumlah</th>
+                            <th>Unit</th>
+                            <th>Harga Unit</th>
+                            <th>Harga Kotor</th>
+                            <th>Diskon</th>
+                            <th>Total</th>
+                            <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody id="detail"></table>
+                </div>
+            </div>
+        </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-primary ml-1 btn-simpan">
+                        <i class="bx bx-check d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Buka</span>
+                    </button>
                     <button type="button" class="btn btn-light-secondary"
                         data-bs-dismiss="modal">
                         <i class="bx bx-x d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">Tutup</span>
-                    </button>
-                    <button type="button" class="btn btn-primary ml-1 btn-simpan">
-                        <i class="bx bx-check d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Simpan</span>
                     </button>
                 </div>
             </form>
@@ -229,9 +162,9 @@
   
         e.preventDefault();
 
-        let name = $("input[name=name]").val();
-        let username = $("input[name=username]").val();
-        let password = $("input[name=password]").val();
+        let name = $("input[name=invoice]").val();
+        let username = $("input[name=trans_date]").val();
+        let password = $("input[name=name]").val();
         let repassword = $("input[name=repassword]").val();
         let email = $("input[name=email]").val();
         let phone = $("input[name=phone]").val();
@@ -281,24 +214,33 @@
         });
 
     });
-    function edit_data(id){
-        $('#modal_edit').modal('show');
+    function show(id){
+        $('#modal_show').modal('show');
 
         $.ajax({
             type : 'get',
             data: {},
-            url : "{{ url('shop/edit') }}/"+id,
+            url : "{{ url('sales') }}/"+id,
             success:function(data){
                 console.log(data);
-                $('#shop_name').val(data.data.name);
-                $('#shop_address').val(data.data.address);
-                $('#shop_location').val(data.data.location);
-                $('#shop_latitude').val(data.data.latitude);
-                $('#shop_longitude').val(data.data.longitude);
+                $('#invoice').val(data.data.invoice);
+                $('#trans_date').val(data.data.trans_date);
+                $('#shop').val(data.data.shop.name);
+                $('#seller').val(data.data.seller.name);
+                $('#total_tax').val(data.data.total_tax);
+                $('#notes').val(data.data.notes);
+                $('#id').val(data.data.id);
+                let detail = data.data.detail
+                $.each( detail, function( i, item ) {
+                    console.log(item);
+                    var newListItem = "<tr> <td>"+item.item_name+"</td> <td>"+item.sku+"</td><td>"+item.qty+"</td><td>"+item.unit+"</td><td>"+item.unit_price+"</td><td>"+item.bruto_price+"</td><td>"+item.discount+"</td><td>"+item.nett_total+"</td><td>"+item.notes+"</td>" + item + "</tr>";
+                $( "#detail" ).append( newListItem );
+                });
             },
             complete:function() {
             }
             });
+            
         }
 </script>
 @endpush

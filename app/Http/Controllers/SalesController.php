@@ -21,6 +21,29 @@ class SalesController extends Controller
     public function index(Request $request)
     {
         $data = $this->SalesRepository->get_data_all();
-        return view('page.sales', compact('data'));
+        $status = 'confirmed';
+        $sales = Sales::where('status', $status)->get();
+        return view('page.sales', compact('data'),['sales' => $sales, 'status' => $status]);
     }
+//     public function getSales()
+// {
+//     $data = $data = $this->SalesRepository->get_data_all();
+//     return response()->json($sales);
+// }
+    public function show($id)
+    {
+        $data = $this->SalesRepository->get_data_by_id($id);
+        if(!empty($data)){
+            return response()->json([
+                'success' => true,
+                'data' => $data 
+            ]);
+        }else{
+            return response()->json([
+                'success' => false,
+                'data' => [] 
+            ]);
+        }
+    }
+    
 }
