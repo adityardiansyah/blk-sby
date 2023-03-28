@@ -21,7 +21,7 @@ class SKUController extends Controller
 
     public function index(){
         $data = ProductMasterDetail::with('product_master')->orderBy('id','desc')->get();
-        $master = ProductMaster::orderBy('id','asc')->get();
+        $master = ProductMaster::select('id','name')->orderBy('id','asc')->get();
 
         return view('page.master.sku', compact('data','master'));
     }
