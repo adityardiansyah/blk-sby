@@ -18,7 +18,7 @@
     <style>
         .select2-container{
             width: 100%!important;
-        }
+        } 
     </style>
 </head>
 
@@ -114,8 +114,8 @@
                                 <span>Retur Gudang</span>
                             </a>
                         </li>
-                        <li class="sidebar-item ">
-                            <a href="index.html" class='sidebar-link'>
+                        <li class="sidebar-item  {{ Session::get('menu_active') == 'sales'? 'active': '' }}">
+                            <a href="{{ route('sales.index') }}" class='sidebar-link'>
                                 <i class="bi bi-cart-check"></i>
                                 <span>Penjualan</span>
                             </a>
@@ -179,9 +179,9 @@
             </footer>
         </div>
     </div>
+    <script src="{{ asset('assets/extensions/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.js') }}"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
-    <script src="{{ asset('assets/extensions/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/datatables.min.js') }}"></script>
     <script src="{{ asset('assets/js/pages/datatables.js') }}"></script>
     <script src="{{ asset('assets/extensions/toastify-js/src/toastify.js') }}"></script>
