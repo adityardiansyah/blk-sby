@@ -45,5 +45,22 @@ class SalesController extends Controller
             ]);
         }
     }
+    public function confirm($id)
+    {
+        $sales = Sales::find($id);
+        $sales->status = 'confirmed';
+        $sales->save();
     
+        return response()->json(['message' => 'Status updated successfully.']);
+    }
+    public function update_status(Request $request,$id){
+        $type = $request->type;
+        if ($type == "open") {
+            Sales::find($id)->update(['status'=>'open']);
+        }
+        return response()->json([
+            'success'=>true,
+            'message'=>'Status Berhasil Diubah',
+        ]);
+    }
 }

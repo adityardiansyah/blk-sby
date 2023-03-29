@@ -35,10 +35,7 @@
                                 <td>{{ $item->notes }}</td>
                                 <td>{{ $item->status }}</td>
                                 <td>
-                                    {{-- @if (Auth::user()->id == 1 && $item->status == 'confirmed')  --}}
-                                    {{-- <button type="button" class="btn btn-primary btn-sm" onclick="show({{ $item->id }})" >Detail</button> --}}
                                     <button type="button" class="btn btn-primary btn-sm"  onclick="show({{ $item->id }})">Detail</button>
-                                    {{-- @endif --}}
                                 </td>
                             </tr>
                         @endforeach
@@ -113,6 +110,7 @@
             </div>
         </div>
         <hr>
+        <h6>Detail</h6>
         <div class="card">
             <div class="card-body">
                 <table class="table table-striped table-bordered" id="table1">
@@ -134,9 +132,9 @@
             </div>
         </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary ml-1 btn-simpan">
+                    <button id="btn-open" type="button" class="btn btn-primary ml-1">
                         <i class="bx bx-check d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Buka</span>
+                        <span class="d-none d-sm-block">Open</span>
                     </button>
                     <button type="button" class="btn btn-light-secondary"
                         data-bs-dismiss="modal">
@@ -158,62 +156,107 @@
         }
     });
 
-    $(".btn-simpan").click(function(e){
+    // $(".btn-simpan").click(function(e){
   
-        e.preventDefault();
+    //     e.preventDefault();
 
-        let name = $("input[name=invoice]").val();
-        let username = $("input[name=trans_date]").val();
-        let password = $("input[name=name]").val();
-        let repassword = $("input[name=repassword]").val();
-        let email = $("input[name=email]").val();
-        let phone = $("input[name=phone]").val();
-        let photo = $("input[name=photo]")[0].files[0];
-        let shop_id = $('select[name=shop_id] option').filter(':selected').val();
-        let group_id = $('select[name=group_id] option').filter(':selected').val();
-        let token = $('input[name="_token"]').val();
+    //     let name = $("input[name=invoice]").val();
+    //     let username = $("input[name=trans_date]").val();
+    //     let password = $("input[name=name]").val();
+    //     let repassword = $("input[name=repassword]").val();
+    //     let email = $("input[name=email]").val();
+    //     let phone = $("input[name=phone]").val();
+    //     let photo = $("input[name=photo]")[0].files[0];
+    //     let shop_id = $('select[name=shop_id] option').filter(':selected').val();
+    //     let group_id = $('select[name=group_id] option').filter(':selected').val();
+    //     let token = $('input[name="_token"]').val();
 
-        if(password !== repassword){
-            message('Password tidak sama!', false);
-            return;
-        }
-        let fd = new FormData();
-        fd.append('_token', token);
-        fd.append('name', name);
-        fd.append('password', password);
-        fd.append('username', username);
-        fd.append('phone', phone);
-        fd.append('shop_id', shop_id);
-        fd.append('repassword', repassword);
-        fd.append('img', photo);
-        fd.append('email', email);
-        fd.append('group_id', group_id);
+    //     if(password !== repassword){
+    //         message('Password tidak sama!', false);
+    //         return;
+    //     }
+    //     let fd = new FormData();
+    //     fd.append('_token', token);
+    //     fd.append('name', name);
+    //     fd.append('password', password);
+    //     fd.append('username', username);
+    //     fd.append('phone', phone);
+    //     fd.append('shop_id', shop_id);
+    //     fd.append('repassword', repassword);
+    //     fd.append('img', photo);
+    //     fd.append('email', email);
+    //     fd.append('group_id', group_id);
 
-        $.ajax({
-            type:'POST',
-            url:"{{ route('seller.store') }}",
-            headers: {
-                'X-CSRF-TOKEN' : token
-            },
-            data:fd,
-            contentType: false,
-            processData: false,
-            dataType: 'json',
-            success:async function(data){
-                message(data.message);
-                $('#modal_all').modal('hide');
-                await new Promise(r => setTimeout(r, 1000));
-                location.reload();
-            },
-            error:function(params) {
-                let txt = params.responseJSON;
-                $.each(txt.errors,function (k,v) {
-                    message(v, false);
+    //     $.ajax({
+    //         type:'POST',
+    //         url:"{{ route('seller.store') }}",
+    //         headers: {
+    //             'X-CSRF-TOKEN' : token
+    //         },
+    //         data:fd,
+    //         contentType: false,
+    //         processData: false,
+    //         dataType: 'json',
+    //         success:async function(data){
+    //             message(data.message);
+    //             $('#modal_all').modal('hide');
+    //             await new Promise(r => setTimeout(r, 1000));
+    //             location.reload();
+    //         },
+    //         error:function(params) {
+    //             let txt = params.responseJSON;
+    //             $.each(txt.errors,function (k,v) {
+    //                 message(v, false);
+    //             });
+    //         }
+    //     });
+
+    // });
+    $('body').on('click', '#btn-open', function () {
+    let sales_id = $('#id').val();
+    let token   = "{{ csrf_token() }}";
+    
+        Swal.fire({
+            title: 'Apakah Kamu Yakin',
+            text: "ingin merubah status ini?",
+            icon: 'question',
+            showCancelButton: true,
+            cancelButtonText: 'TIDAK',
+            confirmButtonText: 'YA, TERIMA'
+        }).then((result) => {
+            console.log(sales_id);
+            if (result.isConfirmed) {
+                //fetch to delete data
+                $.ajax({
+
+                    url: `/sales/${sales_id}/update`,
+                    type: "POST",
+                    cache: false,
+                    data: {
+                        "_token": token,
+                        "type": "open"
+                    },
+                    success:function(response){ 
+
+                        //show success message
+                        Swal.fire({
+                            type: 'success',
+                            icon: 'success',
+                            title: `${response.message}`,
+                            showConfirmButton: false,
+                            timer: 3000
+                        });
+                        setTimeout(() => {
+                            window.location=window.location;
+                        }, 1200);
+                    }
                 });
-            }
-        });
 
-    });
+                
+            }
+        })
+        
+});
     function show(id){
         $('#modal_show').modal('show');
 
@@ -222,6 +265,7 @@
             data: {},
             url : "{{ url('sales') }}/"+id,
             success:function(data){
+                $( "#detail" ).html('');
                 console.log(data);
                 $('#invoice').val(data.data.invoice);
                 $('#trans_date').val(data.data.trans_date);
@@ -236,6 +280,11 @@
                     var newListItem = "<tr> <td>"+item.item_name+"</td> <td>"+item.sku+"</td><td>"+item.qty+"</td><td>"+item.unit+"</td><td>"+item.unit_price+"</td><td>"+item.bruto_price+"</td><td>"+item.discount+"</td><td>"+item.nett_total+"</td><td>"+item.notes+"</td>" + item + "</tr>";
                 $( "#detail" ).append( newListItem );
                 });
+                if (data.data.status =='open'){
+                    $('#open').hide();
+                }else{
+                    $('#open').show();
+                }
             },
             complete:function() {
             }

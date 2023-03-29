@@ -47,7 +47,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('seller', [SellerController::class, 'index'])->name('seller.index');
     Route::post('seller', [SellerController::class, 'store'])->name('seller.store');
     Route::get('sales', [SalesController::class, 'index'])->name('sales.index');
-    Route::get('sales/{id}', [SalesController::class, 'show'])->name('sales.show');
+    Route::get('sales/{id}', [SalesController::class, 'show'])->name('sales.show'); 
+    Route::put('sales/{id}', [SalesController::class, ''])->name('sales.show');
+    Route::post('/sales/{id}/update',[SalesController::class,'update_status']);
     Route::get('conversion', [ConversionController::class, 'index'])->name('conversion.index');
     Route::get('laporan', [ReportController::class, 'index'])->name('laporan.index');
     Route::delete('color/{id}', [ColorController::class, 'destroy']);
