@@ -39,4 +39,16 @@ class GoodsReceiveController extends Controller
             ]);
         }
     }
+
+    public function confirm($id, Request $request){
+        $type = $request->type;
+        if($type == "open"){
+            GoodsReceive::find($id)->update(['status'=>'open']);
+        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Status Berhasil Diubah!',
+        ]); 
+
+    }
 }
