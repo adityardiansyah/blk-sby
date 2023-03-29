@@ -18,7 +18,7 @@
     <style>
         .select2-container{
             width: 100%!important;
-        }
+        } 
     </style>
 </head>
 
@@ -102,8 +102,8 @@
                                 <span>Konversi SKU</span>
                             </a>
                         </li>
-                        <li class="sidebar-item ">
-                            <a href="index.html" class='sidebar-link'>
+                        <li class="sidebar-item {{ Session::get('menu_active') == 'goodsreceive'? 'active': '' }}">
+                            <a href="{{ route('goodsreceive.index') }}" class='sidebar-link'>
                                 <i class="bi bi-box-seam"></i>
                                 <span>Penerimaan Barang</span>
                             </a>
@@ -114,8 +114,8 @@
                                 <span>Retur Gudang</span>
                             </a>
                         </li>
-                        <li class="sidebar-item ">
-                            <a href="index.html" class='sidebar-link'>
+                        <li class="sidebar-item  {{ Session::get('menu_active') == 'sales'? 'active': '' }}">
+                            <a href="{{ route('sales.index') }}" class='sidebar-link'>
                                 <i class="bi bi-cart-check"></i>
                                 <span>Penjualan</span>
                             </a>
@@ -179,9 +179,9 @@
             </footer>
         </div>
     </div>
+    <script src="{{ asset('assets/extensions/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.js') }}"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
-    <script src="{{ asset('assets/extensions/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/datatables.min.js') }}"></script>
     <script src="{{ asset('assets/js/pages/datatables.js') }}"></script>
     <script src="{{ asset('assets/extensions/toastify-js/src/toastify.js') }}"></script>
@@ -189,7 +189,12 @@
     <script src="{{ asset('assets/js/pages/form-element-select.js') }}"></script>
     {{-- <script src="{{ asset('assets/js/select2.min.js') }}"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <!-- Load SweetAlert CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.3/dist/sweetalert2.min.css">
 
+    <!-- Load jQuery and SweetAlert JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.3/dist/sweetalert2.min.js"></script>
 
     <script>
         $('.select2').select2({
