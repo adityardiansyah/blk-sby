@@ -124,6 +124,7 @@
                     </div>
                     </div>
                     <hr>
+                    <h6>Detail</h6>
                     <div class="card">
                         <div class="card-body">
                             <table class="table table-striped table-bordered" id="table1">
@@ -142,10 +143,11 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary ml-1">
+                    <button type="button" class="btn btn-primary ml-1" id="button-open">
                         <i class="bx bx-check d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Buka</span>
+                        <span class="d-none d-sm-block">Open</span>
                     </button>
+                    
                     <button type="button" class="btn btn-light-secondary"
                         data-bs-dismiss="modal">
                         <i class="bx bx-x d-block d-sm-none"></i>
@@ -231,7 +233,8 @@
             data: {},
             url : "{{ url('goodsreceive') }}/"+id,
             success:function(data){
-                // console.log(data);
+                $( "#detail_gr" ).html('');
+                console.log(data);
                 $('#shop').val(data.data.shop.name);
                 $('#name').val(data.data.seller.name);
                 $('#no_sj_from').val(data.data.no_sj_from);
@@ -246,11 +249,63 @@
                     var newListItem = "<tr> <td> "+item.item_name+" </td> <td> "+item.sku+" </td> <td> "+item.qty+" </td> <td> "+item.purchase_price+" </td>" + item + "</tr>";
                     $( "#detail_gr" ).append( newListItem );
                 });
+                if(data.data.status == 'open'){
+                    $('#button-open').hide();
+                }else{
+                    $('#button-open').show();
+                }
             },
             complete:function() {
 
             }
         });
+
     }
+
+    $('body').on('click', '#button-open', function () {
+    let goodsreceive_id = $('#id').val();
+    let token   = "{{ csrf_token() }}"
+    
+        Swal.fire({
+            title: 'Apakah Kamu Yakin',
+            text: "mengubah status menjadi open?",
+            icon: 'question',
+            showCancelButton: true,
+            cancelButtonText: 'TIDAK',
+            confirmButtonText: 'YA, UBAH!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                //fetch to delete data
+                $.ajax({
+
+                    url: `/goodsreceive/${goodsreceive_id}/confirm`,
+                    type: "POST",
+                    cache: false,
+                    data: {
+                        "_token": token,
+                        "type": "open"
+                    },
+                    success:function(response){ 
+                        setTimeout(function(){
+                            window.location=window.location;
+                        },1220);
+                        //show success message
+                        Swal.fire({
+                            type: 'success',
+                            icon: 'success',
+                            title: `${response.message}`,
+                            showConfirmButton: false,
+                            timer: 3000
+                        });
+
+                    }
+                });
+
+                
+            }
+        })
+        
+});
 </script>
 @endpush
