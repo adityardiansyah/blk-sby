@@ -17,7 +17,10 @@ class ReturnSalesRepository{
         $this->conversion = $conv;
         $this->detailSalesRepository = $detailSalesRepository;
     }
-
+    public function get_data_all()
+    {
+        return $this->returnSale->with('detail')->orderBy('created_at', 'desc')->get();
+    }
     public function get_data_by_shop($id)
     {
         return $this->returnSale->where('shop_id', $id)->orderBy('created_at', 'desc')->get();

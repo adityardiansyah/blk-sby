@@ -12,6 +12,7 @@ use App\Http\Controllers\SKUController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\GoodsReceiveController;
+use App\Http\Controllers\ReturnSalesController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -51,6 +52,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('sales/{id}', [SalesController::class, 'show'])->name('sales.show'); 
     Route::put('sales/{id}', [SalesController::class, ''])->name('sales.show');
     Route::post('/sales/{id}/update',[SalesController::class,'update_status']);
+    Route::get('returnsales', [ReturnSalesController::class, 'index'])->name('returnsales.index');
     Route::get('conversion', [ConversionController::class, 'index'])->name('conversion.index');
     Route::get('laporan', [ReportController::class, 'index'])->name('laporan.index');
     Route::delete('color/{id}', [ColorController::class, 'destroy']);

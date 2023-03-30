@@ -120,8 +120,8 @@
                                 <span>Penjualan</span>
                             </a>
                         </li>
-                        <li class="sidebar-item ">
-                            <a href="index.html" class='sidebar-link'>
+                        <li class="sidebar-item {{ Session::get('menu_active') == 'returnsales'? 'active': '' }}">
+                            <a href="{{ route('returnsales.index') }}" class='sidebar-link'>
                                 <i class="bi bi-cart-dash"></i>
                                 <span>Retur Penjualan</span>
                             </a>
