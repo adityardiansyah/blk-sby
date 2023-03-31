@@ -20,7 +20,7 @@ class ReturnSalesController extends Controller
     }
     public function index(Request $request)
     {
-        $data = $this->ReturnSalesRepository->get_data_all();
+        $data = $this->ReturnSalesRepository->get_data_all(); 
         
         return view('page.returnsales', compact('data'));
     }
