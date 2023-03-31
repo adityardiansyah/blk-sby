@@ -12,6 +12,7 @@ use App\Http\Controllers\SKUController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GoodsReceiveController;
 use App\Http\Controllers\ReturnWarehouseController;
+use App\Http\Controllers\StockOpnameController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -55,6 +56,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('returnwarehouse', [ReturnWarehouseController::class, 'index'])->name('returnwarehouse.index');
     Route::get('returnwarehouse/{id}', [ReturnWarehouseController::class, 'show'])->name('returnwarehouse.show');
     Route::post('returnwarehouse/{id}/confirm', [ReturnWarehouseController::class, 'confirm'])->name('returnwarehouse.confirm');
+    Route::get('stockopname', [StockOpnameController::class, 'index'])->name('stockopname.index');
+    Route::get('stockopname/{id}', [StockOpnameController::class, 'show'])->name('stockopname.show');
+    Route::post('stockopname/{id}/confirm', [StockOpnameController::class, 'confirm'])->name('stockopname.confirm');
     Route::get('laporan/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'laporan_stock'])->name('laporan.stock');
     Route::get('laporan-excel/{type}/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'download_excel'])->name('laporan.excel');
 });
