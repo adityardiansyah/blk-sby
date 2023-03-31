@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="page-heading">
-    <h3>Penerimaan Barang</h3>
+    <h3>Retur Gudang</h3>
 </div>
 <div class="page-content">
     <section class="section">
@@ -14,13 +14,10 @@
                 <table class="table table-striped" id="table1">
                     <thead>
                         <tr>
-                            <th>No.</th>
-                            <th>Nama Toko</th>
+                            <th>No. Transaksi</th>
+                            <th>Tanggal Transaksi</th>
                             <th>Nama Seller</th>
-                            <th>No SJ Pengiriman</th>
-                            <th>Tgl. Pengiriman</th>
-                            <th>No SJ Penerimaan</th>
-                            <th>Tgl. Penerimaan</th>
+                            <th>Nama Toko</th>
                             <th>Notes</th>
                             <th>Status</th>
                             <th>Aksi</th>
@@ -29,20 +26,17 @@
                     <tbody>
                         @foreach ($data as $key => $item)
                             <tr>
-                                <td>{{ $key + 1 }}</td>
-                                <td>{{ $item->shop->name }}</td>
+                                <td>{{ date('Y-m-d', strtotime($item->trans_no)) }}</td>
+                                <td>{{ date('Y-m-d', strtotime($item->trans_date)) }}</td>
                                 <td>{{ $item->seller->name }}</td>
-                                <td>{{ $item->no_sj_from }}</td>
-                                <td>{{ date('Y-m-d', strtotime($item->send_date)) }}</td>
-                                <td>{{ $item->no_sj_receive }}</td>
-                                <td>{{ date('Y-m-d', strtotime($item->receive_date)) }}</td>
+                                <td>{{ $item->shop->name }}</td>
                                 <td>{{ $item->notes }}</td>
                                 <td>
                                     <span class="">{{ Str::ucfirst($item->status) }}</span>
                                 </td>
                                     <td>
                                         {{-- <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#modal_show">Detail</button> --}}
-                                        <button type="button" class="btn btn-primary btn-sm" onclick="show({{ $item->id }})">Detail</button>
+                                        <button type="button" class="btn btn-primary btn-sm" onclick="lihat({{ $item->id }})">Detail</button>
                                     </td>
                             </tr>
                         @endforeach
@@ -61,7 +55,7 @@
         role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel33"> Detail Penerimaan Barang </h4>
+                <h4 class="modal-title" id="myModalLabel33"> Detail Retur Gudang </h4>
                 <button type="button" class="close" data-bs-dismiss="modal"
                     aria-label="Close">
                     <i data-feather="x"></i>
@@ -76,46 +70,36 @@
                     </ul>
                 </div>
             @endif
-            <form action="{{ route('goodsreceive.show', ['id' => $item->id]) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('returnwarehouse.show', ['id' => $item->id]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <input type="hidden" name="id" id="id">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6">
-                    <label>Nama Toko</label>
+                    <label>No. Transaksi</label>
                     <div class="form-group">
-                        <input readonly type="text" placeholder="Nama Toko"
-                            class="form-control" name="name" id="shop" required value="{{ old('name') }}">
+                        <input readonly type="text" placeholder="No. Transaksi"
+                            class="form-control" name="notrans" id="trans_no" required value="{{ old('trans_no') }}">
+                    </div>
+                    <label>Tgl. Transaksi</label>
+                    <div class="form-group">
+                        <input readonly type="date" placeholder="Tgl. Transaksi"
+                            class="form-control" name="tgltrans" id="trans_date" required value="{{ old('trans_date') }}">
                     </div>
                     <label>Nama Seller</label>
                     <div class="form-group">
-                        <input readonly type="email" placeholder="Nama Seller"
-                            class="form-control" name="name" id="name" required value="{{ old('name') }}">
+                        <input readonly type="text" placeholder="Nama Seller"
+                            class="form-control" name="name" id="seller" required value="{{ old('name') }}">
                     </div>
-                    <label>No. SJ Pengiriman</label>
-                    <div class="form-group">
-                        <input readonly type="text" placeholder="No. SJ Pengiriman"
-                            class="form-control" name="no_sj_from" id="no_sj_from" required value="{{ old('no_sj_from') }}">
-                    </div>
-                    <label>Tgl Pengiriman</label>
+                    <label>Nama Toko</label>
                     <div class="form-group">
                         <input readonly type="text" placeholder="Tgl Pengiriman"
-                            class="form-control" name="sent_date" id="sent_date" required value="{{ old('sent_date') }}">
+                            class="form-control" name="name" id="shop" required value="{{ old('name') }}">
                     </div>
                         </div>
 
                     <div class="col-md-6">
-                    <label>No. SJ Penerimaan</label>
-                    <div class="form-group">
-                        <input readonly type="text" placeholder="No. SJ Penerimaan"
-                            class="form-control" name="no_sj_receive" id="no_sj_receive" required value="{{ old('no_sj_receive') }}">
-                    </div>
-                    <label>Tgl Penerimaan</label>
-                    <div class="form-group">
-                        <input readonly type="text" placeholder="Tgl Penerimaan"
-                            class="form-control" name="receive_date" id="receive_date" required value="{{ old('receive_date') }}">
-                    </div>
                     <label>Notes</label>
                     <div class="form-group">
                         <input readonly type="text" placeholder="Notes"
@@ -130,13 +114,12 @@
                             <table class="table table-striped table-bordered" id="table1">
                                 <thead>
                                     <tr>
-                                        <th>Nama</th>
+                                        <th>Nama Barang</th>
                                         <th>SKU</th>
                                         <th>Jumlah</th>
-                                        <th>Harga Beli</th>
                                     </tr>
                                 </thead>
-                                <tbody id="detail_gr"></tbody>
+                                <tbody id="detail_rw"></tbody>
                             </table>
                         </div>
                     </div>
@@ -149,7 +132,6 @@
                         <span class="d-none d-sm-block">Open</span>
                     </button>
                 @endif
-                    
                     <button type="button" class="btn btn-light-secondary"
                         data-bs-dismiss="modal">
                         <i class="bx bx-x d-block d-sm-none"></i>
@@ -227,29 +209,27 @@
 
     });
 
-    function show(id){
+    function lihat(id){
         $('#modal_show').modal('show');
 
         $.ajax({
             type : 'get',
             data: {},
-            url : "{{ url('goodsreceive') }}/"+id,
+            url : "{{ url('returnwarehouse') }}/"+id,
             success:function(data){
-                $( "#detail_gr" ).html('');
+                $( "#detail_rw" ).html('');
                 console.log(data);
                 $('#shop').val(data.data.shop.name);
-                $('#name').val(data.data.seller.name);
-                $('#no_sj_from').val(data.data.no_sj_from);
-                $('#sent_date').val(data.data.sent_date);
-                $('#no_sj_receive').val(data.data.no_sj_receive);
-                $('#receive_date').val(data.data.receive_date);
+                $('#seller').val(data.data.seller.name);
+                $('#trans_no').val(data.data.trans_no);
+                $('#trans_date').val(data.data.trans_date);
                 $('#notes').val(data.data.notes);
                 $('#id').val(data.data.id);
                 let detail = data.data.detail
                 $.each( detail, function( i, item ) {
                     console.log(item);
-                    var newListItem = "<tr> <td> "+item.item_name+" </td> <td> "+item.sku+" </td> <td> "+item.qty+" </td> <td> "+item.purchase_price+" </td>" + item + "</tr>";
-                    $( "#detail_gr" ).append( newListItem );
+                    var newListItem = "<tr> <td> "+item.item_name+" </td> <td> "+item.sku+" </td> <td> "+item.qty+" </td>" + item + "</tr>";
+                    $( "#detail_rw" ).append( newListItem );
                 });
                 if(data.data.status == 'open'){
                     $('#button-open').hide();
@@ -265,7 +245,7 @@
     }
 
     $('body').on('click', '#button-open', function () {
-    let goodsreceive_id = $('#id').val();
+    let returnwarehouse_id = $('#id').val();
     let token   = "{{ csrf_token() }}"
     
         Swal.fire({
@@ -281,7 +261,7 @@
                 //fetch to delete data
                 $.ajax({
 
-                    url: `/goodsreceive/${goodsreceive_id}/confirm`,
+                    url: `/returnwarehouse/${returnwarehouse_id}/confirm`,
                     type: "POST",
                     cache: false,
                     data: {

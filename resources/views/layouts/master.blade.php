@@ -108,8 +108,8 @@
                                 <span>Penerimaan Barang</span>
                             </a>
                         </li>
-                        <li class="sidebar-item ">
-                            <a href="index.html" class='sidebar-link'>
+                        <li class="sidebar-item {{ Session::get('menu_active') == 'returnwarehouse'? 'active': '' }}">
+                            <a href="{{ route('returnwarehouse.index') }}" class='sidebar-link'>
                                 <i class="bi bi-box-arrow-up-right"></i>
                                 <span>Retur Gudang</span>
                             </a>
