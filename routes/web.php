@@ -13,13 +13,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\GoodsReceiveController;
 use App\Http\Controllers\ReturnWarehouseController;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Response;
+use App\Http\Controllers\ReturnSalesController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\URL;
 
 Route::get('login', [LoginController::class, 'login']);
 Route::post('login', [LoginController::class, 'check_login'])->name('login'); 
@@ -30,8 +26,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', function () {
         Session::put('menu_active','dashboard');
         return view('home');
-// Route::get('/sales', 'Controller@fungsi')->middleware([Auth::user()->id == 1]);
-
     });
     Route::get('shop', [ShopController::class, 'index'])->name('shop.index');
     Route::post('shop', [ShopController::class, 'store'])->name('master.shop.store');
