@@ -127,8 +127,8 @@
                                 <span>Retur Penjualan</span>
                             </a>
                         </li>
-                        <li class="sidebar-item ">
-                            <a href="index.html" class='sidebar-link'>
+                        <li class="sidebar-item {{ Session::get('menu_active') == 'stockopname'? 'active': '' }}">
+                            <a href="{{ route('stockopname.index') }}" class='sidebar-link'>
                                 <i class="bi bi-boxes"></i>
                                 <span>Stok Fisik</span>
                             </a>
