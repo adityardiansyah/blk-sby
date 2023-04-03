@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="page-heading">
-    <h3>Retur Gudang</h3>
+    <h3>Stok Fisik</h3>
 </div>
 <div class="page-content">
     <section class="section">
@@ -55,7 +55,7 @@
         role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel33"> Detail Retur Gudang </h4>
+                <h4 class="modal-title" id="myModalLabel33"> Detail Stok Fisik </h4>
                 <button type="button" class="close" data-bs-dismiss="modal"
                     aria-label="Close">
                     <i data-feather="x"></i>
@@ -70,7 +70,7 @@
                     </ul>
                 </div>
             @endif
-            <form action="{{ route('returnwarehouse.show', ['id' => $item->id]) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('stockopname.show', ['id' => $item->id]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <input type="hidden" name="id" id="id">
@@ -92,7 +92,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="row">
                         <div class="col-md-4">
                             <label>Nama Seller</label>
@@ -109,7 +109,7 @@
                                     class="form-control" name="name" id="shop" required value="{{ old('name') }}">
                             </div>
                         </div>
-
+                        
                         <div class="col-md-4">
                             <label>Notes</label>
                             <div class="form-group">
@@ -118,8 +118,6 @@
                             </div>
                         </div>
                     </div>
-                    
-                    
                     
                     <hr>
                     <h6>Detail</h6>
@@ -133,7 +131,7 @@
                                         <th>Jumlah</th>
                                     </tr>
                                 </thead>
-                                <tbody id="detail_rw"></tbody>
+                                <tbody id="detail_so"></tbody>
                             </table>
                         </div>
                     </div>
@@ -229,9 +227,9 @@
         $.ajax({
             type : 'get',
             data: {},
-            url : "{{ url('returnwarehouse') }}/"+id,
+            url : "{{ url('stockopname') }}/"+id,
             success:function(data){
-                $( "#detail_rw" ).html('');
+                $( "#detail_so" ).html('');
                 console.log(data);
                 $('#shop').val(data.data.shop.name);
                 $('#seller').val(data.data.seller.name);
@@ -243,7 +241,7 @@
                 $.each( detail, function( i, item ) {
                     console.log(item);
                     var newListItem = "<tr> <td> "+item.item_name+" </td> <td> "+item.sku+" </td> <td> "+item.qty+" </td>" + item + "</tr>";
-                    $( "#detail_rw" ).append( newListItem );
+                    $( "#detail_so" ).append( newListItem );
                 });
                 if(data.data.status == 'open'){
                     $('#button-open').hide();
@@ -256,10 +254,8 @@
             }
         });
 
-    }
-
-    $('body').on('click', '#button-open', function () {
-    let returnwarehouse_id = $('#id').val();
+        $('body').on('click', '#button-open', function () {
+    let stockopname_id = $('#id').val();
     let token   = "{{ csrf_token() }}"
     
         Swal.fire({
@@ -275,7 +271,7 @@
                 //fetch to delete data
                 $.ajax({
 
-                    url: `/returnwarehouse/${returnwarehouse_id}/confirm`,
+                    url: `/stockopname/${stockopname_id}/confirm`,
                     type: "POST",
                     cache: false,
                     data: {
@@ -303,5 +299,7 @@
         })
         
 });
+
+    }
 </script>
 @endpush
