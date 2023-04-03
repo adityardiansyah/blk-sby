@@ -19,6 +19,7 @@
                             <th>Nama Seller</th>
                             <th>Nama Toko</th>
                             <th>Notes</th>
+                            <th>Total Qty</th>
                             <th>Status</th>
                             <th>Aksi</th>
                         </tr>
@@ -31,6 +32,7 @@
                                 <td>{{ $item->seller->name }}</td>
                                 <td>{{ $item->shop->name }}</td>
                                 <td>{{ $item->notes }}</td>
+                                <td></td>
                                 <td>
                                     <span class="">{{ Str::ucfirst($item->status) }}</span>
                                 </td>

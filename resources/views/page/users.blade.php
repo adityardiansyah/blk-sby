@@ -19,6 +19,7 @@
                             <th>Password</th>
                             <th>Tgl. Dibuat</th>
                             <th>Status</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -30,6 +31,9 @@
                                 <td>{{ date('Y-m-d', strtotime($item->created_at)) }}</td>
                                 <td>
                                     <span class="">{{ Str::ucfirst($item->status) }}</span>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-primary btn-sm" onclick="lihat({{ $item->id }})">Edit</button>
                                 </td>
                             </tr>
                         @endforeach
