@@ -24,4 +24,30 @@ class UserController extends Controller
         $data = $this->userRepository->get_all();
         return view('page.users', compact('data'));
     }
+
+    public function show($id) {
+        $data = $this->userRepository->get_data_by_id($id);
+        if(!empty($data)){
+            return response()->json([
+                'success' => true,
+                'data' => $data
+            ]);
+        }else{
+            return response()->json([
+                'success' => false,
+                'data' => []
+            ]);
+        }
+    }
+
+    public function store(Request $request)
+    {
+        $user = $this->userRepository->create($request->all());
+        $this->userRepository->create($request->all());
+        
+        return response()->json([
+            'success'=>true,
+            'message' => 'Berhasil ditambahkan!' 
+        ]);
+    }
 }

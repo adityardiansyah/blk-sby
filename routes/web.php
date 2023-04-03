@@ -45,6 +45,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('color', [ColorController::class, 'index'])->name('master.color');
     Route::post('color', [ColorController::class, 'store'])->name('master.color.store');
     Route::get('users', [UserController::class, 'index'])->name('users.index');
+    Route::get('users/{id}', [UserController::class, 'show'])->name('users.show');
+    Route::get('users/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
+    Route::post('users', [UserController::class, 'store'])->name('users.store');
     Route::get('seller', [SellerController::class, 'index'])->name('seller.index');
     Route::post('seller', [SellerController::class, 'store'])->name('seller.store');
     Route::get('sales', [SalesController::class, 'index'])->name('sales.index');

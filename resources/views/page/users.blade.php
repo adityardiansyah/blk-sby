@@ -33,8 +33,7 @@
                                     <span class="">{{ Str::ucfirst($item->status) }}</span>
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-warning btn-sm" onclick="lihat({{ $item->id }})">Edit</button>
-                                    <button type="button" class="btn btn-primary btn-sm" onclick="detail({{ $item->id }})">Detail</button>
+                                    <button type="button" class="btn btn-warning btn-sm" onclick="detail({{ $item->id }})">Edit</button>
                                 </td>
                             </tr>
                         @endforeach
@@ -46,65 +45,13 @@
     </section>
 </div>
 
-<div class="modal fade text-left" id="modal_show" tabindex="-1" role="dialog"
-    aria-labelledby="myModalLabel33" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered"
-        role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel33"> Edit Password </h4>
-                <button type="button" class="close" data-bs-dismiss="modal"
-                    aria-label="Close">
-                    <i data-feather="x"></i>
-                </button>
-            </div>
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-            <form action="{{ route('stockopname.show', ['id' => $item->id]) }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
-                <input type="hidden" name="id" id="id">
-                <div class="modal-body">
-                    <div class="row">
-                        <label>Password</label>
-                        <div class="form-group">
-                            <input type="text" placeholder="password"
-                                class="form-control" name="password" required value="{{ old('password') }}">
-                        </div>
-                    </div>
-                </div>
-                @if (Auth::user()->id == 1 && 2)
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary ml-1" id="button-open">
-                        <i class="bx bx-check d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Simpan</span>
-                    </button>
-                @endif
-                    <button type="button" class="btn btn-light-secondary"
-                        data-bs-dismiss="modal">
-                        <i class="bx bx-x d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Tutup</span>
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
 <div class="modal fade text-left" id="modal_update" tabindex="-1" role="dialog"
     aria-labelledby="myModalLabel33" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered"
         role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel33"> Detail User </h4>
+                <h4 class="modal-title" id="myModalLabel33"> Edit User </h4>
                 <button type="button" class="close" data-bs-dismiss="modal"
                     aria-label="Close">
                     <i data-feather="x"></i>
@@ -119,7 +66,7 @@
                     </ul>
                 </div>
             @endif
-            <form action="{{ route('stockopname.show', ['id' => $item->id]) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('users.show', ['id' => $item->id]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <input type="hidden" name="id" id="id">
@@ -137,19 +84,27 @@
                         </div>
                         <label>Password</label>
                         <div class="form-group">
-                            <input readonly type="text" placeholder="Password"
+                            <input type="text" placeholder="password"
                                 class="form-control" name="password" id="password" required value="{{ old('password') }}">
+                        </div>
+                        <label>Confirm Password</label>
+                        <div class="form-group">
+                            <input type="text" placeholder="password"
+                                class="form-control" name="repassword" id="repassword" required value="{{ old('repassword') }}">
                         </div>
                         <label>Status</label>
                         <div class="form-group">
-                            <input readonly type="text" placeholder="Status"
-                                class="form-control" name="status" id="status" required value="{{ old('status') }}">
+                            <select name="status" id="" class="form-control choices" required value="{{ old('status') }}">
+                                <option value="">-- Pilih Status --</option>
+                                <option value="active"></option>
+                                <option value="nonactive"></option>
+                            </select>
                         </div>
                     </div>
                 </div>
                 @if (Auth::user()->id == 1 && 2)
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary ml-1" id="button-open">
+                    <button type="button" class="btn btn-primary ml-1" id="button-save">
                         <i class="bx bx-check d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">Simpan</span>
                     </button>
@@ -168,87 +123,6 @@
 
 @push('js')
 <script>
-    function lihat(id){
-        $('#modal_show').modal('show');
-
-        $.ajax({
-            type : 'get',
-            data: {},
-            url : "{{ url('users') }}/"+id,
-            success:function(data){
-                $( "#detail_so" ).html('');
-                console.log(data);
-                $('#shop').val(data.data.shop.name);
-                $('#seller').val(data.data.seller.name);
-                $('#trans_no').val(data.data.trans_no);
-                $('#trans_date').val(data.data.trans_date);
-                $('#notes').val(data.data.notes);
-                $('#id').val(data.data.id);
-                let detail = data.data.detail
-                $.each( detail, function( i, item ) {
-                    console.log(item);
-                    var newListItem = "<tr> <td> "+item.item_name+" </td> <td> "+item.sku+" </td> <td> "+item.qty+" </td>" + item + "</tr>";
-                    $( "#detail_so" ).append( newListItem );
-                });
-                if(data.data.status == 'open'){
-                    $('#button-open').hide();
-                }else{
-                    $('#button-open').show();
-                }
-            },
-            complete:function() {
-
-            }
-        });
-
-        $('body').on('click', '#button-open', function () {
-    let stockopname_id = $('#id').val();
-    let token   = "{{ csrf_token() }}"
-    
-        Swal.fire({
-            title: 'Apakah Kamu Yakin',
-            text: "mengubah status menjadi open?",
-            icon: 'question',
-            showCancelButton: true,
-            cancelButtonText: 'TIDAK',
-            confirmButtonText: 'YA, UBAH!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-
-                //fetch to delete data
-                $.ajax({
-
-                    url: `/stockopname/${stockopname_id}/confirm`,
-                    type: "POST",
-                    cache: false,
-                    data: {
-                        "_token": token,
-                        "type": "open"
-                    },
-                    success:function(response){ 
-                        setTimeout(function(){
-                            window.location=window.location;
-                        },1220);
-                        //show success message
-                        Swal.fire({
-                            type: 'success',
-                            icon: 'success',
-                            title: `${response.message}`,
-                            showConfirmButton: false,
-                            timer: 3000
-                        });
-
-                    }
-                });
-
-                
-            }
-        })
-        
-});
-
-    }
-
     function detail(id){
         $('#modal_update').modal('show');
 
@@ -257,37 +131,29 @@
             data: {},
             url : "{{ url('users') }}/"+id,
             success:function(data){
-                $( "#detail_so" ).html('');
                 console.log(data);
                 $('#name').val(data.data.name);
                 $('#username').val(data.data.username);
-                $('#password').val(data.data.trans_no);
-                $('#status').val(data.data.trans_date);
+                $('#password').val(data.data.password);
+                $('#status').val(data.data.status);
                 $('#id').val(data.data.id);
                 let detail = data.data.detail
                 $.each( detail, function( i, item ) {
                     console.log(item);
-                    var newListItem = "<tr> <td> "+item.item_name+" </td> <td> "+item.sku+" </td> <td> "+item.qty+" </td>" + item + "</tr>";
-                    $( "#detail_so" ).append( newListItem );
                 });
-                if(data.data.status == 'open'){
-                    $('#button-open').hide();
-                }else{
-                    $('#button-open').show();
-                }
             },
             complete:function() {
 
             }
         });
 
-        $('body').on('click', '#button-open', function () {
-    let stockopname_id = $('#id').val();
+    $('body').on('click', '#button-save', function () {
+    let users_id = $('#id').val();
     let token   = "{{ csrf_token() }}"
     
         Swal.fire({
             title: 'Apakah Kamu Yakin',
-            text: "mengubah status menjadi open?",
+            text: "mengubah data user?",
             icon: 'question',
             showCancelButton: true,
             cancelButtonText: 'TIDAK',
@@ -298,12 +164,12 @@
                 //fetch to delete data
                 $.ajax({
 
-                    url: `/stockopname/${stockopname_id}/confirm`,
+                    url: `/users/${users_id}/confirm`,
                     type: "POST",
                     cache: false,
                     data: {
                         "_token": token,
-                        "type": "open"
+                        "type": ""
                     },
                     success:function(response){ 
                         setTimeout(function(){
@@ -326,7 +192,57 @@
         })
         
 });
-
     }
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $("#button-save").click(function(e){
+
+        e.preventDefault();
+
+        let password = $("input[name=password]").val();
+        let repassword = $("input[name=repassword]").val();
+        let status = $("input[name=status]").val();
+        let token = $('input[name="_token"]').val();
+
+        if(password !== repassword){
+            message('Password tidak sama!', false);
+            return;
+        }
+        let fd = new FormData();
+        fd.append('_token', token);
+        fd.append('password', password);
+        fd.append('repassword', repassword);
+        fd.append('status', status);
+
+        $.ajax({
+            type:'POST',
+            url:"{{ route('users.store') }}",
+            headers: {
+                'X-CSRF-TOKEN' : token
+            },
+            data:fd,
+            contentType: false,
+            processData: false,
+            dataType: 'json',
+            success:async function(data){
+                message(data.message);
+                $('#modal_update').modal('hide');
+                await new Promise(r => setTimeout(r, 1000));
+                location.reload();
+            },
+            error:function(params) {
+                let txt = params.responseJSON;
+                $.each(txt.errors,function (k,v) {
+                    message(v, false);
+                });
+            }
+        });
+
+    });
 </script>
 @endpush
