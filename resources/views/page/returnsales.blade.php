@@ -16,6 +16,7 @@
                             <th>No.Return</th>
                             <th>Tgl. Return</th>
                             <th>Invoice</th>
+                            <th>Nama Toko</th>
                             <th>Nama Seller</th>
                             <th>Nama Barang</th>
                             <th>SKU</th>
@@ -31,12 +32,13 @@
                             <td>{{ $item->no_return}}</td>
                             <td>{{ $item->date_sale }}</td>
                             <td>{{ $item->invoice }}</td>
+                            <td>{{ $item->shop->name }}</td>
                             <td>{{ $item->seller->name }}</td>
                             <td>{{ $item->item_name }}</td>
-                            <td>{{ $item->sku}}</td>
+                            <td>{{ $item->sku }}</td>
                             <td>{{ $item->qty }}</td>
-                            <td>{{ $item->unit_price }}</td>
-                            <td>{{ $item->nett_total }}</td>
+                            <td>Rp.{{ number_format($item->unit_price) }}</td>
+                            <td>Rp.{{ number_format($item->nett_total) }}</td>
                             {{-- <td>
                                 <button type="button" class="btn btn-primary btn-sm"  onclick="show({{ $item->id }})">Detail</button>
                             </td>  --}}

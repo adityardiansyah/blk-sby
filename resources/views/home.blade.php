@@ -5,7 +5,7 @@
     <h3>Dashboard</h3>
 </div>
 <div class="page-content">
-    {{-- <section class="row">
+    <section class="row">
         <div class="col-12 col-lg-9">
             <div class="row">
                 <div class="col-6 col-lg-3 col-md-6">
@@ -19,8 +19,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                    <h6 class="text-muted font-semibold">Profile Views</h6>
-                                    <h6 class="font-extrabold mb-0">112.000</h6>
+                                    <h6 class="text-muted font-semibold">Total Toko</h6>
+                                    <h6 class="font-extrabold mb-0">{{ $shop }}</h6>
                                 </div>
                             </div>
                         </div>
@@ -37,8 +37,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                    <h6 class="text-muted font-semibold">Followers</h6>
-                                    <h6 class="font-extrabold mb-0">183.000</h6>
+                                    <h6 class="text-muted font-semibold">Total Seller</h6>
+                                    <h6 class="font-extrabold mb-0">{{ $seller }}</h6>
                                 </div>
                             </div>
                         </div>
@@ -55,8 +55,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                    <h6 class="text-muted font-semibold">Following</h6>
-                                    <h6 class="font-extrabold mb-0">80.000</h6>
+                                    <h6 class="text-muted font-semibold">Total Penjualan Bulan ini</h6>
+                                    <h6 class="font-extrabold mb-0"> pcs {{ $salesmonth }}</h6>
                                 </div>
                             </div>
                         </div>
@@ -73,15 +73,15 @@
                                     </div>
                                 </div>
                                 <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                    <h6 class="text-muted font-semibold">Saved Post</h6>
-                                    <h6 class="font-extrabold mb-0">112</h6>
+                                    <h6 class="text-muted font-semibold">Total Penjualan Tahun ini</h6>
+                                    <h6 class="font-extrabold mb-0">pcs {{ $salesyear }}</h6>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
@@ -206,7 +206,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
         <div class="col-12 col-lg-3">
             <div class="card">
@@ -216,13 +216,13 @@
                             <img src="assets/images/faces/1.jpg" alt="Face 1">
                         </div>
                         <div class="ms-3 name">
-                            <h5 class="font-bold">John Duck</h5>
-                            <h6 class="text-muted mb-0">@johnducky</h6>
+                            <h5 class="font-bold">Total Penjualan Bulan ini</h5>
+                            <h6 class="font-extrabold mb-0">Rp {{ $sales }}</h6>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="card">
+            {{-- <div class="card">
                 <div class="card-header">
                     <h4>Recent Messages</h4>
                 </div>
@@ -267,8 +267,8 @@
                 <div class="card-body">
                     <div id="chart-visitors-profile"></div>
                 </div>
-            </div>
+            </div> --}}
         </div>
-    </section> --}}
+    </section>
 </div>
 @endsection
