@@ -16,8 +16,23 @@ class ReturnWarehouse extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
+    public function shop()
+    {
+        return $this->belongsTo(Shop::class);
+    }
+
+    public function seller()
+    {
+        return $this->belongsTo(Seller::class);
+    }
+
     public function detail()
     {
         return $this->hasMany(ReturnWarehouseDetail::class);
+    }
+
+    public function file_attachment()
+    {
+        return $this->belongsTo(ReturnWarehouse::class);
     }
 }
