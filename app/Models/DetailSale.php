@@ -15,3 +15,4 @@ class DetailSale extends Model
         return $this->belongsTo(Sale::class);
     }
 }
+ 

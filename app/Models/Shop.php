@@ -11,8 +11,8 @@ class Shop extends Model
     protected $table = 'shop';
     protected $fillable =['name','address','location','latitude','longitude','status'];
 
-    public function goodsReceives()
+    public function sales()
     {
-        return $this->hasOne(GoodsReceive::class);
+        return $this->hasOne(Sales::class);
     }
 }
