@@ -37,7 +37,7 @@
                             <td>{{ $item->item_name }}</td>
                             <td>{{ $item->sku }}</td>
                             <td>{{ $item->qty }}</td>
-                            <td>Rp.{{ number_format($item->unit_price) }}</td>
+                            <td>Rp.{{ number_format($item->unit_price, 2, '.',',') }}</td>
                             <td>Rp.{{ number_format($item->nett_total) }}</td>
                             {{-- <td>
                                 <button type="button" class="btn btn-primary btn-sm"  onclick="show({{ $item->id }})">Detail</button>

@@ -13,10 +13,24 @@ use App\Http\Controllers\SKUController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\GoodsReceiveController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ReturnSalesController as ControllersReturnSalesController;
+use App\Http\Controllers\ReturnWarehouseController;
+use App\Http\Controllers\StockOpnameController;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
+
+Route::get('login', [LoginController::class, 'login']);
+Route::post('login', [LoginController::class, 'check_login'])->name('login'); 
+Route::post('logout', [LoginController::class, 'logout'])->name('logout'); 
+
 // URL::forceScheme('https');
-Route::middleware(['auth'])->group(function () {
+    Route::middleware(['auth'])->group(function () {
     Route::get('/',[HomeController::class, 'index'])->name('home.index');
-    // Route::get('home', [HomeController::class, 'index'])->name('home.index');
     Route::get('shop', [ShopController::class, 'index'])->name('shop.index');
     Route::post('shop', [ShopController::class, 'store'])->name('master.shop.store');
     Route::get('shop/edit/{id}', [ShopController::class, 'edit']);

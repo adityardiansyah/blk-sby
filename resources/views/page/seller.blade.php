@@ -20,6 +20,7 @@
                             <th>Phone</th>
                             <th>Tgl. Dibuat</th>
                             <th>Status</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -33,6 +34,9 @@
                                 <td>
                                     <span class="">{{ Str::ucfirst($item->status) }}</span>
                                 </td>
+                                <td>
+                                    <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modal_edit" onclick="edit_data({{ $item->id }})">Edit</button>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -43,7 +47,7 @@
     </section>
 </div>
 
-<div class="modal fade text-left" id="modal_add" tabindex="-1" role="dialog"
+{{-- <div class="modal fade text-left" id="modal_add" tabindex="-1" role="dialog"
     aria-labelledby="myModalLabel33" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered"
         role="document">
@@ -122,6 +126,73 @@
                             <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-secondary"
+                        data-bs-dismiss="modal">
+                        <i class="bx bx-x d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Tutup</span>
+                    </button>
+                    <button type="button" class="btn btn-primary ml-1 btn-simpan">
+                        <i class="bx bx-check d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Simpan</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> --}}
+<div class="modal fade text-left" id="modal_edit" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel33" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered"
+        role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel33">Edit Data </h4>
+                <button type="button" class="close" data-bs-dismiss="modal"
+                    aria-label="Close">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            <form action="{{ route('master.shop.update', ['id'=> $item->id]) }}" method="POST"  class="edit-form" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+                <input type="hidden" name="id" id="id">
+                <div class="modal-body">
+                    <label>No Regristrasi</label>
+                    <div class="form-group">
+                        <input type="text" placeholder="nama toko"
+                            class="form-control" name="name" id="shop_name" required value="{{ old('name') }}">
+                    </div>
+                    <label>Nama</label>
+                    <div class="form-group">
+                        <input type="text" placeholder="Lokasi"
+                            class="form-control" name="location" id="shop_location" required value="{{ old('location') }}">
+                    </div>
+                    <label>Phone</label>
+                    <div class="form-group">
+                        <input type="text" placeholder="Alamat"
+                            class="form-control" name="address" id="shop_address" required value="{{ old('address') }}">
+                    </div>
+                    <label>Tgl. Dibuat</label>
+                    <div class="form-group">
+                        <input type="text" placeholder="latitude"
+                            class="form-control" name="latitude" id="shop_latitude" required value="{{ old('latitude') }}">
+                    </div>
+                    <label>Status</label>
+                    <div class="form-group">
+                        <input type="text" placeholder="longitude"
+                            class="form-control" name="longitude" id="shop_longitute" required value="{{ old('longitude') }}">
                     </div>
                 </div>
                 <div class="modal-footer">

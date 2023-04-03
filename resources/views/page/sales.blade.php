@@ -31,7 +31,7 @@
                                 <td>{{ $item->trans_date }}</td>
                                 <td>{{ $item->shop->name }}</td>
                                 <td>{{ $item->seller->name }}</td>
-                                <td>{{ $item->total_tax }}</td>
+                                <td>Rp.{{ number_format($item->total_tax, 2, '.',',') }}</td>
                                 <td>{{ $item->notes }}</td>
                                 <td>{{ $item->status }}</td>
                                 <td>
