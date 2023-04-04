@@ -66,7 +66,7 @@
                     </ul>
                 </div>
             @endif
-            <form action="{{ route('users.show', ['id' => $item->id]) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('users.update', ['id' => $item->id]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <input type="hidden" name="id" id="id">
@@ -94,7 +94,7 @@
                         </div>
                         <label>Status</label>
                         <div class="form-group">
-                            <select name="status" id="" class="form-control choices" required value="{{ old('status') }}">
+                            <select name="status" id="status" class="form-control choices" required value="{{ old('status') }}">
                                 <option value="">-- Pilih Status --</option>
                                 <option value="active"></option>
                                 <option value="nonactive"></option>
@@ -146,10 +146,49 @@
 
             }
         });
+    }
+
+
+    function edit_data(id){
+    $('#modal_update').modal('show');
+
+    $.ajax({
+        type : 'get',
+        data: {},
+        url : "{{ url('users/edit') }}/"+id,
+        success:function(data){
+            console.log(data);
+            $('#password').val(data.data.password);
+            // $('#repassword').val(data.data.repassword);
+            $('#status').val(data.data.status);
+            $('#id').val(data.data.id);
+        },
+        complete:function() {
+
+        }
+    });
+    }
 
     $('body').on('click', '#button-save', function () {
-    let users_id = $('#id').val();
-    let token   = "{{ csrf_token() }}"
+        let users_id = $('#id').val();
+        let name = $('#name').val();
+        let username = $('#username').val();
+        let password = $('#password').val();
+        let repassword = $('#repassword').val();
+        let status = $('#status').val();
+        let token   = "{{ csrf_token() }}"
+
+        if(password !== repassword){
+                message('Password tidak sama!', false);
+                return;
+        }
+
+        var fd = new FormData();
+        fd.append('_token', token);
+        fd.append('name', name);
+        fd.append('username', username);
+        fd.append('password', password);
+        fd.append('status', status);
     
         Swal.fire({
             title: 'Apakah Kamu Yakin',
@@ -163,28 +202,24 @@
 
                 //fetch to delete data
                 $.ajax({
-
-                    url: `/users/${users_id}/confirm`,
+                    url: `/users/update/${users_id}`,
                     type: "POST",
                     cache: false,
-                    data: {
-                        "_token": token,
-                        "type": ""
-                    },
-                    success:function(response){ 
-                        setTimeout(function(){
-                            window.location=window.location;
-                        },1220);
-                        //show success message
-                        Swal.fire({
-                            type: 'success',
-                            icon: 'success',
-                            title: `${response.message}`,
-                            showConfirmButton: false,
-                            timer: 3000
-                        });
+                    data:fd
+                    // success:function(response){ 
+                    //     setTimeout(function(){
+                    //         window.location=window.location;
+                    //     },1220);
+                    //     //show success message
+                    //     Swal.fire({
+                    //         type: 'success',
+                    //         icon: 'success',
+                    //         title: `${response.message}`,
+                    //         showConfirmButton: false,
+                    //         timer: 3000
+                    //     });
 
-                    }
+                    // }
                 });
 
                 
@@ -192,57 +227,6 @@
         })
         
 });
-    }
 
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    $("#button-save").click(function(e){
-
-        e.preventDefault();
-
-        let password = $("input[name=password]").val();
-        let repassword = $("input[name=repassword]").val();
-        let status = $("input[name=status]").val();
-        let token = $('input[name="_token"]').val();
-
-        if(password !== repassword){
-            message('Password tidak sama!', false);
-            return;
-        }
-        let fd = new FormData();
-        fd.append('_token', token);
-        fd.append('password', password);
-        fd.append('repassword', repassword);
-        fd.append('status', status);
-
-        $.ajax({
-            type:'POST',
-            url:"{{ route('users.store') }}",
-            headers: {
-                'X-CSRF-TOKEN' : token
-            },
-            data:fd,
-            contentType: false,
-            processData: false,
-            dataType: 'json',
-            success:async function(data){
-                message(data.message);
-                $('#modal_update').modal('hide');
-                await new Promise(r => setTimeout(r, 1000));
-                location.reload();
-            },
-            error:function(params) {
-                let txt = params.responseJSON;
-                $.each(txt.errors,function (k,v) {
-                    message(v, false);
-                });
-            }
-        });
-
-    });
 </script>
 @endpush

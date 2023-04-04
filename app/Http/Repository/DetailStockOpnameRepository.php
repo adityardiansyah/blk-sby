@@ -18,6 +18,11 @@ class DetailStockOpnameRepository{
         return $this->detailStockOpname->with('detail')->where('shop_id', $id)->orderBy('created_at', 'desc')->get();
     }
 
+    public function get_data_sum_qty($id)
+    {
+        return $this->detailStockOpname->where('stock_opname_id', $id)->sum('qty');
+    }
+
     public function get_data_by_id($id)
     {
         return $this->detailStockOpname->with('detail')->where('id', $id)->first();

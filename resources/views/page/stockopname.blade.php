@@ -32,7 +32,7 @@
                                 <td>{{ $item->seller->name }}</td>
                                 <td>{{ $item->shop->name }}</td>
                                 <td>{{ $item->notes }}</td>
-                                <td></td>
+                                <td>{{ $item->total_qty }}</td>
                                 <td>
                                     <span class="">{{ Str::ucfirst($item->status) }}</span>
                                 </td>
@@ -130,11 +130,13 @@
                                     <tr>
                                         <th>Nama Barang</th>
                                         <th>SKU</th>
-                                        <th>Jumlah</th>
+                                        <th>Qty</th>
                                     </tr>
                                 </thead>
                                 <tbody id="detail_so"></tbody>
                             </table>
+                            <hr>
+                            <h6 class="float-end">Total Qty : <b id="total_qty"></b></h6>
                         </div>
                     </div>
 
@@ -167,7 +169,7 @@
     });
 
     $(".btn-simpan").click(function(e){
-  
+
         e.preventDefault();
 
         let name = $("input[name=name]").val();
@@ -240,11 +242,14 @@
                 $('#notes').val(data.data.notes);
                 $('#id').val(data.data.id);
                 let detail = data.data.detail
+                let total = 0
                 $.each( detail, function( i, item ) {
                     console.log(item);
                     var newListItem = "<tr> <td> "+item.item_name+" </td> <td> "+item.sku+" </td> <td> "+item.qty+" </td>" + item + "</tr>";
                     $( "#detail_so" ).append( newListItem );
+                    total += item.qty
                 });
+                $('#total_qty').html(total);
                 if(data.data.status == 'open'){
                     $('#button-open').hide();
                 }else{

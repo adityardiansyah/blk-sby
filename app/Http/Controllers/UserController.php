@@ -6,6 +6,7 @@ use App\Http\Repository\SellerRepository;
 use App\Http\Repository\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -49,5 +50,18 @@ class UserController extends Controller
             'success'=>true,
             'message' => 'Berhasil ditambahkan!' 
         ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        return $request->all();
+        $this->validate($request,[
+        ]);
+        $data = User::find($id);
+        $data->password = $request->input('password');
+        $data->status = $request->input('status');
+        $data->save();
+
+        return redirect()->to('/users')->with('message', ['type' => 'success','content' => 'Data berhasil diupdate']);
     }
 }
