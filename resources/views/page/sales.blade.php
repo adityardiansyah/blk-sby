@@ -187,31 +187,7 @@
     //     fd.append('email', email);
     //     fd.append('group_id', group_id);
 
-    //     $.ajax({
-    //         type:'POST',
-    //         url:"{{ route('seller.store') }}",
-    //         headers: {
-    //             'X-CSRF-TOKEN' : token
-    //         },
-    //         data:fd,
-    //         contentType: false,
-    //         processData: false,
-    //         dataType: 'json',
-    //         success:async function(data){
-    //             message(data.message);
-    //             $('#modal_all').modal('hide');
-    //             await new Promise(r => setTimeout(r, 1000));
-    //             location.reload();
-    //         },
-    //         error:function(params) {
-    //             let txt = params.responseJSON;
-    //             $.each(txt.errors,function (k,v) {
-    //                 message(v, false);
-    //             });
-    //         }
-    //     });
 
-    // });
     $('body').on('click', '#btn-open', function () {
     let sales_id = $('#id').val();
     let token   = "{{ csrf_token() }}";
@@ -231,7 +207,7 @@
 
                     url: `/sales/${sales_id}/update`,
                     type: "POST",
-                    cache: false,
+                    cache: false, 
                     data: {
                         "_token": token,
                         "type": "open"

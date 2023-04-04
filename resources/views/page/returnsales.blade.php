@@ -161,63 +161,6 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-
-    // $(".btn-simpan").click(function(e){
-  
-    //     e.preventDefault();
-
-    //     let name = $("input[name=invoice]").val();
-    //     let username = $("input[name=trans_date]").val();
-    //     let password = $("input[name=name]").val();
-    //     let repassword = $("input[name=repassword]").val();
-    //     let email = $("input[name=email]").val();
-    //     let phone = $("input[name=phone]").val();
-    //     let photo = $("input[name=photo]")[0].files[0];
-    //     let shop_id = $('select[name=shop_id] option').filter(':selected').val();
-    //     let group_id = $('select[name=group_id] option').filter(':selected').val();
-    //     let token = $('input[name="_token"]').val();
-
-    //     if(password !== repassword){
-    //         message('Password tidak sama!', false);
-    //         return;
-    //     }
-    //     let fd = new FormData();
-    //     fd.append('_token', token);
-    //     fd.append('name', name);
-    //     fd.append('password', password);
-    //     fd.append('username', username);
-    //     fd.append('phone', phone);
-    //     fd.append('shop_id', shop_id);
-    //     fd.append('repassword', repassword);
-    //     fd.append('img', photo);
-    //     fd.append('email', email);
-    //     fd.append('group_id', group_id);
-
-    //     $.ajax({
-    //         type:'POST',
-    //         url:"{{ route('seller.store') }}",
-    //         headers: {
-    //             'X-CSRF-TOKEN' : token
-    //         },
-    //         data:fd,
-    //         contentType: false,
-    //         processData: false,
-    //         dataType: 'json',
-    //         success:async function(data){
-    //             message(data.message);
-    //             $('#modal_all').modal('hide');
-    //             await new Promise(r => setTimeout(r, 1000));
-    //             location.reload();
-    //         },
-    //         error:function(params) {
-    //             let txt = params.responseJSON;
-    //             $.each(txt.errors,function (k,v) {
-    //                 message(v, false);
-    //             });
-    //         }
-    //     });
-
-    // });
     $('body').on('click', '#btn-open', function () {
     let sales_id = $('#id').val();
     let token   = "{{ csrf_token() }}";

@@ -46,6 +46,8 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
     Route::get('users', [UserController::class, 'index'])->name('users.index');
     Route::get('seller', [SellerController::class, 'index'])->name('seller.index');
     Route::post('seller', [SellerController::class, 'store'])->name('seller.store');
+    Route::get('seller/{id}', [SellerController::class, 'show'])->name('seller.show');
+    Route::put('seller/update/{id}', [ShopController::class, 'update'])->name('seller.update');
     Route::get('sales', [SalesController::class, 'index'])->name('sales.index');
     Route::get('sales/{id}', [SalesController::class, 'show'])->name('sales.show'); 
     Route::put('sales/{id}', [SalesController::class, ''])->name('sales.show');

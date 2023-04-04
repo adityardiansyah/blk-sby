@@ -20,7 +20,7 @@
                                 </div>
                                 <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                     <h6 class="text-muted font-semibold">Total Toko</h6>
-                                    <h6 class="font-extrabold mb-0">{{ $shop }}</h6>
+                                    <h6 class="font-light mb-0">{{ $shop }}</h6>
                                 </div>
                             </div>
                         </div>
@@ -38,7 +38,7 @@
                                 </div>
                                 <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                     <h6 class="text-muted font-semibold">Total Seller</h6>
-                                    <h6 class="font-extrabold mb-0">{{ $seller }}</h6>
+                                    <h6 class="font-light mb-0">{{ $seller }}</h6>
                                 </div>
                             </div>
                         </div>

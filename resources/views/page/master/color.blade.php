@@ -75,7 +75,7 @@
                     </ul>
                 </div>
             @endif
-            <form action="{{ route('seller.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
                     <label>Warna</label>
