@@ -99,7 +99,23 @@ class SellerController extends Controller
             ]);
         }
     }
-    public function update(Request $request,$id){
+        public function update(Request $request, $id)
+    {
+        $this->validate($request, [
+            'password' => 'required|string|min:6',
+            'status' => 'required|in:active,nonactive',
+        ]);
+
+        Seller::where('id', $id)->update([
+            'password' => $request->input('password'),
+            'status' => $request->input('status'),
+        ]);
+
+        return redirect()->to('/users')->with('message', [
+            'type' => 'success',
+            'content' => 'Data berhasil diupdate'
+        ]);
+    }
         // $type = $request->type;
         // $seller = Seller::find($id);
         // $seller->no_seller=$request->input('no_seller');
@@ -113,29 +129,29 @@ class SellerController extends Controller
         //     'success'=>true,
         //     'message'=>'Status Berhasil Diubah',
         // ]);
-        $validator = Validator::make($request->all(),[
-            // 'seller_id'=>'required',
-            'no_seller'=>'required',
-            'name'=>'required',
-            'phone'=>'required',
-            'status'=>'required',
-        ]);
-        if ($validator->fails()) {
-            return response()->json($validator->errors(),422);
-        }
-        $sellerRepository->where('id', $id)->update([
+    //     $validator = Validator::make($request->all(),[
+    //         // 'seller_id'=>'required',
+    //         'no_seller'=>'required',
+    //         'name'=>'required',
+    //         'phone'=>'required',
+    //         'status'=>'required',
+    //     ]);
+    //     if ($validator->fails()) {
+    //         return response()->json($validator->errors(),422);
+    //     }
+    //     $sellerRepository->where('id', $id)->update([
     
-            'no_seller'=>$request->no_seller,
-            'name'=>$request->name,
-            'phone'=>$request->phone,
-            'status'=>$request->status,
-        ]);
-        return response()->json([
-            'success'=>true,
-            'message'=>'Data Berhasil Diupdate!',
-            'data'=>$salesRepository
-        ]);
-    }
+    //         'no_seller'=>$request->no_seller,
+    //         'name'=>$request->name,
+    //         'phone'=>$request->phone,
+    //         'status'=>$request->status,
+    //     ]);
+    //     return response()->json([
+    //         'success'=>true,
+    //         'message'=>'Data Berhasil Diupdate!',
+    //         'data'=>$salesRepository
+    //     ]);
+    // }
     // public function update(Request $request,$id)
     // {
     //     $seller = Seller::find($id);

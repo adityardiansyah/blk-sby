@@ -183,13 +183,12 @@
                     <div class="form-group">
                         <input type="text" placeholder="No telephone"
                             class="form-control" name="phone" id="phone" required value="{{ old('phone') }}">
-                    </div>
+                    </div> 
                     <label>Status</label>
                     <div class="form-group">
-                        <select name="status" id="status" class="form-control choices" required value="{{ old('status') }}">
-                            <option value="">-- Pilih Status --</option>
-                            <option value="active"></option>
-                            <option value="nonactive"></option>
+                        <select class="form-control" name="status" id="status" class="form-control choices" required value="{{ old('status') }}">
+                            <option value="active">active</option>
+                            <option value="nonactive">nonactive</option>
                         </select>
                     </div>
                 </div>
@@ -303,13 +302,6 @@
         var phone = $('#phone').val();
         var status = $('#status').val();
         var token   = "{{ csrf_token() }}"
-
-        let fd = new FormData();
-        fd.append('_token', token);
-        fd.append('no_seller', no_seller);
-        fd.append('name', name);
-        fd.append('phone', phone);
-        fd.append('status', status);
     
         Swal.fire({
             title: 'Apakah Kamu Yakin',
@@ -320,20 +312,24 @@
             confirmButtonText: 'YA, UBAH!'
         }).then((result) => {
             if (result.isConfirmed) {
-
+                var fd = new FormData();
+                fd.append('_token', token);
+                fd.append('no_seller', no_seller);
+                fd.append('name', name);
+                fd.append('phone', phone);
+                fd.append('status', status);
                 //fetch to delete data
                 $.ajax({
                     url: `/seller/update/${seller_id}`,
-                    type: "POST",
+                    type: "PUT",
                     cache: false,
-                    data: {
-                        "_token": token,
-                        "type": ""
-                    },
+                    processData: false,
+                    contentType: false,
+                    data: fd,
                     success:function(response){ 
-                        // setTimeout(function(){
-                        //     window.location=window.location;
-                        // },1220);
+                        setTimeout(function(){
+                            window.location=window.location;
+                        },1220);
                         //show success message
                         Swal.fire({
                             type: 'success',
@@ -342,13 +338,51 @@
                             showConfirmButton: false,
                             timer: 3000
                         });
-
                     }
-                });
-
-                
+                });  
             }
         })
+});
+$(document).ready(function() {
+    // Mendapatkan nilai status saat ini
+    var currentStatus = $('select[name=status]').val();
+
+    // Menonaktifkan opsi yang tidak sesuai
+    $('select[name=status] option').each(function() {
+        if ($(this).val() == currentStatus) {
+        $(this).prop('disabled', true);
+        }
+    });
+
+    // Menangani perubahan nilai pada dropdown
+    $('select[name=status]').on('change', function() {
+        // Mendapatkan nilai status saat ini
+        var currentStatus = $(this).val();
+
+        // Menonaktifkan opsi yang tidak sesuai
+        $('select[name=status] option').each(function() {
+        if ($(this).val() == currentStatus) {
+            $(this).prop('disabled', true);
+        } else {
+            $(this).prop('disabled', false);
+        }
+        });
+    });
+    
+    // Memastikan bahwa opsi yang tidak sesuai selalu dinonaktifkan
+    $('select[name=status]').on('click', function() {
+        // Mendapatkan nilai status saat ini
+        var currentStatus = $(this).val();
+
+        // Menonaktifkan opsi yang tidak sesuai
+        $('select[name=status] option').each(function() {
+        if ($(this).val() == currentStatus) {
+            $(this).prop('disabled', true);
+        } else {
+            $(this).prop('disabled', false);
+        }
+        });
+});
 });
 
 
