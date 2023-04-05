@@ -47,7 +47,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('users', [UserController::class, 'index'])->name('users.index');
     Route::get('users/{id}', [UserController::class, 'show'])->name('users.show');
     Route::post('users', [UserController::class, 'store'])->name('users.store');
-    Route::post('/users/update/{id}', [UserController::class, 'update'])->name('users.update');
+    Route::post('users/update/{id}', [UserController::class, 'update'])->name('users.update');
     Route::get('seller', [SellerController::class, 'index'])->name('seller.index');
     Route::post('seller', [SellerController::class, 'store'])->name('seller.store');
     Route::get('sales', [SalesController::class, 'index'])->name('sales.index');

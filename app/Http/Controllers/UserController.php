@@ -52,16 +52,34 @@ class UserController extends Controller
         ]);
     }
 
+    // public function update(Request $request, $id)
+    // {
+    //     // return $request->all();
+    //     $this->validate($request,[
+    //     ]);
+    //     $data = User::find($id);
+    //     $data->password = $request->input('password');
+    //     $data->status = $request->input('status');
+    //     $data->save();
+
+    //     return redirect()->to('/users')->with('message', ['type' => 'success','content' => 'Data berhasil diupdate']);
+    // }
+
     public function update(Request $request, $id)
     {
-        return $request->all();
-        $this->validate($request,[
+        $this->validate($request, [
+            'password' => 'required|string|min:6',
+            'status' => 'required|in:active,nonactive',
         ]);
-        $data = User::find($id);
-        $data->password = $request->input('password');
-        $data->status = $request->input('status');
-        $data->save();
 
-        return redirect()->to('/users')->with('message', ['type' => 'success','content' => 'Data berhasil diupdate']);
+        User::where('id', $id)->update([
+            'password' => $request->input('password'),
+            'status' => $request->input('status'),
+        ]);
+
+        return redirect()->to('/users')->with('message', [
+            'type' => 'success',
+            'content' => 'Data berhasil diupdate'
+        ]);
     }
 }

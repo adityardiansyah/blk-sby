@@ -27,7 +27,7 @@
                             <tr>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->username }}</td>
-                                <td>*******</td>
+                                <td>{{ $item->password }}</td>
                                 <td>{{ date('Y-m-d', strtotime($item->created_at)) }}</td>
                                 <td>
                                     <span class="">{{ Str::ucfirst($item->status) }}</span>
@@ -94,11 +94,10 @@
                         </div>
                         <label>Status</label>
                         <div class="form-group">
-                            <select name="status" id="status" class="form-control choices" required value="{{ old('status') }}">
-                                <option value="">-- Pilih Status --</option>
-                                <option value="active"></option>
-                                <option value="nonactive"></option>
-                            </select>
+                            <select class="form-control" name="status" id="status" class="form-control choices" required value="{{ old('status') }}">
+                            <option value="active">active</option>
+                            <option value="nonactive">nonactive</option>
+                        </select>
                         </div>
                     </div>
                 </div>
@@ -150,45 +149,37 @@
 
 
     function edit_data(id){
-    $('#modal_update').modal('show');
+        $('#modal_update').modal('show');
 
-    $.ajax({
-        type : 'get',
-        data: {},
-        url : "{{ url('users/edit') }}/"+id,
-        success:function(data){
-            console.log(data);
-            $('#password').val(data.data.password);
-            // $('#repassword').val(data.data.repassword);
-            $('#status').val(data.data.status);
-            $('#id').val(data.data.id);
-        },
-        complete:function() {
+        $.ajax({
+            type : 'get',
+            data: {},
+            url : "{{ url('users/edit') }}/"+id,
+            success:function(data){
+                console.log(data);
+                $('#password').val(data.data.password);
+                $('#status').val(data.data.status);
+                $('#id').val(data.data.id);
+            },
+            complete:function() {
 
-        }
-    });
+            }
+        });
     }
 
     $('body').on('click', '#button-save', function () {
-        let users_id = $('#id').val();
-        let name = $('#name').val();
-        let username = $('#username').val();
-        let password = $('#password').val();
-        let repassword = $('#repassword').val();
-        let status = $('#status').val();
-        let token   = "{{ csrf_token() }}"
+        var users_id = $('#id').val();
+        var name = $('#name').val();
+        var username = $('#username').val();
+        var password = $('#password').val();
+        var repassword = $('#repassword').val();
+        var status = $('#status').val();
+        var token   = "{{ csrf_token() }}"
 
         if(password !== repassword){
                 message('Password tidak sama!', false);
                 return;
         }
-
-        var fd = new FormData();
-        fd.append('_token', token);
-        fd.append('name', name);
-        fd.append('username', username);
-        fd.append('password', password);
-        fd.append('status', status);
     
         Swal.fire({
             title: 'Apakah Kamu Yakin',
@@ -199,34 +190,95 @@
             confirmButtonText: 'YA, UBAH!'
         }).then((result) => {
             if (result.isConfirmed) {
+                var fd = new FormData();
+                fd.append('_token', token);
+                fd.append('name', name);
+                fd.append('username', username);
+                fd.append('password', password);
+                fd.append('status', status);
 
-                //fetch to delete data
                 $.ajax({
                     url: `/users/update/${users_id}`,
                     type: "POST",
                     cache: false,
-                    data:fd
-                    // success:function(response){ 
-                    //     setTimeout(function(){
-                    //         window.location=window.location;
-                    //     },1220);
-                    //     //show success message
-                    //     Swal.fire({
-                    //         type: 'success',
-                    //         icon: 'success',
-                    //         title: `${response.message}`,
-                    //         showConfirmButton: false,
-                    //         timer: 3000
-                    //     });
+                    processData: false,
+                    contentType: false,
+                    data: fd,
+                    success:function(response){ 
+                        setTimeout(function(){
+                            window.location=window.location;
+                        },1220);
+                        //show success message
+                        Swal.fire({
+                            type: 'success',
+                            icon: 'success',
+                            title: `${response.message}`,
+                            showConfirmButton: false,
+                            timer: 3000
+                        });
 
-                    // }
+                    }
                 });
 
                 
             }
         })
         
-});
+    });
+
+    // $(document).ready(function() {
+    //     // Mendapatkan nilai status saat ini
+    //     var currentStatus = $('select[name=status]').val();
+
+    //     // Menonaktifkan opsi yang tidak sesuai
+    //     $('select[name=status] option').each(function() {
+    //         if ($(this).val() == currentStatus) {
+    //         $(this).prop('disabled', true);
+    //         }
+    //     });
+    // });
+
+        $(document).ready(function() {
+    // Mendapatkan nilai status saat ini
+    var currentStatus = $('select[name=status]').val();
+
+    // Menonaktifkan opsi yang tidak sesuai
+    $('select[name=status] option').each(function() {
+        if ($(this).val() == currentStatus) {
+        $(this).prop('disabled', true);
+        }
+    });
+
+    // Menangani perubahan nilai pada dropdown
+    $('select[name=status]').on('change', function() {
+        // Mendapatkan nilai status saat ini
+        var currentStatus = $(this).val();
+
+        // Menonaktifkan opsi yang tidak sesuai
+        $('select[name=status] option').each(function() {
+        if ($(this).val() == currentStatus) {
+            $(this).prop('disabled', true);
+        } else {
+            $(this).prop('disabled', false);
+        }
+        });
+    });
+    
+    // Memastikan bahwa opsi yang tidak sesuai selalu dinonaktifkan
+    $('select[name=status]').on('click', function() {
+        // Mendapatkan nilai status saat ini
+        var currentStatus = $(this).val();
+
+        // Menonaktifkan opsi yang tidak sesuai
+        $('select[name=status] option').each(function() {
+        if ($(this).val() == currentStatus) {
+            $(this).prop('disabled', true);
+        } else {
+            $(this).prop('disabled', false);
+        }
+        });
+    });
+    });
 
 </script>
 @endpush
