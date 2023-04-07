@@ -27,7 +27,7 @@
                             <tr>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->username }}</td>
-                                <td>{{ $item->password }}</td>
+                                <td>********</td>
                                 <td>{{ date('Y-m-d', strtotime($item->created_at)) }}</td>
                                 <td>
                                     <span class="">{{ Str::ucfirst($item->status) }}</span>
@@ -147,33 +147,13 @@
         });
     }
 
-
-    function edit_data(id){
-        $('#modal_update').modal('show');
-
-        $.ajax({
-            type : 'get',
-            data: {},
-            url : "{{ url('users/edit') }}/"+id,
-            success:function(data){
-                console.log(data);
-                $('#password').val(data.data.password);
-                $('#status').val(data.data.status);
-                $('#id').val(data.data.id);
-            },
-            complete:function() {
-
-            }
-        });
-    }
-
     $('body').on('click', '#button-save', function () {
         var users_id = $('#id').val();
         var name = $('#name').val();
         var username = $('#username').val();
         var password = $('#password').val();
         var repassword = $('#repassword').val();
-        var status = $('#status').val();
+        var status = $('select[name=status] option').filter(':selected').val();
         var token   = "{{ csrf_token() }}"
 
         if(password !== repassword){
@@ -226,58 +206,40 @@
         
     });
 
-    // $(document).ready(function() {
-    //     // Mendapatkan nilai status saat ini
-    //     var currentStatus = $('select[name=status]').val();
+    //status
+    $(document).ready(function() {
+        var currentStatus = $('select[name=status]').val();
 
-    //     // Menonaktifkan opsi yang tidak sesuai
-    //     $('select[name=status] option').each(function() {
-    //         if ($(this).val() == currentStatus) {
-    //         $(this).prop('disabled', true);
-    //         }
-    //     });
-    // });
-
-        $(document).ready(function() {
-    // Mendapatkan nilai status saat ini
-    var currentStatus = $('select[name=status]').val();
-
-    // Menonaktifkan opsi yang tidak sesuai
-    $('select[name=status] option').each(function() {
-        if ($(this).val() == currentStatus) {
-        $(this).prop('disabled', true);
-        }
-    });
-
-    // Menangani perubahan nilai pada dropdown
-    $('select[name=status]').on('change', function() {
-        // Mendapatkan nilai status saat ini
-        var currentStatus = $(this).val();
-
-        // Menonaktifkan opsi yang tidak sesuai
         $('select[name=status] option').each(function() {
-        if ($(this).val() == currentStatus) {
+            if ($(this).val() == currentStatus) {
             $(this).prop('disabled', true);
-        } else {
-            $(this).prop('disabled', false);
-        }
+            }
         });
-    });
+
+        $('select[name=status]').on('change', function() {
+            var currentStatus = $(this).val();
+
+            $('select[name=status] option').each(function() {
+            if ($(this).val() == currentStatus) {
+                $(this).prop('disabled', true);
+            } else {
+                $(this).prop('disabled', false);
+            }
+            });
+        });
     
-    // Memastikan bahwa opsi yang tidak sesuai selalu dinonaktifkan
-    $('select[name=status]').on('click', function() {
-        // Mendapatkan nilai status saat ini
-        var currentStatus = $(this).val();
+    
+        $('select[name=status]').on('click', function() {
+            var currentStatus = $(this).val();
 
-        // Menonaktifkan opsi yang tidak sesuai
-        $('select[name=status] option').each(function() {
-        if ($(this).val() == currentStatus) {
-            $(this).prop('disabled', true);
-        } else {
-            $(this).prop('disabled', false);
-        }
+            $('select[name=status] option').each(function() {
+            if ($(this).val() == currentStatus) {
+                $(this).prop('disabled', true);
+            } else {
+                $(this).prop('disabled', false);
+            }
+            });
         });
-    });
     });
 
 </script>
