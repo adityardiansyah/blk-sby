@@ -35,7 +35,7 @@
                                     <span class="">{{ Str::ucfirst($item->status) }}</span>
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modal_edit1" onclick="edit_data({{ $item->id }})">Edit</button>
+                                    <button type="button" class="btn btn-warning btn-sm" onclick="detail({{ $item->id }})">Edit</button>
                                 </td>
                             </tr>
                         @endforeach
@@ -47,7 +47,7 @@
     </section>
 </div>
 
-{{-- <div class="modal fade text-left" id="modal_add" tabindex="-1" role="dialog"
+<div class="modal fade text-left" id="modal_add" tabindex="-1" role="dialog"
     aria-labelledby="myModalLabel33" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered"
         role="document">
@@ -142,14 +142,15 @@
             </form>
         </div>
     </div>
-</div> --}}
-<div class="modal fade text-left" id="modal_edit1" tabindex="-1" role="dialog"
+</div>
+
+<div class="modal fade text-left" id="modal_update" tabindex="-1" role="dialog"
     aria-labelledby="myModalLabel33" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered"
         role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel33">Edit Data </h4>
+                <h4 class="modal-title" id="myModalLabel33"> Edit User </h4>
                 <button type="button" class="close" data-bs-dismiss="modal"
                     aria-label="Close">
                     <i data-feather="x"></i>
@@ -164,43 +165,52 @@
                     </ul>
                 </div>
             @endif
-            <form action="{{ route('seller.show', ['id'=> $item->id]) }}" method="POST"  class="edit-form" enctype="multipart/form-data">
+            <form action="{{ route('seller.update', ['id' => $item->id]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <input type="hidden" name="id" id="id">
                 <div class="modal-body">
-                    <label>No Regristrasi</label>
-                    <div class="form-group">
-                        <input type="text" readonly placeholder="Nomor Regristrasi"
-                            class="form-control" name="no_seller" id="no_seller" required value="{{ old('no_seller') }}">
-                    </div>
-                    <label>Nama</label>
-                    <div class="form-group">
-                        <input type="text" placeholder="Nama"
-                            class="form-control" name="name" id="name" required value="{{ old('name') }}">
-                    </div>
-                    <label>Phone</label>
-                    <div class="form-group">
-                        <input type="text" placeholder="No telephone"
-                            class="form-control" name="phone" id="phone" required value="{{ old('phone') }}">
-                    </div> 
-                    <label>Status</label>
-                    <div class="form-group">
-                        <select class="form-control" name="status" id="status" class="form-control choices" required value="{{ old('status') }}">
+                    <div class="row">
+                        <label>No. Reg</label>
+                        <div class="form-group">
+                            <input readonly type="text" placeholder="No. Reg"
+                                class="form-control" name="no_seller" id="no_seller" required value="{{ old('no_seller') }}">
+                        </div>
+                        <label>Nama</label>
+                        <div class="form-group">
+                            <input type="text" placeholder="Name"
+                                class="form-control" name="name" id="name" required value="{{ old('name') }}">
+                        </div>
+                        <label>Phone</label>
+                        <div class="form-group">
+                            <input type="text" placeholder="phone"
+                                class="form-control" name="phone" id="phone" required value="{{ old('phone') }}">
+                        </div>
+                        {{-- <label>Tanggal Dibuat</label>
+                        <div class="form-group">
+                            <input type="text" placeholder="tgl. dibuat"
+                                class="form-control" name="created_at" id="created_at" required value="{{ old('created_at') }}">
+                        </div> --}}
+                        <label>Status</label>
+                        <div class="form-group">
+                            <select class="form-control" name="status" id="status" class="form-control choices" required value="{{ old('status') }}">
                             <option value="active">active</option>
                             <option value="nonactive">nonactive</option>
                         </select>
+                        </div>
                     </div>
                 </div>
+                @if (Auth::user()->id == 1 && 2)
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-primary ml-1" id="button-save">
+                        <i class="bx bx-check d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Simpan</span>
+                    </button>
+                @endif
                     <button type="button" class="btn btn-light-secondary"
                         data-bs-dismiss="modal">
                         <i class="bx bx-x d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">Tutup</span>
-                    </button>
-                    <button id="btn-simpan" type="button" class="btn btn-primary ml-1 btn-simpan">
-                        <i class="bx bx-check d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Simpan</span>
                     </button>
                 </div>
             </form>
@@ -210,7 +220,7 @@
 @endsection
 
 @push('js')
-{{-- <script>
+<script>
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -272,13 +282,10 @@
             }
         });
 
-        
-
     });
-</script> --}}
-<script>
-    function edit_data(id){
-        $('#modal_edit1').modal('show');
+
+    function detail(id){
+        $('#modal_update').modal('show');
 
         $.ajax({
             type : 'get',
@@ -289,23 +296,31 @@
                 $('#no_seller').val(data.data.no_seller);
                 $('#name').val(data.data.name);
                 $('#phone').val(data.data.phone);
+                // $('#created_at').val(data.data.created_at);
                 $('#status').val(data.data.status);
+                $('#id').val(data.data.id);
+                let detail = data.data.detail
+                $.each( detail, function( i, item ) {
+                    console.log(item);
+                });
             },
             complete:function() {
+
             }
-            });
-        }
-        $('body').on('click', '#btn-simpan', function () {
+        });
+    }
+
+    $('body').on('click', '#button-save', function () {
         var seller_id = $('#id').val();
         var no_seller = $('#no_seller').val();
         var name = $('#name').val();
         var phone = $('#phone').val();
-        var status = $('#status').val();
+        var status = $('select[name=status] option').filter(':selected').val();
         var token   = "{{ csrf_token() }}"
     
         Swal.fire({
             title: 'Apakah Kamu Yakin',
-            text: "mengubah data seller?",
+            text: "mengubah data user?",
             icon: 'question',
             showCancelButton: true,
             cancelButtonText: 'TIDAK',
@@ -318,10 +333,10 @@
                 fd.append('name', name);
                 fd.append('phone', phone);
                 fd.append('status', status);
-                //fetch to delete data
+
                 $.ajax({
                     url: `/seller/update/${seller_id}`,
-                    type: "PUT",
+                    type: "POST",
                     cache: false,
                     processData: false,
                     contentType: false,
@@ -338,12 +353,16 @@
                             showConfirmButton: false,
                             timer: 3000
                         });
+
                     }
-                });  
+                });
+
+                
             }
         })
-});
-$(document).ready(function() {
+        
+    });
+    $(document).ready(function() {
     // Mendapatkan nilai status saat ini
     var currentStatus = $('select[name=status]').val();
 
@@ -384,88 +403,5 @@ $(document).ready(function() {
         });
 });
 });
-
-
-//         $('body').on('click', '#btn-simpan', function () {
-//     let seller_id = $('#id').val();
-//     let token   = "{{ csrf_token() }}"
-    
-//         e.preventDefault();
-
-//             let fd = new FormData();
-//             fd.append('_token', token);
-//             fd.append('no_seller', no_seller);
-//             fd.append('name', name);
-//             fd.append('phone', phone);
-//             fd.append('status', status);
-
-//         Swal.fire({
-//             title: 'Apakah Kamu Yakin',
-//             text: "mengubah data seller?",
-//             icon: 'question',
-//             showCancelButton: true,
-//             cancelButtonText: 'TIDAK',
-//             confirmButtonText: 'IYA'
-//         }).then((result) => {
-//             if (result.isConfirmed) {
-
-//                 //fetch to delete data
-//                 $.ajax({
-
-//                     url: `seller/update'${id}`,
-//                     type: "POST",
-//                     cache: false,
-//                     data: {
-//                         "_token": token,
-//                         "type": ""
-//                     },
-//                     data:fd,
-//                     contentType: false,
-//                     processData: false,
-//                     dataType: 'json',
-//                     success:function(response){ 
-//                         setTimeout(function(){
-//                             window.location=window.location;
-//                         },1220);
-//                         //show success message
-//                         Swal.fire({
-//                             type: 'success',
-//                             icon: 'success',
-//                             title: `${response.message}`,
-//                             showConfirmButton: false,
-//                             timer: 3000
-
-                            
-//                         });
-
-//                     }
-//                 }); 
-//             }
-//     })
-// });
-            // edit_data();
-            // $("#btn-simpan").click(function(e){
-
-            // e.preventDefault();
-
-            // var no_seller = $("input[name=no_seller]").val(data.data.no_seller);
-            // var name = $("input[name=name]").val(data.data.name);
-            // var phone = $("input[name=phone]").val(data.data.phone);
-            // var status = $("input[name=status]").val(data.data.status);
-            // let token = $('input[name="_token"]').val(data.data.token);
-
-            // let fd = new FormData();
-            // fd.append('_token', token);
-            // fd.append('no_seller', no_seller);
-            // fd.append('name', name);
-            // fd.append('phone', phone);
-            // fd.append('status', status);
-
-            // setTimeout(() => {
-            //     window.location=window.location;
-            // }, 1200);
-            // });
-
 </script>
-
 @endpush

@@ -44,11 +44,12 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
     Route::get('color', [ColorController::class, 'index'])->name('master.color');
     Route::post('color', [ColorController::class, 'store'])->name('master.color.store');
     Route::get('users', [UserController::class, 'index'])->name('users.index');
+
     Route::get('seller', [SellerController::class, 'index'])->name('seller.index');
-    Route::post('seller', [SellerController::class, 'store'])->name('seller.store');
     Route::get('seller/{id}', [SellerController::class, 'show'])->name('seller.show');
-    Route::get('seller/edit/{id}', [SellerController::class, 'edit'])->name('seller.edit');
-    Route::put('seller/update/{id}', [SellerController::class, 'update'])->name('seller.update');
+    Route::post('seller', [SellerController::class, 'store'])->name('seller.store');
+    Route::post('seller/update/{id}', [SellerController::class, 'update'])->name('seller.update');
+
     Route::get('sales', [SalesController::class, 'index'])->name('sales.index');
     Route::get('sales/{id}', [SalesController::class, 'show'])->name('sales.show'); 
     Route::put('sales/{id}', [SalesController::class, ''])->name('sales.show');
