@@ -29,9 +29,8 @@ Route::post('login', [LoginController::class, 'check_login'])->name('login');
 Route::post('logout', [LoginController::class, 'logout'])->name('logout'); 
 
 // URL::forceScheme('https');
-Route::middleware(['auth'])->group(function () {
+    Route::middleware(['auth'])->group(function () {
     Route::get('/',[HomeController::class, 'index'])->name('home.index');
-    // Route::get('home', [HomeController::class, 'index'])->name('home.index');
     Route::get('shop', [ShopController::class, 'index'])->name('shop.index');
     Route::post('shop', [ShopController::class, 'store'])->name('master.shop.store');
     Route::get('shop/edit/{id}', [ShopController::class, 'edit']);
@@ -45,8 +44,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('color', [ColorController::class, 'index'])->name('master.color');
     Route::post('color', [ColorController::class, 'store'])->name('master.color.store');
     Route::get('users', [UserController::class, 'index'])->name('users.index');
+    Route::get('users/{id}', [UserController::class, 'show'])->name('users.show');
+    Route::post('users', [UserController::class, 'store'])->name('users.store');
+    Route::post('users/update/{id}', [UserController::class, 'update'])->name('users.update');
     Route::get('seller', [SellerController::class, 'index'])->name('seller.index');
+    Route::get('seller/{id}', [SellerController::class, 'show'])->name('seller.show');
     Route::post('seller', [SellerController::class, 'store'])->name('seller.store');
+    Route::post('seller/update/{id}', [SellerController::class, 'update'])->name('seller.update');
+
     Route::get('sales', [SalesController::class, 'index'])->name('sales.index');
     Route::get('sales/{id}', [SalesController::class, 'show'])->name('sales.show'); 
     Route::put('sales/{id}', [SalesController::class, ''])->name('sales.show');

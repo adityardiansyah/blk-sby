@@ -16,7 +16,8 @@
         "laravel/sanctum": "*",
         "laravel/tinker": "^2.5",
         "laravel/ui": "*",
-        "maatwebsite/excel": "*"
+        "maatwebsite/excel": "*",
+        "symfony/intl": "^6.2"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
