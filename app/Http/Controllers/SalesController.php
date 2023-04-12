@@ -16,7 +16,7 @@ class SalesController extends Controller
         $this->middleware(function ($request, $next){
             Session::put('menu_active','sales');
             return $next($request);
-        });
+        }); 
     }
     public function index(Request $request)
     {
