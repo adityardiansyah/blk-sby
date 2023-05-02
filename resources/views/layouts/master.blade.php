@@ -15,14 +15,15 @@
     <link rel="stylesheet" href="{{ asset('assets/extensions/toastify-js/src/toastify.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/extensions/choices.js/public/assets/styles/choices.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.3/dist/sweetalert2.min.css">
     <style>
         .select2-container{
             width: 100%!important;
-        }
+        } 
     </style>
 </head>
 
-<body>
+<body> 
     <div id="app">
         <div id="sidebar" class="active">
             <div class="sidebar-wrapper active">
@@ -102,32 +103,32 @@
                                 <span>Konversi SKU</span>
                             </a>
                         </li>
-                        <li class="sidebar-item ">
-                            <a href="index.html" class='sidebar-link'>
+                        <li class="sidebar-item {{ Session::get('menu_active') == 'goodsreceive'? 'active': '' }}">
+                            <a href="{{ route('goodsreceive.index') }}" class='sidebar-link'>
                                 <i class="bi bi-box-seam"></i>
                                 <span>Penerimaan Barang</span>
                             </a>
                         </li>
-                        <li class="sidebar-item ">
-                            <a href="index.html" class='sidebar-link'>
+                        <li class="sidebar-item {{ Session::get('menu_active') == 'returnwarehouse'? 'active': '' }}">
+                            <a href="{{ route('returnwarehouse.index') }}" class='sidebar-link'>
                                 <i class="bi bi-box-arrow-up-right"></i>
                                 <span>Retur Gudang</span>
                             </a>
                         </li>
-                        <li class="sidebar-item ">
-                            <a href="index.html" class='sidebar-link'>
+                        <li class="sidebar-item  {{ Session::get('menu_active') == 'sales'? 'active': '' }}">
+                            <a href="{{ route('sales.index') }}" class='sidebar-link'>
                                 <i class="bi bi-cart-check"></i>
                                 <span>Penjualan</span>
                             </a>
                         </li>
-                        <li class="sidebar-item ">
-                            <a href="index.html" class='sidebar-link'>
+                        <li class="sidebar-item {{ Session::get('menu_active') == 'returnsales'? 'active': '' }}">
+                            <a href="{{ route('returnsales.index') }}" class='sidebar-link'>
                                 <i class="bi bi-cart-dash"></i>
                                 <span>Retur Penjualan</span>
                             </a>
                         </li>
-                        <li class="sidebar-item ">
-                            <a href="index.html" class='sidebar-link'>
+                        <li class="sidebar-item {{ Session::get('menu_active') == 'stockopname'? 'active': '' }}">
+                            <a href="{{ route('stockopname.index') }}" class='sidebar-link'>
                                 <i class="bi bi-boxes"></i>
                                 <span>Stok Fisik</span>
                             </a>
@@ -179,17 +180,18 @@
             </footer>
         </div>
     </div>
+    <script src="{{ asset('assets/extensions/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.js') }}"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
-    <script src="{{ asset('assets/extensions/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/datatables.min.js') }}"></script>
     <script src="{{ asset('assets/js/pages/datatables.js') }}"></script>
     <script src="{{ asset('assets/extensions/toastify-js/src/toastify.js') }}"></script>
     <script src="{{ asset('assets/extensions/choices.js/public/assets/scripts/choices.js') }}"></script>
     <script src="{{ asset('assets/js/pages/form-element-select.js') }}"></script>
-    {{-- <script src="{{ asset('assets/js/select2.min.js') }}"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
+    <!-- Load jQuery and SweetAlert JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.3/dist/sweetalert2.min.js"></script>
 
     <script>
         $('.select2').select2({

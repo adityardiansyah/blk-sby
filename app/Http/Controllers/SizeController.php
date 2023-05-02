@@ -33,7 +33,7 @@ class SizeController extends Controller
         return redirect()->to('/size')->with('message', ['type' => 'success', 'content' => 'Data tidak dapat dihapus']);
     } else {
         $data->delete();
-        return redirect()->to('/size')->with('message', ['type' => 'success', 'content' => 'Berhasil dihapus']);
+        return redirect()->to('/size')->with('message', ['type' => 'success', 'content' => 'Berhasil dihapus']); 
     }
     }
 

@@ -13,6 +13,11 @@ class ReturnWarehouseRepository{
         $this->conversion = $conv;
     }
 
+    public function get_data_all()
+    {
+        return $this->returnWarehouse->with('detail')->with('file_attachment')->orderBy('created_at', 'asc')->get();
+    }
+
     public function get_data_by_shop($id)
     {
         return $this->returnWarehouse->with('detail')->where('shop_id', $id)->orderBy('created_at', 'desc')->get();
@@ -20,7 +25,7 @@ class ReturnWarehouseRepository{
 
     public function get_data_by_id($id)
     {
-        return $this->returnWarehouse->with('detail')->where('id', $id)->first();
+        return $this->returnWarehouse->with('detail')->with('file_attachment')->with('seller')->with('shop')->where('id', $id)->first();
     }
 
     public function create($data, $file)

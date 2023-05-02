@@ -35,7 +35,7 @@
                                 {{-- <td>
                                     <span class="">{{ Str::ucfirst($item->status) }}</span>
                                 </td> --}}
-                                <td  >
+                                <td>
                                 <form onsubmit="return confirm(Hapus Data?)" class='d-inline' action=" {{ url ('/size/' .$item->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')

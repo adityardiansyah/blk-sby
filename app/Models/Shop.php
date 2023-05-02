@@ -10,4 +10,9 @@ class Shop extends Model
     use HasFactory;
     protected $table = 'shop';
     protected $fillable =['name','address','location','latitude','longitude','status'];
+
+    public function sales()
+    {
+        return $this->hasOne(Sales::class);
+    }
 }

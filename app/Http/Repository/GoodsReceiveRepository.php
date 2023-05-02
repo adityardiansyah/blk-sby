@@ -11,6 +11,11 @@ class GoodsReceiveRepository{
         $this->goodsReceive = $con;
     }
 
+    public function get_data_all()
+    {
+        return $this->goodsReceive->with('detail')->with('file_attachment')->orderBy('created_at', 'desc')->get();
+    }
+
     public function get_data_by_shop($shop_id)
     {
         return $this->goodsReceive->with('detail')->with('file_attachment')->where('shop_id', $shop_id)->orderBy('created_at', 'desc')->get();
@@ -18,7 +23,7 @@ class GoodsReceiveRepository{
 
     public function get_data_by_id($id)
     {
-        return $this->goodsReceive->with('detail')->with('file_attachment')->where('id', $id)->first();
+        return $this->goodsReceive->with('detail')->with('file_attachment')->with('seller')->with('shop')->where('id', $id)->first();
     }
 
     public function create($data, $file)

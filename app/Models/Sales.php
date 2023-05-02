@@ -5,18 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Seller extends Model
+class Sales extends Model
 {
     use HasFactory;
-    protected $fillable = ["shop_id","user_id","no_seller","name","phone","photo","email","status"];
+    protected $fillable = ["invoice","trans_date","shop_id","seller_id","total_tax","notes","status"];
 
     public function shop()
     {
         return $this->belongsTo(Shop::class);
     }
-
-    public function sales()
+    public function seller()
     {
-        return $this->hasOne(Sales::class);
+        return $this->belongsTo(Seller::class);
     }
 }
