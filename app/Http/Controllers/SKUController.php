@@ -98,13 +98,16 @@ class SKUController extends Controller
             ]);
         }
     }
-    public function update($id, Request $request) {
-        $this->validate($request,[
-            'sku' => 'required',
-        ]);
-        $data = ProductMasterDetail::find($id);
-        $data->sku = $request->sku;
-        $data->save();
-        return redirect()->to('/sku')->with('message', ['type' => 'success','content' => 'Data berhasil diupdate']);
+    public function update(Request $request) {
+        $id = $request->id;
+        if($id){
+            $this->validate($request,[
+                'sku' => 'required',
+            ]);
+            $data = ProductMasterDetail::find($id);
+            $data->sku = $request->sku;
+            $data->save();
+            return redirect()->to('/sku')->with('message', ['type' => 'success','content' => 'Data berhasil diupdate']);
+        }
     }
 }
