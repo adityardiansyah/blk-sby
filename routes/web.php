@@ -62,7 +62,7 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
     Route::delete('color/{id}', [ColorController::class, 'destroy']);
     Route::delete('sku/{id}', [SKUController::class, 'destroy']);
     Route::get('sku/edit/{id}', [SKUController::class, 'edit']);
-    Route::put('/sku/update/{id}', [SKUController::class, 'update'])->name('master.sku.update');
+    Route::put('/sku/update', [SKUController::class, 'update'])->name('master.sku.update');
     Route::get('goodsreceive', [GoodsReceiveController::class, 'index'])->name('goodsreceive.index');
     Route::get('goodsreceive/{id}', [GoodsReceiveController::class, 'show'])->name('goodsreceive.show');
     Route::post('goodsreceive/{id}/confirm', [GoodsReceiveController::class, 'confirm'])->name('goodsreceive.confirm');

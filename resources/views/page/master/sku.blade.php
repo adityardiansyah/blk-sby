@@ -109,7 +109,7 @@
                     </ul>
                 </div> 
             @endif
-            <form action="{{ route('master.sku.update', ['id' => $item->id]) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('master.sku.update') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <input type="hidden" name="id" id="id">
@@ -126,7 +126,7 @@
                         <i class="bx bx-x d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">Tutup</span>
                     </button>
-                    <button type="button" class="btn btn-primary ml-1 btn-simpan">
+                    <button type="submit" class="btn btn-primary ml-1">
                         <i class="bx bx-check d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">Simpan</span>
                     </button>
