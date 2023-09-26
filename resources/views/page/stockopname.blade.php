@@ -36,13 +36,12 @@
                                 <td>
                                     <span class="">{{ Str::ucfirst($item->status) }}</span>
                                 </td>
-                                    <td>
-                                        {{-- <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#modal_show">Detail</button> --}}
-                                        <button type="button" class="btn btn-primary btn-sm" onclick="lihat({{ $item->id }})">Detail</button>
-                                    </td>
+                                <td>
+                                    {{-- <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#modal_show">Detail</button> --}}
+                                    <button type="button" class="btn btn-primary btn-sm" onclick="lihat({{ $item->id }})">Detail</button>
+                                </td>
                             </tr>
                         @endforeach
-
                     </tbody>
                 </table>
             </div>
@@ -72,89 +71,91 @@
                     </ul>
                 </div>
             @endif
-            <form action="{{ route('stockopname.show', ['id' => $item->id]) }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
-                <input type="hidden" name="id" id="id">
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>No. Transaksi</label>
-                            <div class="form-group">
-                                <input readonly type="text" placeholder="No. Transaksi"
-                                    class="form-control" name="notrans" id="trans_no" required value="{{ old('trans_no') }}">
+            @if (count($data) > 0)
+                <form action="{{ route('stockopname.show', ['id'=> $item->id]) }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" name="id" id="id">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>No. Transaksi</label>
+                                <div class="form-group">
+                                    <input readonly type="text" placeholder="No. Transaksi"
+                                        class="form-control" name="notrans" id="trans_no" required value="{{ old('trans_no') }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>Tgl. Transaksi</label>
+                                <div class="form-group">
+                                    <input readonly type="date" placeholder="Tgl. Transaksi"
+                                        class="form-control" name="tgltrans" id="trans_date" required value="{{ old('trans_date') }}">
+                                </div>
                             </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <label>Tgl. Transaksi</label>
-                            <div class="form-group">
-                                <input readonly type="date" placeholder="Tgl. Transaksi"
-                                    class="form-control" name="tgltrans" id="trans_date" required value="{{ old('trans_date') }}">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Nama Seller</label>
+                                <div class="form-group">
+                                    <input readonly type="text" placeholder="Nama Seller"
+                                        class="form-control" name="name" id="seller" required value="{{ old('name') }}">
+                                </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label>Nama Seller</label>
-                            <div class="form-group">
-                                <input readonly type="text" placeholder="Nama Seller"
-                                    class="form-control" name="name" id="seller" required value="{{ old('name') }}">
+                            
+                            <div class="col-md-4">
+                                <label>Nama Toko</label>
+                                <div class="form-group">
+                                    <input readonly type="text" placeholder="Tgl Pengiriman"
+                                        class="form-control" name="name" id="shop" required value="{{ old('name') }}">
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label>Notes</label>
+                                <div class="form-group">
+                                    <input readonly type="text" placeholder="Notes"
+                                        class="form-control" name="notes" id="notes" required value="{{ old('notes') }}">
+                                </div>
                             </div>
                         </div>
                         
-                        <div class="col-md-4">
-                            <label>Nama Toko</label>
-                            <div class="form-group">
-                                <input readonly type="text" placeholder="Tgl Pengiriman"
-                                    class="form-control" name="name" id="shop" required value="{{ old('name') }}">
+                        <hr>
+                        <h6>Detail</h6>
+                        <div class="card">
+                            <div class="card-body">
+                                <table class="table table-striped table-bordered" id="table1">
+                                    <thead>
+                                        <tr>
+                                            <th>Nama Barang</th>
+                                            <th>SKU</th>
+                                            <th>Qty</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="detail_so"></tbody>
+                                </table>
+                                <hr>
+                                <h6 class="float-end">Total Qty : <b id="total_qty"></b></h6>
                             </div>
                         </div>
-                        
-                        <div class="col-md-4">
-                            <label>Notes</label>
-                            <div class="form-group">
-                                <input readonly type="text" placeholder="Notes"
-                                    class="form-control" name="notes" id="notes" required value="{{ old('notes') }}">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <hr>
-                    <h6>Detail</h6>
-                    <div class="card">
-                        <div class="card-body">
-                            <table class="table table-striped table-bordered" id="table1">
-                                <thead>
-                                    <tr>
-                                        <th>Nama Barang</th>
-                                        <th>SKU</th>
-                                        <th>Qty</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="detail_so"></tbody>
-                            </table>
-                            <hr>
-                            <h6 class="float-end">Total Qty : <b id="total_qty"></b></h6>
-                        </div>
-                    </div>
 
-                </div>
-                @if (Auth::user()->id == 1 && 2)
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary ml-1" id="button-open">
-                        <i class="bx bx-check d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Open</span>
-                    </button>
-                @endif
-                    <button type="button" class="btn btn-light-secondary"
-                        data-bs-dismiss="modal">
-                        <i class="bx bx-x d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Tutup</span>
-                    </button>
-                </div>
-            </form>
+                    </div>
+                    @if (Auth::user()->id == 1 && 2)
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary ml-1" id="button-open">
+                            <i class="bx bx-check d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Open</span>
+                        </button>
+                    @endif
+                        <button type="button" class="btn btn-light-secondary"
+                            data-bs-dismiss="modal">
+                            <i class="bx bx-x d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Tutup</span>
+                        </button>
+                    </div>
+                </form>
+            @endif
         </div>
     </div>
 </div>
