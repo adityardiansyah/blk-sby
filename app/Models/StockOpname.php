@@ -28,7 +28,9 @@ class StockOpname extends Model
 
     public function detail()
     {
-        return $this->hasMany(DetailStockOpname::class);
+        return $this->hasMany(DetailStockOpname::class)
+        ->leftJoin('conversions','conversions.id','=','detail_stock_opname.conversion_id')
+        ->select('detail_stock_opname.*','conversions.color','conversions.size');
     }
 
     public function file_attachment()

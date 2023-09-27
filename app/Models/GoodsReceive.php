@@ -23,7 +23,9 @@ class GoodsReceive extends Model
 
     public function detail()
     {
-        return $this->hasMany(GoodsReceiveDetail::class);
+        return $this->hasMany(GoodsReceiveDetail::class)
+        ->leftJoin('conversions','conversions.id','=','goods_receive_details.conversion_id')
+        ->select('goods_receive_details.*','conversions.color','conversions.size');
     }
 
     public function file_attachment()
