@@ -10,19 +10,21 @@ class ReportRepository{
     public function get_all_by_shop($shop_id, $date_start, $date_end)
     {
         $data = DB::select("
-            select c.id, c.name_item, c.sku, pm.`group`, pm.brand, pm.variant, pm.motive, c.color, c.`size`,
-            sum(qty_final) qty_on_hand, c.price
-            from conversions c 
-            join product_masters pm on pm.id = c.product_master_id 
-            where c.shop_id = $shop_id
-            group by 1,2,3,4,5,6,7,8,9,11
+            SELECT c.id, c.name_item, c.sku, pm.`group`, pm.brand, pm.variant, pm.motive, c.color, c.`size`,
+            SUM(c.qty_final) AS qty_on_hand, c.price
+            FROM conversions c
+            JOIN product_masters pm ON pm.id = c.product_master_id
+            WHERE c.shop_id = $shop_id 
+            GROUP BY 1, 2, 3, 4, 5, 6, 7, 8, 9, 11
         ");
 
         foreach ($data as $key => $value) {
             $stock_awal = $this->query_stock_last_month($date_start, $value->id, $shop_id);
             $gr = $this->query_gr($date_start, $date_end, $value->id, $shop_id);
             $sales = $this->query_sales($date_start, $date_end, $value->id, $shop_id);
+            $stock_opname = $this->query_stock_opname($value->id, $shop_id, $date_start, $date_end);
             
+            $value->stock_opname = !empty($stock_opname[0])? (int)$stock_opname[0]->total : 0;
             $value->last_month = !empty($stock_awal[0])? (int)$stock_awal[0]->total : 0;
             $value->gr = !empty($gr[0])? (int)$gr[0]->total : 0;
             $value->sales = !empty($sales[0])? (int)$sales[0]->total : 0;
@@ -30,6 +32,22 @@ class ReportRepository{
         }
         return $data;
     }
+
+    public function query_stock_opname($conversion_id, $shop_id, $date_start, $date_end)
+    {
+        $data = DB::select("
+            SELECT SUM(d.qty) AS total
+            FROM stock_opname so
+            JOIN detail_stock_opname d ON d.stock_opname_id = so.id
+            WHERE so.trans_date BETWEEN '$date_start' AND '$date_end' 
+            AND so.status = 'confirmed'
+            AND so.shop_id = $shop_id 
+            AND d.conversion_id = $conversion_id
+            GROUP BY d.conversion_id
+            LIMIT 1
+        ");
+        return $data;
+    }   
 
     public function query_stock_last_month($date_start, $conversion_id, $shop_id)
     {

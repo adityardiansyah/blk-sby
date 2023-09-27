@@ -100,7 +100,7 @@
                         <li class="sidebar-item {{ Session::get('menu_active') == 'conversion'? 'active': '' }}">
                             <a href="{{ route('conversion.index') }}" class='sidebar-link'>
                                 <i class="bi bi-funnel"></i>
-                                <span>Konversi SKU</span>
+                                <span>Daftar Produk</span>
                             </a>
                         </li>
                         <li class="sidebar-item {{ Session::get('menu_active') == 'goodsreceive'? 'active': '' }}">

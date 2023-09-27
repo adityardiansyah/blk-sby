@@ -70,6 +70,7 @@
                     </ul>
                 </div>
             @endif
+            @if (count($data) > 0)
             <form action="{{ route('returnwarehouse.show', ['id' => $item->id]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
@@ -153,6 +154,7 @@
                     </button>
                 </div>
             </form>
+            @endif
         </div>
     </div>
 </div>

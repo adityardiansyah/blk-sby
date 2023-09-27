@@ -17,5 +17,10 @@ class Conversion extends Model
     {
         return $this->belongsTo(ProductMaster::class);
     }
+
+    public function shop()
+    {
+        return $this->belongsTo(Shop::class);
+    }
 }
 

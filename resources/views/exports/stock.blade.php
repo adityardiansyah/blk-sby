@@ -20,7 +20,7 @@
         <th rowspan="2" style="text-align: center; background-color: #40c668;"><b>Nama Master</b></th>
         <th rowspan="2" style="text-align: center; background-color: #40c668;"><b>Nama SKU</b></th>
         <th colspan="6" style="text-align: center; background-color: #40c668;"><b>Category</b></th>
-        <th colspan="4" style="text-align: center; background-color: #40c668;"><b>Qty (pcs)</b></th>
+        <th colspan="5" style="text-align: center; background-color: #40c668;"><b>Qty (pcs)</b></th>
         <th rowspan="2" style="text-align: center; background-color: #40c668;"><b>Harga Jual</b></th>
     </tr>
     <tr>
@@ -30,10 +30,11 @@
         <th style="text-align: center; background-color: #40c668;"><b>Motive</b></th>
         <th style="text-align: center; background-color: #40c668;"><b>Warna</b></th>
         <th style="text-align: center; background-color: #40c668;"><b>Size</b></th>
-        <th style="text-align: center; background-color: #40c668;"><b>Last Month</b></th>
+        <th style="text-align: center; background-color: #40c668;"><b>Saldo Awal</b></th>
         <th style="text-align: center; background-color: #40c668;"><b>Received</b></th>
         <th style="text-align: center; background-color: #40c668;"><b>Sales</b></th>
         <th style="text-align: center; background-color: #40c668;"><b>Stock on Hand</b></th>
+        <th style="text-align: center; background-color: #40c668;"><b>Stock Opname</b></th>
     </tr>
     </thead>
     <tbody>
@@ -42,6 +43,8 @@
             $total_gr = 0;
             $total_sales = 0;
             $total_qty_on_hand = 0;
+            $total_price = 0;
+            $total_opname = 0;
         @endphp
         @foreach ($data as $key => $item)
         <tr>
@@ -58,6 +61,7 @@
             <td>{{ $item->gr }}</td>
             <td>{{ $item->sales }}</td>
             <td>{{ $item->qty_on_hand }}</td>
+            <td>{{ $item->stock_opname }}</td>
             <td>{{ $item->price }}</td>
         </tr>
         @php
@@ -65,6 +69,8 @@
             $total_gr += $item->gr;
             $total_sales += $item->sales;
             $total_qty_on_hand += $item->qty_on_hand;
+            $total_price += $item->price;
+            $total_opname += $item->stock_opname
         @endphp
         @endforeach
         <tr>
@@ -73,7 +79,8 @@
             <td style="background-color: #b6b6b6;"><b>{{ $total_gr }}</b></td>
             <td style="background-color: #b6b6b6;"><b>{{ $total_sales }}</b></td>
             <td style="background-color: #b6b6b6;"><b>{{ $total_qty_on_hand }}</b></td>
-            <td style="background-color: #b6b6b6;"></td>
+            <td style="background-color: #b6b6b6;"><b>{{ $total_opname }}</b></td>
+            <td style="background-color: #b6b6b6;"><b>{{ $total_price }}</b></td>
         </tr>
     </tbody>
 </table>

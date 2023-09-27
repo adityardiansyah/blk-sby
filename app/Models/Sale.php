@@ -22,6 +22,8 @@ class Sale extends Model
 
     public function detail()
     {
-        return $this->hasMany(DetailSale::class, 'sales_id','id');
+        return $this->hasMany(DetailSale::class, 'sales_id','id')
+        ->leftJoin('conversions','conversions.id','=','detail_sales.conversion_id')
+        ->select('detail_sales.*','conversions.color','conversions.size');
     }
 }
