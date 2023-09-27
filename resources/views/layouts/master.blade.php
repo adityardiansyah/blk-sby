@@ -95,8 +95,6 @@
                                 <span>User</span>
                             </a>
                         </li>
-                        @endif
-                        @if (Auth::user()->user_group[0]->group_id == 1)
                         <li class="sidebar-item {{ Session::get('menu_active') == 'conversion'? 'active': '' }}">
                             <a href="{{ route('conversion.index') }}" class='sidebar-link'>
                                 <i class="bi bi-funnel"></i>
@@ -133,7 +131,6 @@
                                 <span>Stok Fisik</span>
                             </a>
                         </li>
-                        @endif
 
                         <li class="sidebar-item {{ Session::get('menu_active') == 'laporan'? 'active': '' }}">
                             <a href="{{ route('laporan.index') }}" class='sidebar-link'>
@@ -141,6 +138,7 @@
                                 <span>Laporan</span>
                             </a>
                         </li>
+                        @endif
                         @endif
                         <li class="sidebar-item">
                             <a href="{{ route('logout') }}" class='sidebar-link' onclick="event.preventDefault();
