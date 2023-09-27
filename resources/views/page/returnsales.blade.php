@@ -74,46 +74,48 @@
                     </ul>
                 </div>
             @endif
-            <form action="{{ route('sales.show', ['id'=> $item->id]) }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
-                <input type="hidden" name="id" id="id">
-                <div class="modal-body">
-                    <div class="row">
+            @if (count($data) > 0)
+                <form action="{{ route('sales.show', ['id'=> $item->id]) }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" name="id" id="id">
+                    <div class="modal-body">
+                        <div class="row">
+                        <div class="col-md-6">
+                        <label>Invoice</label>
+                        <div class="form-group">
+                            <input type="text" readonly placeholder="Invoice"
+                                class="form-control" name="invoice" id="invoice" required value="{{ old('invoice') }}">
+                        </div>
+                        <label>Tanggal Transaksi</label>
+                        <div class="form-group">
+                            <input type="text" readonly placeholder="tanggal transaksi"
+                                class="form-control" name="trans_date" id="trans_date" required value="{{ old('trans_date') }}">
+                        </div>
+                        <label>Nama Toko</label>
+                        <div class="form-group">
+                            <input type="text" readonly placeholder="nama toko"
+                                class="form-control" name="shop" id="shop" required value="{{ old('shop') }}">
+                        </div>
+                    </div>
                     <div class="col-md-6">
-                    <label>Invoice</label>
-                    <div class="form-group">
-                        <input type="text" readonly placeholder="Invoice"
-                            class="form-control" name="invoice" id="invoice" required value="{{ old('invoice') }}">
+                        <label>Nama Seller</label>
+                        <div class="form-group">
+                        <input type="text" readonly placeholder="name penjual"
+                        class="form-control" name="seller" id="seller" required value="{{ old('seller') }}">
                     </div>
-                    <label>Tanggal Transaksi</label>
+                    <label>Total Harga</label>
                     <div class="form-group">
-                        <input type="text" readonly placeholder="tanggal transaksi"
-                            class="form-control" name="trans_date" id="trans_date" required value="{{ old('trans_date') }}">
+                        <input type="text" readonly placeholder="total harga"
+                        class="form-control" name="total_tax" id="total_tax" required value="{{ old('total_tax') }}">
                     </div>
-                    <label>Nama Toko</label>
+                    <label>Notes</label>
                     <div class="form-group">
-                        <input type="text" readonly placeholder="nama toko"
-                            class="form-control" name="shop" id="shop" required value="{{ old('shop') }}">
+                        <input type="text" readonly placeholder="notes"
+                        class="form-control" name="notes" id="notes" required value="{{ old('notes') }}">
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <label>Nama Seller</label>
-                    <div class="form-group">
-                    <input type="text" readonly placeholder="name penjual"
-                    class="form-control" name="seller" id="seller" required value="{{ old('seller') }}">
-                </div>
-                <label>Total Harga</label>
-                <div class="form-group">
-                    <input type="text" readonly placeholder="total harga"
-                    class="form-control" name="total_tax" id="total_tax" required value="{{ old('total_tax') }}">
-                </div>
-                <label>Notes</label>
-                <div class="form-group">
-                    <input type="text" readonly placeholder="notes"
-                    class="form-control" name="notes" id="notes" required value="{{ old('notes') }}">
-                </div>
-            </div>
+                </form>
+            @endif
         </div>
         <hr>
         <h6>Detail</h6>
