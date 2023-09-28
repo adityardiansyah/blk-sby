@@ -6,13 +6,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\GoodsReceive;
 use App\Http\Repository\GoodsReceiveRepository;
+use App\Http\Repository\ManagementStockRepository;
 
 class GoodsReceiveController extends Controller
 {
-    protected $goodsReceiveRepository, $detailGoodsReceiveRepository, $conversionRepository;
+    protected $goodsReceiveRepository, $detailGoodsReceiveRepository, $conversionRepository, $manageStockRepository;
     
-    public function __construct(GoodsReceiveRepository $goods) {
+    public function __construct(GoodsReceiveRepository $goods, ManagementStockRepository $manageStock) {
         $this->goodsReceiveRepository = $goods;
+        $this->manageStockRepository = $manageStock;
+
         $this->middleware(function ($request, $next){
             Session::put('menu_active','goodsreceive');
             return $next($request);
@@ -43,7 +46,7 @@ class GoodsReceiveController extends Controller
     public function confirm($id, Request $request){
         $type = $request->type;
         if($type == "open"){
-            GoodsReceive::find($id)->update(['status'=>'open']);
+            return $this->manageStockRepository->update_status($id, $type);
         }
         return response()->json([
             'success' => true,
