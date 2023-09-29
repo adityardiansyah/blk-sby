@@ -28,6 +28,9 @@ class ReportRepository{
             $value->last_month = !empty($stock_awal[0])? (int)$stock_awal[0]->total : 0;
             $value->gr = !empty($gr[0])? (int)$gr[0]->total : 0;
             $value->sales = !empty($sales[0])? (int)$sales[0]->total : 0;
+            $value->total = (int)$value->last_month + (int)$value->gr - (int)$value->sales;
+            $value->stock_opname = !empty($stock_opname[0])? (int)$stock_opname[0]->total : 0;
+            $value->deviasi = (int)$value->total - (int)$value->stock_opname;
             $value->qty_on_hand = (int)$value->qty_on_hand;
         }
         return $data;

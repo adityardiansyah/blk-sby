@@ -95,12 +95,10 @@
                                 <span>User</span>
                             </a>
                         </li>
-                        @endif
-                        @if (Auth::user()->user_group[0]->group_id == 1)
                         <li class="sidebar-item {{ Session::get('menu_active') == 'conversion'? 'active': '' }}">
                             <a href="{{ route('conversion.index') }}" class='sidebar-link'>
                                 <i class="bi bi-funnel"></i>
-                                <span>Konversi SKU</span>
+                                <span>Daftar Produk</span>
                             </a>
                         </li>
                         <li class="sidebar-item {{ Session::get('menu_active') == 'goodsreceive'? 'active': '' }}">
@@ -133,7 +131,21 @@
                                 <span>Stok Fisik</span>
                             </a>
                         </li>
-                        @endif
+
+                        <li class="sidebar-item  has-sub">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-diagram-3"></i>
+                                <span>Adjustment</span>
+                            </a>
+                            <ul class="submenu {{ in_array(Session::get('menu_active'), ['in','out'])? 'active': '' }}">
+                                <li class="submenu-item {{ Session::get('menu_active') == 'in'? 'active': '' }}">
+                                    <a href="/adjusment/in">In</a>
+                                </li>
+                                <li class="submenu-item {{ Session::get('menu_active') == 'out'? 'active': '' }}">
+                                    <a href="/adjusment/out">Out</a>
+                                </li>
+                            </ul>
+                        </li>
 
                         <li class="sidebar-item {{ Session::get('menu_active') == 'laporan'? 'active': '' }}">
                             <a href="{{ route('laporan.index') }}" class='sidebar-link'>
@@ -141,6 +153,7 @@
                                 <span>Laporan</span>
                             </a>
                         </li>
+                        @endif
                         @endif
                         <li class="sidebar-item">
                             <a href="{{ route('logout') }}" class='sidebar-link' onclick="event.preventDefault();

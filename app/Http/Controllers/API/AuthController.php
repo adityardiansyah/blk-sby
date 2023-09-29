@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthController extends Controller
 {
@@ -43,7 +44,10 @@ class AuthController extends Controller
                 ->json(['message' => 'Unauthorized'], 401);
         }
 
+        
         $user = User::where('username', $request['username'])->firstOrFail();
+        
+        PersonalAccessToken::where('name', $request['username'])->delete();
 
         $token = $user->createToken($request->username)->plainTextToken;
 
@@ -55,24 +59,32 @@ class AuthController extends Controller
     {
         $request->user()->tokens()->where('tokenable_id', Auth::user()->id)->delete();
 
-        return [
+        return response()
+            ->json([
             'message' => 'You have successfully logged out and the token was successfully deleted'
-        ];
+        ],200);
     }
 
     public function profile()
     {
         try {
-            $user = Auth::user();
-            $data = Seller::with('shop')->where('user_id', $user->id)->first();
-            $data->username = $user->username;
-            $data->seller_id = $user->id;
-            $data->shop = $data->shop;
-    
-            return response()->json([
-                'message' => 'Data berhasil ditemukan',
-                'data' => $data,
-            ]);
+            if(Auth::user()){
+                $user = Auth::user();
+                $data = Seller::with('shop')->where('user_id', $user->id)->first();
+                $data->username = $user->username;
+                $data->seller_id = $user->id;
+                $data->shop = $data->shop;
+        
+                return response()->json([
+                    'message' => 'Data berhasil ditemukan',
+                    'data' => $data,
+                ]);
+            }else{
+                return response()->json([
+                    'message' => 'Data user tidak ditemukan',
+                    'data' => []
+                ], 403);
+            }
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => $th->getMessage(),

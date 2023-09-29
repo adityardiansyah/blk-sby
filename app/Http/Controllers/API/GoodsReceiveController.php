@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Repository\ConversionRepository;
 use App\Http\Repository\DetailGoodsReceiveRepository;
 use App\Http\Repository\GoodsReceiveRepository;
+use App\Http\Repository\ManagementStockRepository;
 use App\Models\FileGoodsReceived;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,12 +14,16 @@ use Svg\Tag\Rect;
 
 class GoodsReceiveController extends Controller
 {
-    protected $goodsReceiveRepository, $detailGoodsReceiveRepository, $conversionRepository;
+    protected $goodsReceiveRepository, $detailGoodsReceiveRepository, $conversionRepository, $manageStockRepository;
 
-    public function __construct(GoodsReceiveRepository $goods, DetailGoodsReceiveRepository $dtGoods, ConversionRepository $con) {
+    public function __construct(GoodsReceiveRepository $goods, 
+                                DetailGoodsReceiveRepository $dtGoods, 
+                                ConversionRepository $con,
+                                ManagementStockRepository $manageStock) {
         $this->goodsReceiveRepository = $goods;
         $this->detailGoodsReceiveRepository = $dtGoods;
         $this->conversionRepository = $con;
+        $this->manageStockRepository = $manageStock;
     }
 
     public function index()
@@ -141,7 +146,7 @@ class GoodsReceiveController extends Controller
                     $checkStock = $this->conversionRepository->checkStockItem($detail->detail, 'OUT');
                     if($checkStock['error']){
                         return response()->json([
-                            'message' => 'Cannot sale! '.$checkStock['data'].', Not enough stock',
+                            'message' => 'Cannot open! '.$checkStock['data'].', Not enough stock',
                             'data' => []
                         ], 400);
                     }
@@ -162,7 +167,7 @@ class GoodsReceiveController extends Controller
                 }
             }
 
-            $this->goodsReceiveRepository->update_status($id, $request->type);
+            $this->manageStockRepository->update_status($id, $request->type);
 
             return response()->json([
                 'message' => 'success updated',
