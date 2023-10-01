@@ -1,5 +1,3 @@
-#LARAVEL via artisan
-
 FROM thecodingmachine/php:8.1-v4-apache
 ARG PHP_VER=8.1
 
