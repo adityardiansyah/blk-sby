@@ -21,7 +21,7 @@ Route::get('login', [LoginController::class, 'login']);
 Route::post('login', [LoginController::class, 'check_login'])->name('login'); 
 Route::post('logout', [LoginController::class, 'logout'])->name('logout'); 
 
-    Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/',[HomeController::class, 'index'])->name('home.index');
     Route::get('shop', [ShopController::class, 'index'])->name('shop.index');
     Route::post('shop', [ShopController::class, 'store'])->name('master.shop.store');
@@ -43,7 +43,7 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
     Route::get('users/{id}', [UserController::class, 'show'])->name('users.show');
     Route::post('users', [UserController::class, 'store'])->name('users.store');
     Route::post('users/update/{id}', [UserController::class, 'update'])->name('users.update');
-   
+
     Route::get('seller', [SellerController::class, 'index'])->name('seller.index');
     Route::get('seller/{id}', [SellerController::class, 'show'])->name('seller.show');
     Route::post('seller', [SellerController::class, 'store'])->name('seller.store');
