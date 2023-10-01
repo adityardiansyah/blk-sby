@@ -35,18 +35,23 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
     Route::post('shop', [ShopController::class, 'store'])->name('master.shop.store');
     Route::get('shop/edit/{id}', [ShopController::class, 'edit']);
     Route::put('shop/update', [ShopController::class,'update'])->name('master.shop.update');
+    
     Route::get('sku', [SKUController::class, 'index'])->name('master.sku');
     Route::get('list-sku', [SKUController::class, 'list_sku'])->name('master.list-sku');
     Route::post('sku', [SKUController::class, 'store'])->name('master.sku.store');
+    
     Route::get('size', [SizeController::class, 'index'])->name('master.size');
     Route::post('size', [SizeController::class, 'store'])->name('master.size.store');
     Route::delete('size/{id}', [SizeController::class, 'destroy']);
+    
     Route::get('color', [ColorController::class, 'index'])->name('master.color');
     Route::post('color', [ColorController::class, 'store'])->name('master.color.store');
+    
     Route::get('users', [UserController::class, 'index'])->name('users.index');
     Route::get('users/{id}', [UserController::class, 'show'])->name('users.show');
     Route::post('users', [UserController::class, 'store'])->name('users.store');
     Route::post('users/update/{id}', [UserController::class, 'update'])->name('users.update');
+   
     Route::get('seller', [SellerController::class, 'index'])->name('seller.index');
     Route::get('seller/{id}', [SellerController::class, 'show'])->name('seller.show');
     Route::post('seller', [SellerController::class, 'store'])->name('seller.store');
@@ -56,22 +61,29 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
     Route::get('sales/{id}', [SalesController::class, 'show'])->name('sales.show'); 
     Route::put('sales/{id}', [SalesController::class, ''])->name('sales.show');
     Route::post('/sales/{id}/update',[SalesController::class,'update_status']);
+    
     Route::get('returnsales', [ControllersReturnSalesController::class, 'index'])->name('returnsales.index');
     Route::get('conversion', [ConversionController::class, 'index'])->name('conversion.index');
-    Route::get('laporan', [ReportController::class, 'index'])->name('laporan.index');
+    
     Route::delete('color/{id}', [ColorController::class, 'destroy']);
+    
     Route::delete('sku/{id}', [SKUController::class, 'destroy']);
     Route::get('sku/edit/{id}', [SKUController::class, 'edit']);
     Route::put('/sku/update', [SKUController::class, 'update'])->name('master.sku.update');
+    
     Route::get('goodsreceive', [GoodsReceiveController::class, 'index'])->name('goodsreceive.index');
     Route::get('goodsreceive/{id}', [GoodsReceiveController::class, 'show'])->name('goodsreceive.show');
     Route::post('goodsreceive/{id}/confirm', [GoodsReceiveController::class, 'confirm'])->name('goodsreceive.confirm');
+    
     Route::get('returnwarehouse', [ReturnWarehouseController::class, 'index'])->name('returnwarehouse.index');
     Route::get('returnwarehouse/{id}', [ReturnWarehouseController::class, 'show'])->name('returnwarehouse.show');
     Route::post('returnwarehouse/{id}/confirm', [ReturnWarehouseController::class, 'confirm'])->name('returnwarehouse.confirm');
+    
     Route::get('stockopname', [StockOpnameController::class, 'index'])->name('stockopname.index');
     Route::get('stockopname/{id}', [StockOpnameController::class, 'show'])->name('stockopname.show');
     Route::post('stockopname/{id}/confirm', [StockOpnameController::class, 'confirm'])->name('stockopname.confirm');
+    
+    Route::get('laporan', [ReportController::class, 'index'])->name('laporan.index');
     Route::get('laporan/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'laporan_stock'])->name('laporan.stock');
     Route::get('laporan-excel/{type}/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'download_excel'])->name('laporan.excel');
 });
