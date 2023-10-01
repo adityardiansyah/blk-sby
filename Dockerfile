@@ -1,8 +1,6 @@
 FROM thecodingmachine/php:8.1-v4-apache
 ARG PHP_VER=8.1
 
-#ENV APACHE_RUN_USER=www-data \
-#    APACHE_RUN_GROUP=www-data \
 ENV APACHE_DOCUMENT_ROOT=/var/www/public \
     APACHE_EXTENSIONS="request rewrite" \
     PHP_INI_MEMORY_LIMIT=1g \
