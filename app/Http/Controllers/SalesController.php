@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Models\Sales;
+use App\Models\Shop;
+use App\Models\Seller;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 use App\Http\Repository\SalesRepository;
@@ -20,16 +22,45 @@ class SalesController extends Controller
     }
     public function index(Request $request)
     {
-        $data = $this->SalesRepository->get_data_all();
         $status = 'confirmed';
         $sales = Sales::where('status', $status)->get();
-        return view('page.sales', compact('data'),['sales' => $sales, 'status' => $status]);
+        $shop = Shop::all();
+        $seller = Seller::all();
+
+        if (request()->date_start || request()->date_end || request()->shop_id || request()->seller_id) {
+            $date_start = $request->input('date_start');
+            $date_end = $request->input('date_end');
+            $shop_id = $request->input('shop_id');
+            $seller_id = $request->input('seller_id');
+            
+            $query = Sales::query();
+            
+            if ($date_start && $date_end) {
+                $query->whereBetween('trans_date', [$date_start, $date_end]);
+            }
+            
+            if ($shop_id) {
+                $query->where('shop_id', $shop_id);
+            }
+            
+            if ($seller_id) {
+                $query->where('seller_id', $seller_id);
+            }
+
+            $data = $query->get();
+        } else {
+            $data = $this->SalesRepository->get_data_all();
+        }
+
+        return view('page.sales', compact('data', 'shop', 'seller'),['sales' => $sales, 'status' => $status]);
     }
+
 //     public function getSales()
 // {
 //     $data = $data = $this->SalesRepository->get_data_all();
 //     return response()->json($sales);
 // }
+
     public function show($id)
     {
         $data = $this->SalesRepository->get_data_by_id($id);
