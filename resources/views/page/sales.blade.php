@@ -7,7 +7,11 @@
     <div class="page-content">
         <section class="section">
             <div class="card">
-
+                <div class="card-header">
+                    <a href="{{ route('sales.index') }}"><button class="btn btn-secondary float-end ms-2">Reset</button></a>
+                    <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
+                        data-bs-target="#modal_filter"><i class="bi bi-funnel"></i> Filter</button>
+                </div>
                 <div class="card-body">
                     <table class="table table-striped" id="table1">
                         <thead>
@@ -68,87 +72,142 @@
                     </div>
                 @endif
                 @if (count($data) > 0)
-                <form action="{{ route('sales.show', ['id' => $item->id]) }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    @method('PUT')
-                    <input type="hidden" name="id" id="id">
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Invoice</label>
-                                <div class="form-group">
-                                    <input type="text" readonly placeholder="Invoice" class="form-control" name="invoice"
-                                        id="invoice" required value="{{ old('invoice') }}">
+                    <form action="{{ route('sales.show', ['id' => $item->id]) }}" method="POST"
+                        enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+                        <input type="hidden" name="id" id="id">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Invoice</label>
+                                    <div class="form-group">
+                                        <input type="text" readonly placeholder="Invoice" class="form-control"
+                                            name="invoice" id="invoice" required value="{{ old('invoice') }}">
+                                    </div>
+                                    <label>Tanggal Transaksi</label>
+                                    <div class="form-group">
+                                        <input type="text" readonly placeholder="tanggal transaksi" class="form-control"
+                                            name="trans_date" id="trans_date" required value="{{ old('trans_date') }}">
+                                    </div>
+                                    <label>Nama Toko</label>
+                                    <div class="form-group">
+                                        <input type="text" readonly placeholder="nama toko" class="form-control"
+                                            name="shop" id="shop" required value="{{ old('shop') }}">
+                                    </div>
                                 </div>
-                                <label>Tanggal Transaksi</label>
-                                <div class="form-group">
-                                    <input type="text" readonly placeholder="tanggal transaksi" class="form-control"
-                                        name="trans_date" id="trans_date" required value="{{ old('trans_date') }}">
-                                </div>
-                                <label>Nama Toko</label>
-                                <div class="form-group">
-                                    <input type="text" readonly placeholder="nama toko" class="form-control"
-                                        name="shop" id="shop" required value="{{ old('shop') }}">
+                                <div class="col-md-6">
+                                    <label>Nama Seller</label>
+                                    <div class="form-group">
+                                        <input type="text" readonly placeholder="name penjual" class="form-control"
+                                            name="seller" id="seller" required value="{{ old('seller') }}">
+                                    </div>
+                                    <label>Total Harga</label>
+                                    <div class="form-group">
+                                        <input type="text" readonly placeholder="total harga" class="form-control"
+                                            name="total_tax" id="total_tax" required value="{{ old('total_tax') }}">
+                                    </div>
+                                    <label>Notes</label>
+                                    <div class="form-group">
+                                        <input type="text" readonly placeholder="notes" class="form-control"
+                                            name="notes" id="notes" required value="{{ old('notes') }}">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <label>Nama Seller</label>
-                                <div class="form-group">
-                                    <input type="text" readonly placeholder="name penjual" class="form-control"
-                                        name="seller" id="seller" required value="{{ old('seller') }}">
+                            <hr>
+                            <h6>Detail</h6>
+                            <div class="card">
+                                <div class="card-body">
+                                    <table class="table table-striped table-bordered" id="table1">
+                                        <thead>
+                                            <tr>
+                                                <th>Nama Item</th>
+                                                <th>SKU</th>
+                                                <th>Jumlah</th>
+                                                <th>Unit</th>
+                                                <th>Harga Unit</th>
+                                                <th>Harga Kotor</th>
+                                                <th>Diskon</th>
+                                                <th>Total</th>
+                                                <th>Notes</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="detail">
+                                    </table>
                                 </div>
-                                <label>Total Harga</label>
-                                <div class="form-group">
-                                    <input type="text" readonly placeholder="total harga" class="form-control"
-                                        name="total_tax" id="total_tax" required value="{{ old('total_tax') }}">
-                                </div>
-                                <label>Notes</label>
-                                <div class="form-group">
-                                    <input type="text" readonly placeholder="notes" class="form-control" name="notes"
-                                        id="notes" required value="{{ old('notes') }}">
-                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                @if (Auth::user()->id == 1 && 2)
+                                    <button id="btn-open" type="button" class="btn btn-primary ml-1">
+                                        <i class="bx bx-check d-block d-sm-none"></i>
+                                        <span class="d-none d-sm-block">Open</span>
+                                    </button>
+                                @endif
+                                <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                                    <i class="bx bx-x d-block d-sm-none"></i>
+                                    <span class="d-none d-sm-block">Tutup</span>
+                                </button>
                             </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
                 @endif
             </div>
-            <hr>
-            <h6>Detail</h6>
-            <div class="card">
-                <div class="card-body">
-                    <table class="table table-striped table-bordered" id="table1">
-                        <thead>
-                            <tr>
-                                <th>Nama Item</th>
-                                <th>SKU</th>
-                                <th>Jumlah</th>
-                                <th>Unit</th>
-                                <th>Harga Unit</th>
-                                <th>Harga Kotor</th>
-                                <th>Diskon</th>
-                                <th>Total</th>
-                                <th>Notes</th>
-                            </tr>
-                        </thead>
-                        <tbody id="detail">
-                    </table>
+        </div>
+    </div>
+
+    <div class="modal fade text-left" id="modal_filter" role="dialog" aria-labelledby="myModalLabel33"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel33">Filter</h4>
+                    <button type="button" class="close btn-tutup" data-bs-dismiss="modal" aria-label="Close">
+                        <i data-feather="x"></i>
+                    </button>
                 </div>
+                <div class="modal-body">
+                    <form action="{{ route('sales.index') }}" method="get">
+                        <div class="col-md-12" id="filter">
+                            <div>
+                                <small for="">Tanggal Awal</small>
+                                <input type="date" name="date_start" id="date_start" class="form-control"
+                                    value="{{ request('date_start') }}">
+                            </div>
+                            <div class="">
+                                <small for="">Tanggal Akhir</small>
+                                <input type="date" name="date_end" id="date_end" class="form-control"
+                                    value="{{ request('date_end') }}">
+                            </div>
+                            <div class="">
+                                <small for="">Cabang Toko</small>
+                                <select name="shop_id" class="form-control" id="shop_id">
+                                    <option value="">Pilih Cabang</option>
+                                    @foreach ($shop as $item)
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="">
+                                <small for="">Nama Seller</small>
+                                <select name="seller_id" class="form-control" id="seller_id">
+                                    <option value="">Pilih Seller</option>
+                                    @foreach ($seller as $item)
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-secondary btn-tutup" data-bs-dismiss="modal">
+                        <i class="bx bx-x d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Tutup</span>
+                    </button>
+                    <input type="submit" class="btn btn-primary" value="Terapkan">
+                </div>
+                </form>
             </div>
         </div>
-        <div class="modal-footer">
-            <button id="btn-open" type="button" class="btn btn-primary ml-1">
-                <i class="bx bx-check d-block d-sm-none"></i>
-                <span class="d-none d-sm-block">Open</span>
-            </button>
-            <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
-                <i class="bx bx-x d-block d-sm-none"></i>
-                <span class="d-none d-sm-block">Tutup</span>
-            </button>
-        </div>
-        </form>
-    </div>
-    </div>
     </div>
 @endsection
 
@@ -266,9 +325,9 @@
                         $("#detail").append(newListItem);
                     });
                     if (data.data.status == 'open') {
-                        $('#open').hide();
+                        $('#btn-open').hide();
                     } else {
-                        $('#open').show();
+                        $('#btn-open').show();
                     }
                 },
                 complete: function() {}

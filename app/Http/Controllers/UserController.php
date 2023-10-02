@@ -12,12 +12,12 @@ class UserController extends Controller
 {
     protected $userRepository;
 
-    public function __construct(UserRepository $us) {
+    public function __construct(UserRepository $user) {
         $this->middleware(function ($request, $next){
             Session::put('menu_active','users');
             return $next($request);
         });
-        $this->userRepository = $us;
+        $this->userRepository = $user;
     }
     
     public function index(Request $request)
@@ -44,10 +44,10 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $user = $this->userRepository->create($request->all());
-        $this->userRepository->create($request->all());
         
         return response()->json([
             'success'=>true,
+            'data' => $user,
             'message' => 'Berhasil ditambahkan!' 
         ]);
     }
