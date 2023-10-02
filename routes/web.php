@@ -15,6 +15,11 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReturnSalesController as ControllersReturnSalesController;
 use App\Http\Controllers\ReturnWarehouseController;
 use App\Http\Controllers\StockOpnameController;
+use App\Http\Controllers\AdjusmentController;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 
 Route::get('login', [LoginController::class, 'login']);
@@ -56,7 +61,8 @@ Route::middleware(['auth'])->group(function () {
     
     Route::get('returnsales', [ControllersReturnSalesController::class, 'index'])->name('returnsales.index');
     Route::get('conversion', [ConversionController::class, 'index'])->name('conversion.index');
-    
+    Route::get('conversion/api/{shop_id}', [ConversionController::class, 'api'])->name('conversion.api');
+    Route::get('laporan', [ReportController::class, 'index'])->name('laporan.index');
     Route::delete('color/{id}', [ColorController::class, 'destroy']);
     
     Route::delete('sku/{id}', [SKUController::class, 'destroy']);
@@ -78,4 +84,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('laporan', [ReportController::class, 'index'])->name('laporan.index');
     Route::get('laporan/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'laporan_stock'])->name('laporan.stock');
     Route::get('laporan-excel/{type}/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'download_excel'])->name('laporan.excel');
+    Route::get('adjusment/in', [AdjusmentController::class, 'adjusment_in'])->name('adjusment.in');
+    Route::get('adjusment/out', [AdjusmentController::class, 'adjusment_out'])->name('adjusment.out');
+    Route::post('adjusment/store', [AdjusmentController::class, 'store'])->name('adjusment.store');
+    Route::put('adjusment/update/{id}', [AdjusmentController::class, 'update'])->name('adjusment.update');
+    Route::delete('adjusment/delete/{id}', [AdjusmentController::class, 'delete'])->name('adjusment.delete');
 });

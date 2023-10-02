@@ -132,6 +132,21 @@
                             </a>
                         </li>
 
+                        <li class="sidebar-item  has-sub">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-diagram-3"></i>
+                                <span>Adjustment</span>
+                            </a>
+                            <ul class="submenu {{ in_array(Session::get('menu_active'), ['in','out'])? 'active': '' }}">
+                                <li class="submenu-item {{ Session::get('menu_active') == 'in'? 'active': '' }}">
+                                    <a href="/adjusment/in">In</a>
+                                </li>
+                                <li class="submenu-item {{ Session::get('menu_active') == 'out'? 'active': '' }}">
+                                    <a href="/adjusment/out">Out</a>
+                                </li>
+                            </ul>
+                        </li>
+
                         <li class="sidebar-item {{ Session::get('menu_active') == 'laporan'? 'active': '' }}">
                             <a href="{{ route('laporan.index') }}" class='sidebar-link'>
                                 <i class="bi bi-file-earmark-bar-graph"></i>

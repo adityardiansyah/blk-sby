@@ -20,6 +20,19 @@ class ConversionController extends Controller
         });
     }
 
+    public function conversion()
+    {
+        return $this->conversionRepository;
+    }
+
+    public function api($shop_id)
+    {
+        return response()->json([
+            'success' => true,
+            'data' => $this->conversionRepository->get_data_by_shop($shop_id)
+        ]);
+    }
+
     public function index()
     {
         $data = Conversion::get();
