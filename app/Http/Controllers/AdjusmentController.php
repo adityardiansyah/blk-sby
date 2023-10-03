@@ -23,8 +23,16 @@ class AdjusmentController extends Controller
         });
     }
 
+    public function detail_adjusment($id)
+    {
+        return response()->json([
+            'data' => $this->adjusment->get_adjusment_by_id($id)
+        ]);
+    }
+
     public function adjusment_in()
     {
+        Session::put('menu_active','in');
         $data = $this->adjusment->get_adjusment_in();
         $shop = $this->shop->get_all();
         return view('page.adjusment.adjusin', compact('data', 'shop'));
@@ -32,6 +40,7 @@ class AdjusmentController extends Controller
 
     public function adjusment_out()
     {
+        Session::put('menu_active','out');
         $data = $this->adjusment->get_adjusment_out();
         $shop = $this->shop->get_all();
         return view('page.adjusment.adjusout', compact('data', 'shop'));
@@ -42,8 +51,10 @@ class AdjusmentController extends Controller
         try {
             $this->validate($request, [
                 'conversion_id' => 'required',
+                'type' => 'required',
                 'qty' => 'required|integer',
                 'notes' => 'required',
+                'shop_id' => 'required|integer'
             ]);
 
             $storing = $this->adjusment->store($request);
@@ -57,7 +68,7 @@ class AdjusmentController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,
-                'message' => 'Gagal ditambahkan'
+                'message' => $th
             ]);
         }
     }
@@ -84,6 +95,28 @@ class AdjusmentController extends Controller
 
     public function update(Request $request, $id)
     {
+        try {
+            $this->validate($request, [
+                'conversion_id-edit' => 'required',
+                'type-edit' => 'required',
+                'qty-edit' => 'required',
+                'notes-edit' => 'required',
+                'shop_id-edit' => 'required'
+            ]);
 
+            $updating = $this->adjusment->update($request, $id);
+
+            if ($updating) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Berhasil diupdate'
+                ]);
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => $th
+            ]);
+        }
     }
 }

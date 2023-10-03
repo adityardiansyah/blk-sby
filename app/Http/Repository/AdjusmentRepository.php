@@ -4,6 +4,7 @@ namespace App\Http\Repository;
 use App\Models\Adjusment;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Repository\ConversionRepository;
+use DB;
 
 class AdjusmentRepository{
     protected $adjusment, $conversion;
@@ -32,31 +33,35 @@ class AdjusmentRepository{
     public function store($request)
     {
         $arr = [
-            'convensions_id' => $request['convensions_id'],
+            'conversion_id' => $request['conversion_id'],
             'type' => $request['type'],
             'qty' => $request['qty'],
             'notes' => $request['notes'],
+            'shop_id' => $request['shop_id'],
             'status' => 'open'
         ];
 
-        $this->conversion->update_qty($request['convensions_id'], $request['qty'], $request['type']);
-
-        return $this->adjusment->create($arr);
+        return DB::table('adjusments')
+            ->insert($arr);
     }
 
-    public function update($request)
-    {
-        $arr = [
-            'convensions_id' => $request['convensions_id'],
-            'type' => $request['type'],
-            'qty' => $request['qty'],
-            'notes' => $request['notes'],
-            'status' => $request['status']
-        ];
+    public function update($request, $id)
+    {     
 
-        $this->conversion->update_qty($request['convensions_id'], $request['qty'], $request['type']);
+        if ($request->status === 'confirmed') {
+            $this->conversion->update_qty($request['conversion_id-edit'], $request['qty-edit'], $request['type-edit']);
+        }
 
-        return $this->adjusment->update($arr);
+        return DB::table('adjusments')
+                ->where('id', $id)
+                ->update([
+                    'conversion_id' => $request['conversion_id-edit'],
+                    'type' => $request['type-edit'],
+                    'qty' => $request['qty-edit'],
+                    'notes' => $request['notes-edit'],
+                    'shop_id' => $request['shop_id-edit'],
+                    'status' => $request['status'] 
+                ]);
     }
 
     public function delete($id)
