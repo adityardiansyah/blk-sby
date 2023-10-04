@@ -81,7 +81,7 @@ class AdjusmentController extends Controller
             if (empty($data)) {
                 return response()->json([
                     'success'=> false,
-                    'message' => 'Gagal dihapus!' 
+                    'message' => 'Gagal dihapus!'
                 ]);
             }
 
@@ -117,6 +117,24 @@ class AdjusmentController extends Controller
                 'success' => false,
                 'message' => $th
             ]);
+        }
+    }
+
+    public function confirm(Request $request, $id)
+    {
+        try {
+            $data = $this->adjusment->get_adjusment_by_id($id);
+
+            if (empty($data)) {
+                return response()->json([
+                    'success'=> false,
+                    'message' => 'Gagal dihapus!'
+                ]);
+            }
+
+            return $this->adjusment->confirm($request, $id);
+        } catch (\Throwable $th) {
+            //throw $th;
         }
     }
 }

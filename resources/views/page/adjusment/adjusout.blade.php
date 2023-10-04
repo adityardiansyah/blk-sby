@@ -16,7 +16,7 @@
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Type</th>
+                            <th>Barang</th>
                             <th>Qty</th>
                             <th>Notes</th>
                             <th>Status</th>
@@ -32,7 +32,7 @@
                             @foreach ($data as $key => $item)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td>{{ $item->type }}</td>
+                                    <td>{{ $item->sku }}</td>
                                     <td>{{ $item->qty }}</td>
                                     <td>{{ $item->notes }}</td>
                                     <td>{{ $item->status }}</td>
@@ -45,6 +45,9 @@
                                             @if (Auth::user()->id == 1)
                                                 <button type="submit" name="submit" class="btn btn-danger btn-sm">Delete</button>
                                                 <button type="button" class="btn btn-warning btn-sm" onclick="edit({{ $item->id }}, {{ $item->shop_id }}, {{ $item->conversion_id }}, {{ $item->qty }}, '{{ $item->notes }}', '{{ $item->status }}')">Edit</button>
+                                                @if ($item->status != 'confirmed')
+                                                    <button type="button" class="btn btn-success btn-sm" onclick="konfirmasi({{ $item->id }}, {{ $item->conversion_id }}, {{ $item->qty }})">Confirm</button>
+                                                @endif
                                             @endif
                                         </form>
                                     </td>
@@ -108,7 +111,7 @@
                     </div>
                     <label>Notes</label>
                     <div class="form-group">
-                        <input type="text" placeholder="Catatan" class="form-control" name="notes" required value="{{ old('notes') }}">
+                        <input type="text" placeholder="Catatan" class="form-control" name="notes" required value="{{ old('notes') }}" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -183,7 +186,7 @@
                         <label class="form-check-label" for="status-open">
                             Open
                         </label>
-                        <input class="form-check-input" type="radio" name="status" id="status-confirm" value="confirm">
+                        <input class="form-check-input" type="radio" name="status" id="status-confirm" value="confirmed">
                         <label class="form-check-label" for="status-confirm">
                             Confirm
                         </label>
@@ -201,6 +204,25 @@
                     </button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+{{-- Modal Confirm --}}
+<div class="modal" id="modal-confirm">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Yakin akan merubah status <b id="title-confirm"></b> pada toko <b id="toko-confirm"></b> menjadi confirm?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Klik save changes jika anda yakin dengan perubahan</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary btn-confirm">Save changes</button>
+            </div>
         </div>
     </div>
 </div>
@@ -314,7 +336,7 @@ function edit(id, shopId, conversionId, qty, notes, status) {
                     label += ' - ' + size;
                 }
 
-                $('#conversion_id-edit').append('<option value="' + id + '">' + label + '</option>');
+                $('#conversion_id-edit').append('<option ' + selected + ' value="' + id + '">' + label + '</option>');
             });
         }
     })
@@ -328,7 +350,7 @@ function edit(id, shopId, conversionId, qty, notes, status) {
 
     if (status === 'open') {
         $('#status-open').prop('checked', true);
-    } else if (status === 'confirm') {
+    } else if (status === 'confirmed') {
         $('#status-confirm').prop('checked', true);
     }
 
@@ -452,6 +474,66 @@ $(".btn-simpan").click(function(e){
     });
 
 });
+
+function konfirmasi(id, conversion, qty) {
+    $("#modal-confirm").modal('show');
+
+    $.ajax({
+        type: 'GET',
+        url: "{{ url('adjusment/detail') }}/" + id,
+        data: {},
+        success: (data) => {
+            $('#title-confirm').text(data.data.sku)
+            $('#toko-confirm').text(data.data.name)
+        }
+    })
+
+    const token = $('input[name="_token"]').val();
+    const formData = new FormData()
+    formData.append('_token', token)
+    formData.append('conversion_id', conversion)
+    formData.append('qty', qty)
+    formData.append('type', 'OUT')
+
+    $(".btn-confirm").click(function(e) {
+        $.ajax({
+            type: 'POST',
+            url: "{{ url('adjusment/confirm') }}/" + id,
+            headers: {
+                'X-CSRF-TOKEN' : token
+            },
+            data: {formData},
+            contentType: false,
+            processData: false,
+            dataType: 'json',
+            beforeSend: function () {
+                $('.btn-confirm').prop('disabled',true);
+                $('.btn-confirm').html('');
+                $('.btn-confirm').append('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Loading...')
+            },
+            success: (data) => {
+                if (data.success) {
+                    setTimeout(() => {
+                        window.location=window.location;
+                    }, 1200);
+                    message(data.message, data.success);
+                }
+            },
+            complete: function () {
+                $('.btn-update').prop('disabled',false);
+                $('.btn-update').html('');
+                $('.btn-update').append('Simpan');
+                $("input[name=color]").val("");
+            },
+            error:function(params) {
+                let txt = params.responseJSON;
+                $.each(txt.errors,function (k,v) {
+                    message(v, false);
+                });
+            }
+        })
+    })
+}
 
 </script>
 @endpush

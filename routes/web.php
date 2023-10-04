@@ -83,4 +83,5 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
     Route::post('adjusment/store', [AdjusmentController::class, 'store'])->name('adjusment.store');
     Route::post('adjusment/update/{id}', [AdjusmentController::class, 'update'])->name('adjusment.update');
     Route::delete('adjusment/delete/{id}', [AdjusmentController::class, 'delete'])->name('adjusment.delete');
+    Route::post('adjusment/confirm/{id}', [AdjusmentController::class, 'confirm'])->name('adjusment.confirm');
 });
