@@ -8,8 +8,10 @@
         <section class="section">
             <div class="card">
                 <div class="card-header">
-                    <a href="{{ route('goodsreceive.index') }}"><button class="btn btn-secondary float-end ms-2">Reset</button></a>
-                    <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#modal_filter"><i class="bi bi-funnel"></i> Filter</button>
+                    <a href="{{ route('goodsreceive.index') }}"><button
+                            class="btn btn-secondary float-end ms-2">Reset</button></a>
+                    <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
+                        data-bs-target="#modal_filter"><i class="bi bi-funnel"></i> Filter</button>
                 </div>
                 <div class="card-body table-responsive">
                     <table class="table table-striped" id="table1">
@@ -110,8 +112,8 @@
                                 <div class="col-md-6">
                                     <label>No. SJ Penerimaan</label>
                                     <div class="form-group">
-                                        <input readonly type="text" placeholder="No. SJ Penerimaan"
-                                            class="form-control" name="no_sj_receive" id="no_sj_receive" required
+                                        <input readonly type="text" placeholder="No. SJ Penerimaan" class="form-control"
+                                            name="no_sj_receive" id="no_sj_receive" required
                                             value="{{ old('no_sj_receive') }}">
                                     </div>
                                     <label>Tgl Penerimaan</label>
@@ -134,13 +136,14 @@
                                     <table class="table table-striped table-bordered" id="table1">
                                         <thead>
                                             <tr>
+                                                <th>No.</th>
                                                 <th>Nama</th>
                                                 <th>SKU</th>
                                                 <th>Jumlah</th>
                                                 <th>Harga Beli</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="detail_gr"></tbody>
+                                        <tbody class="spinners" id="detail_gr"></tbody>
                                     </table>
                                 </div>
                             </div>
@@ -165,18 +168,16 @@
     </div>
     </div>
 
-<div class="modal fade text-left" id="modal_filter" role="dialog"
-    aria-labelledby="myModalLabel33" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered"
-        role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel33">Filter</h4>
-                <button type="button" class="close btn-tutup" data-bs-dismiss="modal"
-                    aria-label="Close">
-                    <i data-feather="x"></i>
-                </button>
-            </div>
+    <div class="modal fade text-left" id="modal_filter" role="dialog" aria-labelledby="myModalLabel33"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel33">Filter</h4>
+                    <button type="button" class="close btn-tutup" data-bs-dismiss="modal" aria-label="Close">
+                        <i data-feather="x"></i>
+                    </button>
+                </div>
                 <div class="modal-body">
                     <form action="{{ route('goodsreceive.index') }}" method="get">
                         <div class="col-md-12" id="filter">
@@ -209,19 +210,18 @@
                                 </select>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-light-secondary btn-tutup"
-                        data-bs-dismiss="modal">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-secondary btn-tutup" data-bs-dismiss="modal">
                         <i class="bx bx-x d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">Tutup</span>
                     </button>
                     <input type="submit" class="btn btn-primary" value="Terapkan">
                 </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 @endsection
 
 @push('js')
@@ -296,6 +296,20 @@
                 type: 'get',
                 data: {},
                 url: "{{ url('goodsreceive') }}/" + id,
+                beforeSend: function() {
+                    $('.spinners').prop('disabled', true);
+                    $("#detail_gr").html('');
+                    var spinnerHtml = `
+                        <tr>
+                        <td colspan="5" class="text-center">
+                        <div class="spinner-border text-primary mt-2" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        </td>
+                        </tr>
+                    `;
+                    $("#detail_gr").append(spinnerHtml);
+                    },
                 success: function(data) {
                     $("#detail_gr").html('');
                     console.log(data);
@@ -308,11 +322,14 @@
                     $('#notes').val(data.data.notes);
                     $('#id').val(data.data.id);
                     let detail = data.data.detail
+                    let itemNumber = 1;
                     $.each(detail, function(i, item) {
                         console.log(item);
-                        var newListItem = "<tr> <td> " + item.item_name + " </td> <td> " + item.sku +
+                        var newListItem = "<tr> <td> " + itemNumber + " </td> <td> " + item.item_name +
+                            " </td> <td> " + item.sku +
                             " </td> <td> " + item.qty + " </td> <td> " + item.purchase_price +
                             " </td>" + item + "</tr>";
+                            itemNumber++;
                         $("#detail_gr").append(newListItem);
                     });
                     if (data.data.status == 'open') {

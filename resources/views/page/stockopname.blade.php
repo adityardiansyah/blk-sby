@@ -190,12 +190,13 @@
                                 <table class="table table-striped table-bordered" id="table1">
                                     <thead>
                                         <tr>
+                                            <th>No.</th>
                                             <th>Nama Barang</th>
                                             <th>SKU</th>
                                             <th>Qty</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="detail_so"></tbody>
+                                    <tbody class="spinners" id="detail_so"></tbody>
                                 </table>
                                 <hr>
                                 <h6 class="float-end">Total Qty : <b id="total_qty"></b></h6>
@@ -295,6 +296,20 @@
             type : 'get',
             data: {},
             url : "{{ url('stockopname') }}/"+id,
+            beforeSend: function() {
+                    $('.spinners').prop('disabled', true);
+                    $("#detail_so").html('');
+                    var spinnerHtml = `
+                        <tr>
+                        <td colspan="4" class="text-center">
+                        <div class="spinner-border text-primary mt-2" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        </td>
+                        </tr>
+                    `;
+                    $("#detail_so").append(spinnerHtml);
+                    },
             success:function(data){
                 $( "#detail_so" ).html('');
                 console.log(data);
@@ -306,9 +321,11 @@
                 $('#id').val(data.data.id);
                 let detail = data.data.detail
                 let total = 0
+                let itemNumber = 1
                 $.each( detail, function( i, item ) {
                     console.log(item);
-                    var newListItem = "<tr> <td> "+item.item_name+" </td> <td> "+item.sku+" </td> <td> "+item.qty+" </td>" + item + "</tr>";
+                    var newListItem = "<tr> <td> " + itemNumber + " </td> <td> "+item.item_name+" </td> <td> "+item.sku+" </td> <td> "+item.qty+" </td>" + item + "</tr>";
+                    itemNumber++
                     $( "#detail_so" ).append( newListItem );
                     total += item.qty
                 });
