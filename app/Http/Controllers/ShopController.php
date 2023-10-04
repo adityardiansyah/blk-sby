@@ -5,13 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Shop;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use App\Http\Repository\ShopRepository;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class ShopController extends Controller
 {
-    public function __construct()
+    protected $shop;
+
+    public function __construct(ShopRepository $shp)
     {
+        $this->shop = $shp;
         $this->middleware(function ($request, $next) {
             Session::put('menu_active', 'shop');
             return $next($request);
@@ -22,6 +26,13 @@ class ShopController extends Controller
     {
         $data = Shop::all();
         return view('page.shop', compact('data'));
+    }
+
+    public function shop_api()
+    {
+        return response()->json([
+            'data' => $this->shop->get_all()
+        ]);
     }
 
     public function store(Request $request)

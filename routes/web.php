@@ -30,6 +30,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/',[HomeController::class, 'index'])->name('home.index');
     Route::get('shop', [ShopController::class, 'index'])->name('shop.index');
     Route::post('shop', [ShopController::class, 'store'])->name('master.shop.store');
+    Route::get('shop/api', [ShopController::class, 'shop_api'])->name('shop.api');
     Route::get('shop/edit/{id}', [ShopController::class, 'edit']);
     Route::put('shop/update', [ShopController::class,'update'])->name('master.shop.update');
     
@@ -84,9 +85,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('laporan', [ReportController::class, 'index'])->name('laporan.index');
     Route::get('laporan/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'laporan_stock'])->name('laporan.stock');
     Route::get('laporan-excel/{type}/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'download_excel'])->name('laporan.excel');
+    Route::get('adjusment/detail/{id}', [AdjusmentController::class, 'detail_adjusment'])->name('adjusment.edit');
     Route::get('adjusment/in', [AdjusmentController::class, 'adjusment_in'])->name('adjusment.in');
     Route::get('adjusment/out', [AdjusmentController::class, 'adjusment_out'])->name('adjusment.out');
     Route::post('adjusment/store', [AdjusmentController::class, 'store'])->name('adjusment.store');
-    Route::put('adjusment/update/{id}', [AdjusmentController::class, 'update'])->name('adjusment.update');
+    Route::post('adjusment/update/{id}', [AdjusmentController::class, 'update'])->name('adjusment.update');
     Route::delete('adjusment/delete/{id}', [AdjusmentController::class, 'delete'])->name('adjusment.delete');
 });
