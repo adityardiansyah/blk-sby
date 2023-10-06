@@ -174,7 +174,6 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\NavServiceProvider::class,
         Laravel\Sanctum\SanctumServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         // Maatwebsite\Excel\ExcelServiceProvider::class,
