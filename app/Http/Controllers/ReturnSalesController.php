@@ -14,7 +14,7 @@ class ReturnSalesController extends Controller
     public function __construct(ReturnSalesRepository $sales) {
         $this->ReturnSalesRepository = $sales;
         $this->middleware(function ($request, $next){
-            Session::put('menu_active','returnsales');
+            Session::put('menu_active','/returnsales');
             return $next($request);
         });
     }

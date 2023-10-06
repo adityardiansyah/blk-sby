@@ -14,7 +14,7 @@ class UserController extends Controller
 
     public function __construct(UserRepository $us) {
         $this->middleware(function ($request, $next){
-            Session::put('menu_active','users');
+            Session::put('menu_active','/users');
             return $next($request);
         });
         $this->userRepository = $us;

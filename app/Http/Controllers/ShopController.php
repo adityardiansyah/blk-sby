@@ -17,7 +17,7 @@ class ShopController extends Controller
     {
         $this->shop = $shp;
         $this->middleware(function ($request, $next) {
-            Session::put('menu_active', 'shop');
+            Session::put('menu_active', '/shop');
             return $next($request);
         });
     }

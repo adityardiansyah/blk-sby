@@ -18,7 +18,7 @@ class AdjusmentController extends Controller
         $this->conversions = $conv;
         $this->shop = $shp;
         $this->middleware(function ($request, $next){
-            Session::put('menu_active','adjusment');
+            Session::put('menu_active','/adjusment');
             return $next($request);
         });
     }
@@ -32,7 +32,7 @@ class AdjusmentController extends Controller
 
     public function adjusment_in()
     {
-        Session::put('menu_active','in');
+        Session::put('menu_active','/adjusment/in');
         $data = $this->adjusment->get_adjusment_in();
         $shop = $this->shop->get_all();
         return view('page.adjusment.adjusin', compact('data', 'shop'));
@@ -40,7 +40,7 @@ class AdjusmentController extends Controller
 
     public function adjusment_out()
     {
-        Session::put('menu_active','out');
+        Session::put('menu_active','/adjusment/out');
         $data = $this->adjusment->get_adjusment_out();
         $shop = $this->shop->get_all();
         return view('page.adjusment.adjusout', compact('data', 'shop'));

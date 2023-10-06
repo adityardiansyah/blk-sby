@@ -15,7 +15,7 @@ class ConversionController extends Controller
     public function __construct(ConversionRepository $conversion) {
         $this->conversionRepository = $conversion;
         $this->middleware(function ($request, $next){
-            Session::put('menu_active','conversion');
+            Session::put('menu_active','/conversion');
             return $next($request);
         });
     }

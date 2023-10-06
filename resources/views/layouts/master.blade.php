@@ -57,103 +57,32 @@
                             </a>
                         </li>
                         @if (!empty(Auth::user()->user_group[0]))    
-                        @if (Auth::user()->user_group[0]->group_id == 1 || Auth::user()->user_group[0]->group_id == 2)
-                        <li class="sidebar-item  has-sub">
-                            <a href="#" class='sidebar-link'>
-                                <i class="bi bi-diagram-3"></i>
-                                <span>Master</span>
-                            </a>
-                            <ul class="submenu {{ in_array(Session::get('menu_active'), ['sku','color','size'])? 'active': '' }}">
-                                <li class="submenu-item {{ Session::get('menu_active') == 'sku'? 'active': '' }}">
-                                    <a href="{{ route('master.sku') }}">SKU</a>
-                                </li>
-                                <li class="submenu-item {{ Session::get('menu_active') == 'color'? 'active': '' }}">
-                                    <a href="{{ route('master.color') }}">Warna</a>
-                                </li>
-                                <li class="submenu-item {{ Session::get('menu_active') == 'size'? 'active': '' }}">
-                                    <a href="{{ route('master.size') }}">Ukuran</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="sidebar-item  has-sub">
-                            <a href="#" class='sidebar-link'>
-                                <i class="bi bi-shop"></i>
-                                <span>Toko</span>
-                            </a>
-                            <ul class="submenu {{ in_array(Session::get('menu_active'), ['shop','seller'])? 'active': '' }}">
-                                <li class="submenu-item {{ Session::get('menu_active') == 'shop'? 'active': '' }}">
-                                    <a href="{{ route('shop.index') }}">Toko</a>
-                                </li>
-                                <li class="submenu-item {{ Session::get('menu_active') == 'seller'? 'active': '' }}">
-                                    <a href="{{ route('seller.index') }}">Seller</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="sidebar-item {{ Session::get('menu_active') == 'users'? 'active': '' }}">
-                            <a href="{{ route('users.index') }}" class='sidebar-link'>
-                                <i class="bi bi-people"></i>
-                                <span>User</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item {{ Session::get('menu_active') == 'conversion'? 'active': '' }}">
-                            <a href="{{ route('conversion.index') }}" class='sidebar-link'>
-                                <i class="bi bi-funnel"></i>
-                                <span>Daftar Produk</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item {{ Session::get('menu_active') == 'goodsreceive'? 'active': '' }}">
-                            <a href="{{ route('goodsreceive.index') }}" class='sidebar-link'>
-                                <i class="bi bi-box-seam"></i>
-                                <span>Penerimaan Barang</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item {{ Session::get('menu_active') == 'returnwarehouse'? 'active': '' }}">
-                            <a href="{{ route('returnwarehouse.index') }}" class='sidebar-link'>
-                                <i class="bi bi-box-arrow-up-right"></i>
-                                <span>Retur Gudang</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item  {{ Session::get('menu_active') == 'sales'? 'active': '' }}">
-                            <a href="{{ route('sales.index') }}" class='sidebar-link'>
-                                <i class="bi bi-cart-check"></i>
-                                <span>Penjualan</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item {{ Session::get('menu_active') == 'returnsales'? 'active': '' }}">
-                            <a href="{{ route('returnsales.index') }}" class='sidebar-link'>
-                                <i class="bi bi-cart-dash"></i>
-                                <span>Retur Penjualan</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item {{ Session::get('menu_active') == 'stockopname'? 'active': '' }}">
-                            <a href="{{ route('stockopname.index') }}" class='sidebar-link'>
-                                <i class="bi bi-boxes"></i>
-                                <span>Stok Fisik</span>
-                            </a>
-                        </li>
-
-                        <li class="sidebar-item  has-sub">
-                            <a href="#" class='sidebar-link'>
-                                <i class="bi bi-diagram-3"></i>
-                                <span>Adjustment</span>
-                            </a>
-                            <ul class="submenu {{ in_array(Session::get('menu_active'), ['in','out'])? 'active': '' }}">
-                                <li class="submenu-item {{ Session::get('menu_active') == 'in'? 'active': '' }}">
-                                    <a href="/adjusment/in">In</a>
-                                </li>
-                                <li class="submenu-item {{ Session::get('menu_active') == 'out'? 'active': '' }}">
-                                    <a href="/adjusment/out">Out</a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="sidebar-item {{ Session::get('menu_active') == 'laporan'? 'active': '' }}">
-                            <a href="{{ route('laporan.index') }}" class='sidebar-link'>
-                                <i class="bi bi-file-earmark-bar-graph"></i>
-                                <span>Laporan</span>
-                            </a>
-                        </li>
-                        @endif
+                            @if (Auth::user()->user_group[0]->group_id == 1 || Auth::user()->user_group[0]->group_id == 2)
+                                @foreach (NavHelper::list_menu() as $item)
+                                    @if ($item['section_id'] != NULL)
+                                        <li class="sidebar-item  has-sub">
+                                            <a href="#" class='sidebar-link'>
+                                                <i class="bi bi-{{ $item['icons'] }}"></i>
+                                                <span>{{ $item['section'] }}</span>
+                                            </a>
+                                            <ul class="submenu {{ in_array(Session::get('menu_active'), $item['aktif']) ? 'active': '' }}">
+                                                @foreach ($item['menu'] as $key)
+                                                    <li class="submenu-item {{ Session::get('menu_active') == $key['url'] ? 'active': '' }}">
+                                                        <a href="{{ $key['url'] }}">{{ $key['menu'] }}</a>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </li>
+                                    @else
+                                        <li class="sidebar-item {{ Session::get('menu_active') == 'dashboard'? 'active': '' }} ">
+                                            <a href="{{ url('/') }}" class='sidebar-link'>
+                                                <i class="bi bi-grid-fill"></i>
+                                                <span>{{ $item['section'] }}</span>
+                                            </a>
+                                        </li>
+                                    @endif
+                                @endforeach
+                            @endif
                         @endif
                         <li class="sidebar-item">
                             <a href="{{ route('logout') }}" class='sidebar-link' onclick="event.preventDefault();
@@ -165,9 +94,6 @@
                                 @csrf
                             </form>
                         </li>
-
-                                    
-
                     </ul>
                 </div>
             </div>
@@ -222,19 +148,19 @@
         }
     </script>
     @if(session()->has('message'))
-    @php
-        $message = Session::get('message');
-    @endphp
-    <script>
-        Toastify({
-            text: "{{ $message['content'] }}",
-            duration: 7000,
-            close:true,
-            gravity:"top",
-            position: "right",
-            backgroundColor: ("{{ $message['type'] }}" == 'success')? "#61876E": "#F55050",
-        }).showToast();
-    </script>
+        @php
+            $message = Session::get('message');
+        @endphp
+        <script>
+            Toastify({
+                text: "{{ $message['content'] }}",
+                duration: 7000,
+                close:true,
+                gravity:"top",
+                position: "right",
+                backgroundColor: ("{{ $message['type'] }}" == 'success')? "#61876E": "#F55050",
+            }).showToast();
+        </script>
     @endif
 
     @stack('js')

@@ -17,7 +17,7 @@ class StockOpnameController extends Controller
         $this->stock = $stock;
         $this->detailStockOpnameRepository = $detail_stock;
         $this->middleware(function ($request, $next){
-            Session::put('menu_active','stockopname');
+            Session::put('menu_active','/stockopname');
             return $next($request);
         });
     }
