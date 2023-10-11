@@ -15,9 +15,22 @@ class ConversionController extends Controller
     public function __construct(ConversionRepository $conversion) {
         $this->conversionRepository = $conversion;
         $this->middleware(function ($request, $next){
-            Session::put('menu_active','conversion');
+            Session::put('menu_active','/conversion');
             return $next($request);
         });
+    }
+
+    public function conversion()
+    {
+        return $this->conversionRepository;
+    }
+
+    public function api($shop_id)
+    {
+        return response()->json([
+            'success' => true,
+            'data' => $this->conversionRepository->get_data_by_shop($shop_id)
+        ]);
     }
 
     public function index()

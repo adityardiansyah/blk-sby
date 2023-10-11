@@ -22,5 +22,10 @@ class Conversion extends Model
     {
         return $this->belongsTo(Shop::class);
     }
+
+    public function adjusment()
+    {
+        return $this->belongsTo(Adjusment::class);
+    }
 }
 

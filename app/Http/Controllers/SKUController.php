@@ -14,7 +14,7 @@ class SKUController extends Controller
 {
     public function __construct() {
         $this->middleware(function ($request, $next){
-            Session::put('menu_active','sku');
+            Session::put('menu_active','/sku');
             return $next($request);
         });
     }

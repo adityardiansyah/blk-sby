@@ -13,7 +13,7 @@ class ColorController extends Controller
 {
     public function __construct() {
         $this->middleware(function ($request, $next){
-            Session::put('menu_active','color');
+            Session::put('menu_active','/color');
             return $next($request);
         });
     }

@@ -1,10 +1,6 @@
-#LARAVEL via artisan
-
 FROM thecodingmachine/php:8.1-v4-apache
 ARG PHP_VER=8.1
 
-#ENV APACHE_RUN_USER=www-data \
-#    APACHE_RUN_GROUP=www-data \
 ENV APACHE_DOCUMENT_ROOT=/var/www/public \
     APACHE_EXTENSIONS="request rewrite" \
     PHP_INI_MEMORY_LIMIT=1g \
@@ -33,11 +29,8 @@ RUN sudo chown -R docker:docker /var/www
 RUN composer install  \
     && composer update
 
-# RUN sudo apt-get install -y nodejs npm
-
-# RUN npm install \
-#     && npm update
-
 RUN php artisan cache:clear
 RUN php artisan view:clear
 RUN php artisan route:clear
+RUN php artisan migrate
+RUN composer dump-autoload

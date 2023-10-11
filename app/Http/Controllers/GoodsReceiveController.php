@@ -19,8 +19,8 @@ class GoodsReceiveController extends Controller
         $this->goodsReceiveRepository = $goods;
         $this->manageStockRepository = $manageStock;
 
-        $this->middleware(function ($request, $next) {
-            Session::put('menu_active', 'goodsreceive');
+        $this->middleware(function ($request, $next){
+            Session::put('menu_active','/goodsreceive');
             return $next($request);
         });
     }
