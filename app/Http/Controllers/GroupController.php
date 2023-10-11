@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use App\Http\Repository\GroupRepository;
 
 class GroupController extends Controller
@@ -11,6 +12,10 @@ class GroupController extends Controller
 
     public function __construct(GroupRepository $group) {
         $this->group = $group;
+        $this->middleware(function ($request, $next){
+            Session::put('menu_active','/group');
+            return $next($request);
+        });
     }
 
     public function index()
