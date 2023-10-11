@@ -17,6 +17,7 @@ class MenuSeeder extends Seeder
         DB::table('menus')
             ->insert([
                 'group_id' => 1,
+                'parent_id' => 0,
                 'section_id' => 1,
                 'name_menu' => 'SKU',
                 'url' => '/sku',
@@ -28,6 +29,7 @@ class MenuSeeder extends Seeder
         DB::table('menus')
             ->insert([
                 'group_id' => 1,
+                'parent_id' => 0,
                 'section_id' => 1,
                 'name_menu' => 'Warna',
                 'url' => '/color',
@@ -39,6 +41,7 @@ class MenuSeeder extends Seeder
         DB::table('menus')
             ->insert([
                 'group_id' => 1,
+                'parent_id' => 0,
                 'section_id' => 1,
                 'name_menu' => 'Ukuran',
                 'url' => '/size',
@@ -50,6 +53,7 @@ class MenuSeeder extends Seeder
         DB::table('menus')
             ->insert([
                 'group_id' => 1,
+                'parent_id' => 0,
                 'section_id' => 2,
                 'name_menu' => 'Toko',
                 'url' => '/shop',
@@ -61,6 +65,7 @@ class MenuSeeder extends Seeder
         DB::table('menus')
             ->insert([
                 'group_id' => 1,
+                'parent_id' => 0,
                 'section_id' => 2,
                 'name_menu' => 'Seller',
                 'url' => '/seller',
@@ -72,6 +77,7 @@ class MenuSeeder extends Seeder
         DB::table('menus')
             ->insert([
                 'group_id' => 1,
+                'parent_id' => 0,
                 'section_id' => 3,
                 'name_menu' => 'In',
                 'url' => '/adjusment/in',
@@ -83,6 +89,7 @@ class MenuSeeder extends Seeder
         DB::table('menus')
             ->insert([
                 'group_id' => 1,
+                'parent_id' => 0,
                 'section_id' => 3,
                 'name_menu' => 'Out',
                 'url' => '/adjusment/out',
@@ -94,6 +101,7 @@ class MenuSeeder extends Seeder
         DB::table('menus')
             ->insert([
                 'group_id' => 1,
+                'parent_id' => 0,
                 'section_id' => 4,
                 'name_menu' => 'User',
                 'url' => '/users',
@@ -105,6 +113,19 @@ class MenuSeeder extends Seeder
         DB::table('menus')
             ->insert([
                 'group_id' => 1,
+                'parent_id' => 0,
+                'section_id' => 4,
+                'name_menu' => 'Create Section',
+                'url' => '/create-section',
+                'icons' => '',
+                'order' => 3,
+                'status' => 1,
+            ]);
+
+        DB::table('menus')
+            ->insert([
+                'group_id' => 1,
+                'parent_id' => 0,
                 'section_id' => 5,
                 'name_menu' => 'Daftar Produk',
                 'url' => '/conversion',
@@ -116,6 +137,7 @@ class MenuSeeder extends Seeder
         DB::table('menus')
             ->insert([
                 'group_id' => 1,
+                'parent_id' => 0,
                 'section_id' => 5,
                 'name_menu' => 'Penerimaan Barang',
                 'url' => '/goodsreceive',
@@ -127,6 +149,7 @@ class MenuSeeder extends Seeder
         DB::table('menus')
             ->insert([
                 'group_id' => 1,
+                'parent_id' => 0,
                 'section_id' => 5,
                 'name_menu' => 'Retur Gudang',
                 'url' => '/returnwarehouse',
@@ -138,6 +161,7 @@ class MenuSeeder extends Seeder
         DB::table('menus')
             ->insert([
                 'group_id' => 1,
+                'parent_id' => 0,
                 'section_id' => 6,
                 'name_menu' => 'Penjualan',
                 'url' => '/sales',
@@ -149,6 +173,7 @@ class MenuSeeder extends Seeder
         DB::table('menus')
             ->insert([
                 'group_id' => 1,
+                'parent_id' => 0,
                 'section_id' => 6,
                 'name_menu' => 'Retur Penjualan',
                 'url' => '/returnsales',
@@ -160,6 +185,7 @@ class MenuSeeder extends Seeder
         DB::table('menus')
             ->insert([
                 'group_id' => 1,
+                'parent_id' => 0,
                 'section_id' => 6,
                 'name_menu' => 'Stock Fisik',
                 'url' => '/stockopname',
@@ -171,6 +197,7 @@ class MenuSeeder extends Seeder
         DB::table('menus')
             ->insert([
                 'group_id' => 1,
+                'parent_id' => 0,
                 'section_id' => 7,
                 'name_menu' => 'Laporan',
                 'url' => '/laporan',
@@ -182,6 +209,7 @@ class MenuSeeder extends Seeder
         DB::table('menus')
             ->insert([
                 'group_id' => 1,
+                'parent_id' => 0,
                 'section_id' => 4,
                 'name_menu' => 'Group',
                 'url' => '/group',
@@ -193,6 +221,7 @@ class MenuSeeder extends Seeder
         DB::table('menus')
             ->insert([
                 'group_id' => 1,
+                'parent_id' => 0,
                 'section_id' => 8,
                 'name_menu' => 'Setting',
                 'url' => '/setting',
