@@ -22,4 +22,12 @@ class SectionRepository{
     {
         return DB::table('menu_sections')->where('id', $id)->first();
     }
+
+    public function update($request, $id)
+    {
+        return DB::table('menu_sections')->where('id', $id)->update([
+            'name_section' => $request->name_section,
+            'icons' => $request->icons,
+        ]);
+    }
 }

@@ -20,6 +20,7 @@ use App\Http\Controllers\StockOpnameController;
 use App\Http\Controllers\AdjusmentController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\MenuController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -31,18 +32,15 @@ Route::get('login', [LoginController::class, 'login']);
 Route::post('login', [LoginController::class, 'check_login'])->name('login'); 
 Route::post('logout', [LoginController::class, 'logout'])->name('logout'); 
 
-Route::get('/icons', function () {
-    $iconPath = public_path('assets/extensions/@icon/dripicons/icons');
-    $icons = File::allFiles($iconPath);
-
-    return view('page.icon', compact('icons'));
-});
-
 Route::get('/section', [SectionController::class, 'index']);
+Route::get('/section/{id}', [SectionController::class, 'detailSection']);
 
 // URL::forceScheme('https');
 Route::middleware(['auth'])->group(function () {
     Route::get('/create-section', [SectionController::class, 'section']);
+    Route::get('/section/edit/{id}', [SectionController::class, 'edit']);
+    Route::post('section/update/{id}', [SectionController::class, 'update']);
+    Route::get('/menu/{id}', [MenuController::class, 'menuApi']);
     Route::get('/',[HomeController::class, 'index'])->name('home.index');
     Route::get('shop', [ShopController::class, 'index'])->name('shop.index');
     Route::post('shop', [ShopController::class, 'store'])->name('master.shop.store');

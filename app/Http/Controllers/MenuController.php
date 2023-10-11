@@ -72,9 +72,9 @@ class MenuController extends Controller
      * @param  \App\Models\Menu  $menu
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        //
+        $this->menu->update($request, $id);
     }
 
     /**
@@ -86,5 +86,12 @@ class MenuController extends Controller
     public function destroy(Menu $menu)
     {
         //
+    }
+
+    public function menuApi($id)
+    {
+        return response()->json([
+            'payload' => $this->menu->get_menu($id)
+        ]);
     }
 }

@@ -210,7 +210,7 @@ class MenuSeeder extends Seeder
             ->insert([
                 'group_id' => 1,
                 'parent_id' => 0,
-                'section_id' => 4,
+                'section_id' => 8,
                 'name_menu' => 'Group',
                 'url' => '/group',
                 'icons' => '',
