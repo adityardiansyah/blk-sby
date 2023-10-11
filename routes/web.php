@@ -15,16 +15,35 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReturnSalesController as ControllersReturnSalesController;
 use App\Http\Controllers\ReturnWarehouseController;
 use App\Http\Controllers\StockOpnameController;
+use App\Http\Controllers\AdjusmentController;
+use App\Http\Controllers\SectionController;
+use App\Http\Controllers\GroupController;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 
 Route::get('login', [LoginController::class, 'login']);
 Route::post('login', [LoginController::class, 'check_login'])->name('login'); 
 Route::post('logout', [LoginController::class, 'logout'])->name('logout'); 
 
+Route::get('/icons', function () {
+    $iconPath = public_path('assets/extensions/@icon/dripicons/icons');
+    $icons = File::allFiles($iconPath);
+
+    return view('page.icon', compact('icons'));
+});
+
+Route::get('/section', [SectionController::class, 'index']);
+
+// URL::forceScheme('https');
 Route::middleware(['auth'])->group(function () {
+    Route::get('/create-section', [SectionController::class, 'section']);
     Route::get('/',[HomeController::class, 'index'])->name('home.index');
     Route::get('shop', [ShopController::class, 'index'])->name('shop.index');
     Route::post('shop', [ShopController::class, 'store'])->name('master.shop.store');
+    Route::get('shop/api', [ShopController::class, 'shop_api'])->name('shop.api');
     Route::get('shop/edit/{id}', [ShopController::class, 'edit']);
     Route::put('shop/update', [ShopController::class,'update'])->name('master.shop.update');
     
@@ -56,7 +75,8 @@ Route::middleware(['auth'])->group(function () {
     
     Route::get('returnsales', [ControllersReturnSalesController::class, 'index'])->name('returnsales.index');
     Route::get('conversion', [ConversionController::class, 'index'])->name('conversion.index');
-    
+    Route::get('conversion/api/{shop_id}', [ConversionController::class, 'api'])->name('conversion.api');
+    Route::get('laporan', [ReportController::class, 'index'])->name('laporan.index');
     Route::delete('color/{id}', [ColorController::class, 'destroy']);
     
     Route::delete('sku/{id}', [SKUController::class, 'destroy']);
@@ -78,4 +98,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('laporan', [ReportController::class, 'index'])->name('laporan.index');
     Route::get('laporan/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'laporan_stock'])->name('laporan.stock');
     Route::get('laporan-excel/{type}/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'download_excel'])->name('laporan.excel');
+    Route::get('adjusment/detail/{id}', [AdjusmentController::class, 'detail_adjusment'])->name('adjusment.edit');
+    Route::get('adjusment/in', [AdjusmentController::class, 'adjusment_in'])->name('adjusment.in');
+    Route::get('adjusment/out', [AdjusmentController::class, 'adjusment_out'])->name('adjusment.out');
+    Route::post('adjusment/store', [AdjusmentController::class, 'store'])->name('adjusment.store');
+    Route::post('adjusment/update/{id}', [AdjusmentController::class, 'update'])->name('adjusment.update');
+    Route::delete('adjusment/delete/{id}', [AdjusmentController::class, 'delete'])->name('adjusment.delete');
+    Route::post('adjusment/confirm/{id}', [AdjusmentController::class, 'confirm'])->name('adjusment.confirm');
+    Route::get('group', [GroupController::class, 'index']);
+    Route::get('group/detail/{id}', [GroupController::class, 'api']);
+    Route::post('group', [GroupController::class, 'store']);
+    Route::delete('group/{id}', [GroupController::class, 'delete']);
+    Route::post('group/update/{id}', [GroupController::class, 'update']);
 });

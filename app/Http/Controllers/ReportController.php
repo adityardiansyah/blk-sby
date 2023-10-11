@@ -19,7 +19,7 @@ class ReportController extends Controller
         private ReportRepository $reportRepository
     ) {
         $this->middleware(function ($request, $next){
-            Session::put('menu_active','laporan');
+            Session::put('menu_active','/laporan');
             return $next($request);
         });
     }

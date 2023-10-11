@@ -13,7 +13,7 @@ class SizeController extends Controller
 {
     public function __construct() {
         $this->middleware(function ($request, $next){
-            Session::put('menu_active','size');
+            Session::put('menu_active','/size');
             return $next($request);
         });
     }

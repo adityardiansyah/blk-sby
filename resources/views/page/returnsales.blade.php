@@ -7,7 +7,11 @@
 <div class="page-content">
     <section class="section">
         <div class="card">
-
+            <div class="card-header">
+                {{-- <button type="button" class="btn btn-warning float-end" data-bs-toggle="modal" data-bs-target="#modal_add"><i class="bi bi-eye"></i></button> --}}
+                <a href="{{ route('returnsales.index') }}"><button class="btn btn-secondary float-end ms-2">Reset</button></a>
+                <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#modal_filter"><i class="bi bi-funnel"></i> Filter</button>
+            </div>
             <div class="card-body">
                 <table class="table table-striped" id="table1">
                     <thead>
@@ -52,6 +56,63 @@
     </section>
 </div>
 
+<div class="modal fade text-left" id="modal_filter" role="dialog"
+    aria-labelledby="myModalLabel33" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered"
+        role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel33">Filter</h4>
+                <button type="button" class="close btn-tutup" data-bs-dismiss="modal"
+                    aria-label="Close">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+                <div class="modal-body">
+                    <form action="{{ route('returnsales.index') }}" method="get">
+                        <div class="col-md-12" id="filter">
+                            <div>
+                                <small for="">Tanggal Awal</small>
+                                <input type="date" name="date_start" id="date_start" class="form-control"
+                                    value="{{ request('date_start') }}">
+                            </div>
+                            <div class="">
+                                <small for="">Tanggal Akhir</small>
+                                <input type="date" name="date_end" id="date_end" class="form-control"
+                                    value="{{ request('date_end') }}">
+                            </div>
+                            <div class="">
+                                <small for="">Cabang Toko</small>
+                                <select name="shop_id" class="form-control" id="shop_id">
+                                    <option value="">Pilih Cabang</option>
+                                    @foreach ($shop as $item)
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="">
+                                <small for="">Nama Seller</small>
+                                <select name="seller_id" class="form-control" id="seller_id">
+                                    <option value="">Pilih Seller</option>
+                                    @foreach ($seller as $item)
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-secondary btn-tutup"
+                        data-bs-dismiss="modal">
+                        <i class="bx bx-x d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Tutup</span>
+                    </button>
+                    <input type="submit" class="btn btn-primary" value="Terapkan">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <div class="modal fade text-left modal-xl" id="modal_show" tabindex="-1" role="dialog"
     aria-labelledby="myModalLabel33" aria-hidden="true">
@@ -154,6 +215,7 @@
         </div>
     </div>
 </div>
+
 @endsection
 
 @push('js')

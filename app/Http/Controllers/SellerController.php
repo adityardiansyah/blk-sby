@@ -19,7 +19,7 @@ class SellerController extends Controller
         private UserRepository $userRepository
     ) {
         $this->middleware(function ($request, $next){
-            Session::put('menu_active','seller');
+            Session::put('menu_active','/seller');
             return $next($request);
         });
     }

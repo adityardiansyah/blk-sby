@@ -16,7 +16,7 @@ class CreateMenuSectionsTable extends Migration
         Schema::create('menu_sections', function (Blueprint $table) {
             $table->id();
             $table->string('name_section');
-            $table->string('order');
+            $table->integer('order');
             $table->string('icons');
             $table->string('status');
             $table->timestamps();

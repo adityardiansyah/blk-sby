@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\ReturnWarehouse;
+use App\Models\Shop;
+use App\Models\Seller;
 use App\Http\Repository\ReturnWarehouseRepository;
 
 class ReturnWarehouseController extends Controller
@@ -14,15 +16,41 @@ class ReturnWarehouseController extends Controller
     public function __construct(ReturnWarehouseRepository $return) {
         $this->ReturnWarehouseRepository = $return;
         $this->middleware(function ($request, $next){
-            Session::put('menu_active','returnwarehouse');
+            Session::put('menu_active','/returnwarehouse');
             return $next($request);
         });
     }
 
-    public function index(){
-        $data = $this->ReturnWarehouseRepository->get_data_all();
+    public function index(Request $request){
+        $shop = Shop::all();
+        $seller = Seller::all();
+        
+        if (request()->date_start || request()->date_end || request()->shop_id || request()->seller_id) {
+            $date_start = $request->input('date_start');
+            $date_end = $request->input('date_end');
+            $shop_id = $request->input('shop_id');
+            $seller_id = $request->input('seller_id');
+            
+            $query = ReturnWarehouse::query();
+            
+            if ($date_start && $date_end) {
+                $query->whereBetween('trans_date', [$date_start, $date_end]);
+            }
+            
+            if ($shop_id) {
+                $query->where('shop_id', $shop_id);
+            }
+            
+            if ($seller_id) {
+                $query->where('seller_id', $seller_id);
+            }
 
-        return view('page.returnwarehouse', compact('data'));
+            $data = $query->get();
+        } else {
+            $data = $this->ReturnWarehouseRepository->get_data_all();
+        }
+
+        return view('page.returnwarehouse', compact('data', 'shop', 'seller'));
     }
 
     public function show($id) {
