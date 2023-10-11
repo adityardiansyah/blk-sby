@@ -33,3 +33,4 @@ RUN php artisan cache:clear
 RUN php artisan view:clear
 RUN php artisan route:clear
 RUN php artisan migrate
+RUN composer dump-autoload
