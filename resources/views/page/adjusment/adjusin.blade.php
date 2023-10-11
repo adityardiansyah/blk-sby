@@ -16,7 +16,7 @@
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Type</th>
+                            <th>Barang</th>
                             <th>Qty</th>
                             <th>Notes</th>
                             <th>Status</th>
@@ -32,7 +32,7 @@
                             @foreach ($data as $key => $item)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td>{{ $item->type }}</td>
+                                    <td>{{ $item->sku }}</td>
                                     <td>{{ $item->qty }}</td>
                                     <td>{{ $item->notes }}</td>
                                     <td>{{ $item->status }}</td>
@@ -45,6 +45,9 @@
                                             @if (Auth::user()->id == 1)
                                                 <button type="submit" name="submit" class="btn btn-danger btn-sm">Delete</button>
                                                 <button type="button" class="btn btn-warning btn-sm" onclick="edit({{ $item->id }}, {{ $item->shop_id }}, {{ $item->conversion_id }}, {{ $item->qty }}, '{{ $item->notes }}', '{{ $item->status }}')">Edit</button>
+                                                @if ($item->status != 'confirmed')
+                                                    <button type="button" class="btn btn-success btn-sm" onclick="konfirmasi({{ $item->id }}, {{ $item->conversion_id }}, {{ $item->qty }})">Confirm</button>
+                                                @endif
                                             @endif
                                         </form>
                                     </td>
@@ -58,6 +61,7 @@
     </section>
 </div>
 
+{{-- Modal Box Tambah --}}
 <div class="modal fade text-left" id="modal_add" role="dialog"
     aria-labelledby="myModalLabel33" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg"
@@ -108,7 +112,7 @@
                     </div>
                     <label>Notes</label>
                     <div class="form-group">
-                        <input type="text" placeholder="Catatan" class="form-control" name="notes" required value="{{ old('notes') }}">
+                        <input type="text" placeholder="Catatan" class="form-control" name="notes" required value="{{ old('notes') }}" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -127,6 +131,7 @@
     </div>
 </div>
 
+{{-- Modal Box Edit --}}
 <div class="modal fade text-left" id="modal_edit" role="dialog"
     aria-labelledby="myModalLabel34" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg"
@@ -175,7 +180,7 @@
                     </div>
                     <label>Notes</label>
                     <div class="form-group">
-                        <input type="text" placeholder="Catatan" class="form-control" name="notes-edit" id="notes-edit" required value="{{ old('notes') }}">
+                        <input type="text" placeholder="Catatan" class="form-control" name="notes-edit" id="notes-edit" required value="{{ old('notes') }}" required>
                     </div>
                     <label>Status</label>
                     <div class="form-group">
@@ -183,7 +188,7 @@
                         <label class="form-check-label" for="status-open">
                             Open
                         </label>
-                        <input class="form-check-input" type="radio" name="status" id="status-confirm" value="confirm">
+                        <input class="form-check-input" type="radio" name="status" id="status-confirm" value="confirmed">
                         <label class="form-check-label" for="status-confirm">
                             Confirm
                         </label>
@@ -201,6 +206,25 @@
                     </button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+{{-- Modal Confirm --}}
+<div class="modal" id="modal-confirm">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Yakin akan merubah status <b id="title-confirm"></b> pada toko <b id="toko-confirm"></b> menjadi confirm?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Klik save changes jika anda yakin dengan perubahan</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary btn-confirm">Save changes</button>
+            </div>
         </div>
     </div>
 </div>
@@ -271,9 +295,75 @@
         })
     })
     
+    // Tambah data
+    $(".btn-simpan").click(function(e){
+    
+        e.preventDefault();
+    
+        let token = $('input[name="_token"]').val();
+        var conversion_id = $("select[name=conversion_id] option").filter(':selected').val();
+        var shop_id = parseInt($("select[name=shop_id] option").filter(':selected').val());
+        var type = $("input[name=type]").val();
+        var qty = $("input[name=qty]").val();
+        var notes = $("input[name=notes]").val();
+    
+        let fd = new FormData();
+        fd.append('_token', token);
+        fd.append('conversion_id', conversion_id);
+        fd.append('shop_id', shop_id)
+        fd.append('type', type);
+        fd.append('qty', qty);
+        fd.append('notes', notes);
+    
+        $.ajax({
+            type:'POST',
+            url:"{{ route('adjusment.store') }}",
+            headers: {
+                'X-CSRF-TOKEN' : token
+            },
+            data:fd,
+            contentType: false,
+            processData: false,
+            dataType: 'json',
+            beforeSend: function () {
+                $('.btn-simpan').prop('disabled',true);
+                $('.btn-simpan').html('')
+                $('.btn-simpan').append('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Loading...')
+            },
+            success:async function(data){
+                if (data.success) {
+                    setTimeout(() => {
+                        window.location=window.location;
+                    }, 1200);
+                    message(data.message, data.success);
+                }else{
+                    if (data.message.validator) {
+                        message('Semua kolom wajib diisi', data.success);
+                    }else{
+                        message(data.message, data.success);
+                    }
+                }
+            },
+            complete: function () {
+                $('.btn-simpan').prop('disabled',false);
+                $('.btn-simpan').html('')
+                $('.btn-simpan').append('Simpan');
+                $("input[name=color]").val("");
+            },
+            error:function(params) {
+                let txt = params.responseJSON;
+                $.each(txt.errors,function (k,v) {
+                    message(v, false);
+                });
+            }
+        });
+    });
+
+    // Fungsi edit data
     function edit(id, shopId, conversionId, qty, notes, status) {
         $('#modal_edit').modal('show');
     
+        // Fetch data toko
         $.ajax({
             type: 'GET',
             url: "{{ url('shop/api') }}",
@@ -282,13 +372,14 @@
                 $.each(data.data, function(index, shop) {
                     let id = shop.id
                     let label = shop.name
-                    let selected = (shopId == id) ? 'selected' : '';
+                    let selected = (shopId == id) ? 'selected' : ''; 
     
                     $('#shop-edit').append('<option ' + selected + ' value="' + id + '">' + label + '</option>');
                 })
             }
         })
     
+        // Deklarasi ulang select2 ke select option toko
         $("#shop-edit").select2({
             dropdownParent: $("#modal_edit")
         })
@@ -305,7 +396,7 @@
                     let color = product.color;
                     let size = product.size;
                     let selected = (conversionId == id) ? 'selected' : '';
-    
+                                        
                     let label = sku;
                     if (color !== null) {
                         label += ' - ' + color;
@@ -314,24 +405,28 @@
                         label += ' - ' + size;
                     }
     
-                    $('#conversion_id-edit').append('<option value="' + id + '">' + label + '</option>');
+                    $('#conversion_id-edit').append('<option ' + selected + ' value="' + id + '">' + label + '</option>');
                 });
             }
         })
     
+        // Deklarasi ulang select2 ke select option barang
         $("#conversion_id-edit").select2({
             dropdownParent: $("#modal_edit")
         })
     
+        // Set value kuantiti dan catatan sesuai dengan detail data
         $('#qty-edit').val(qty) 
         $('#notes-edit').val(notes)
     
+        // Checked untuk radio button
         if (status === 'open') {
             $('#status-open').prop('checked', true);
-        } else if (status === 'confirm') {
+        } else if (status === 'confirmed') {
             $('#status-confirm').prop('checked', true);
         }
     
+        // Update data
         $(".btn-update").click(function(e){
         
             e.preventDefault();
@@ -352,11 +447,6 @@
             fd.append('notes-edit', notes);
             fd.append('shop_id-edit', shop_id_edit)
             fd.append('status', status);
-    
-            // auto refresh
-            setTimeout(() => {
-                window.location=window.location;
-            }, 1200);
         
             $.ajax({
                 type:'POST',
@@ -374,8 +464,18 @@
                     $('.btn-update').append('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Loading...')
                 },
                 success:async function(data){
-                    message(data.message, data.success);
-                    // get_data();
+                    if (data.success) {
+                        setTimeout(() => {
+                            window.location=window.location;
+                        }, 1200);
+                        message(data.message, data.success);
+                    }else{
+                        if (data.message.validator) {
+                            message('Semua kolom wajib diisi', data.success);
+                        }else{
+                            message(data.message, data.success);
+                        }
+                    }
                 },
                 complete: function () {
                     $('.btn-update').prop('disabled',false);
@@ -392,66 +492,65 @@
             });
         })
     }
-    
-    
-    $(".btn-simpan").click(function(e){
-    
-        e.preventDefault();
-    
-        let token = $('input[name="_token"]').val();
-        var conversion_id = $("select[name=conversion_id] option").filter(':selected').val();
-        var shop_id = parseInt($("select[name=shop_id] option").filter(':selected').val());
-        var type = $("input[name=type]").val();
-        var qty = $("input[name=qty]").val();
-        var notes = $("input[name=notes]").val();
-    
-        let fd = new FormData();
-        fd.append('_token', token);
-        fd.append('conversion_id', conversion_id);
-        fd.append('shop_id', shop_id)
-        fd.append('type', type);
-        fd.append('qty', qty);
-        fd.append('notes', notes);
-    
-        // auto refresh
-        setTimeout(() => {
-            window.location=window.location;
-        }, 1200);
-    
+
+    function konfirmasi(id, conversion, qty) {
+        $("#modal-confirm").modal('show');
+
         $.ajax({
-            type:'POST',
-            url:"{{ route('adjusment.store') }}",
-            headers: {
-                'X-CSRF-TOKEN' : token
-            },
-            data:fd,
-            contentType: false,
-            processData: false,
-            dataType: 'json',
-            beforeSend: function () {
-                $('.btn-simpan').prop('disabled',true);
-                $('.btn-simpan').html('')
-                $('.btn-simpan').append('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Loading...')
-            },
-            success:async function(data){
-                message(data.message, data.success);
-                // get_data();
-            },
-            complete: function () {
-                $('.btn-simpan').prop('disabled',false);
-                $('.btn-simpan').html('')
-                $('.btn-simpan').append('Simpan');
-                $("input[name=color]").val("");
-            },
-            error:function(params) {
-                let txt = params.responseJSON;
-                $.each(txt.errors,function (k,v) {
-                    message(v, false);
-                });
+            type: 'GET',
+            url: "{{ url('adjusment/detail') }}/" + id,
+            data: {},
+            success: (data) => {
+                $('#title-confirm').text(data.data.sku)
+                $('#toko-confirm').text(data.data.name)
             }
-        });
-    
-    });
-    
-    </script>
+        })
+
+        const token = $('input[name="_token"]').val();
+        const formData = new FormData()
+        formData.append('_token', token)
+        formData.append('conversion_id', conversion)
+        formData.append('qty', qty)
+        formData.append('type', 'IN')
+
+        $(".btn-confirm").click(function(e) {
+            $.ajax({
+                type: 'POST',
+                url: "{{ url('adjusment/confirm') }}/" + id,
+                headers: {
+                    'X-CSRF-TOKEN' : token
+                },
+                data: {formData},
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                beforeSend: function () {
+                    $('.btn-confirm').prop('disabled',true);
+                    $('.btn-confirm').html('');
+                    $('.btn-confirm').append('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Loading...')
+                },
+                success: (data) => {
+                    if (data.success) {
+                        setTimeout(() => {
+                            window.location=window.location;
+                        }, 1200);
+                        message(data.message, data.success);
+                    }
+                },
+                complete: function () {
+                    $('.btn-update').prop('disabled',false);
+                    $('.btn-update').html('');
+                    $('.btn-update').append('Simpan');
+                    $("input[name=color]").val("");
+                },
+                error:function(params) {
+                    let txt = params.responseJSON;
+                    $.each(txt.errors,function (k,v) {
+                        message(v, false);
+                    });
+                }
+            })
+        })
+    }
+</script>
 @endpush

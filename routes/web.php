@@ -16,6 +16,8 @@ use App\Http\Controllers\ReturnSalesController as ControllersReturnSalesControll
 use App\Http\Controllers\ReturnWarehouseController;
 use App\Http\Controllers\StockOpnameController;
 use App\Http\Controllers\AdjusmentController;
+use App\Http\Controllers\SectionController;
+use App\Http\Controllers\GroupController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -26,7 +28,18 @@ Route::get('login', [LoginController::class, 'login']);
 Route::post('login', [LoginController::class, 'check_login'])->name('login'); 
 Route::post('logout', [LoginController::class, 'logout'])->name('logout'); 
 
+Route::get('/icons', function () {
+    $iconPath = public_path('assets/extensions/@icon/dripicons/icons');
+    $icons = File::allFiles($iconPath);
+
+    return view('page.icon', compact('icons'));
+});
+
+Route::get('/section', [SectionController::class, 'index']);
+
+// URL::forceScheme('https');
 Route::middleware(['auth'])->group(function () {
+    Route::get('/create-section', [SectionController::class, 'section']);
     Route::get('/',[HomeController::class, 'index'])->name('home.index');
     Route::get('shop', [ShopController::class, 'index'])->name('shop.index');
     Route::post('shop', [ShopController::class, 'store'])->name('master.shop.store');
@@ -91,4 +104,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('adjusment/store', [AdjusmentController::class, 'store'])->name('adjusment.store');
     Route::post('adjusment/update/{id}', [AdjusmentController::class, 'update'])->name('adjusment.update');
     Route::delete('adjusment/delete/{id}', [AdjusmentController::class, 'delete'])->name('adjusment.delete');
+    Route::post('adjusment/confirm/{id}', [AdjusmentController::class, 'confirm'])->name('adjusment.confirm');
+    Route::get('group', [GroupController::class, 'index']);
+    Route::get('group/detail/{id}', [GroupController::class, 'api']);
+    Route::post('group', [GroupController::class, 'store']);
+    Route::delete('group/{id}', [GroupController::class, 'delete']);
+    Route::post('group/update/{id}', [GroupController::class, 'update']);
 });

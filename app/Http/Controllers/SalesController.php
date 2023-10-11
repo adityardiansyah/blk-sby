@@ -16,7 +16,7 @@ class SalesController extends Controller
     public function __construct(SalesRepository $sales) {
         $this->SalesRepository = $sales;
         $this->middleware(function ($request, $next){
-            Session::put('menu_active','sales');
+            Session::put('menu_active','/sales');
             return $next($request);
         }); 
     }

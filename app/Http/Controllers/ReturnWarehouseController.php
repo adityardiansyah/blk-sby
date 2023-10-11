@@ -16,7 +16,7 @@ class ReturnWarehouseController extends Controller
     public function __construct(ReturnWarehouseRepository $return) {
         $this->ReturnWarehouseRepository = $return;
         $this->middleware(function ($request, $next){
-            Session::put('menu_active','returnwarehouse');
+            Session::put('menu_active','/returnwarehouse');
             return $next($request);
         });
     }
