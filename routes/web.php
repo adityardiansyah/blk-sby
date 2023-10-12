@@ -18,6 +18,7 @@ use App\Http\Controllers\StockOpnameController;
 use App\Http\Controllers\AdjusmentController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\PermissionController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -39,8 +40,10 @@ Route::get('/section', [SectionController::class, 'index']);
 
 // URL::forceScheme('https');
 Route::middleware(['auth'])->group(function () {
-    Route::get('/create-section', [SectionController::class, 'section']);
     Route::get('/',[HomeController::class, 'index'])->name('home.index');
+    
+    Route::get('/create-section', [SectionController::class, 'section']);
+    
     Route::get('shop', [ShopController::class, 'index'])->name('shop.index');
     Route::post('shop', [ShopController::class, 'store'])->name('master.shop.store');
     Route::get('shop/api', [ShopController::class, 'shop_api'])->name('shop.api');
@@ -98,6 +101,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('laporan', [ReportController::class, 'index'])->name('laporan.index');
     Route::get('laporan/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'laporan_stock'])->name('laporan.stock');
     Route::get('laporan-excel/{type}/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'download_excel'])->name('laporan.excel');
+    
     Route::get('adjusment/detail/{id}', [AdjusmentController::class, 'detail_adjusment'])->name('adjusment.edit');
     Route::get('adjusment/in', [AdjusmentController::class, 'adjusment_in'])->name('adjusment.in');
     Route::get('adjusment/out', [AdjusmentController::class, 'adjusment_out'])->name('adjusment.out');
@@ -105,9 +109,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('adjusment/update/{id}', [AdjusmentController::class, 'update'])->name('adjusment.update');
     Route::delete('adjusment/delete/{id}', [AdjusmentController::class, 'delete'])->name('adjusment.delete');
     Route::post('adjusment/confirm/{id}', [AdjusmentController::class, 'confirm'])->name('adjusment.confirm');
-    Route::get('group', [GroupController::class, 'index']);
-    Route::get('group/detail/{id}', [GroupController::class, 'api']);
-    Route::post('group', [GroupController::class, 'store']);
-    Route::delete('group/{id}', [GroupController::class, 'delete']);
-    Route::post('group/update/{id}', [GroupController::class, 'update']);
+    
+    Route::get('group', [GroupController::class, 'index'])->name('group.index');
+    Route::post('group/store', [GroupController::class, 'store'])->name('group.store');
+    Route::get('group/{id}', [GroupController::class, 'show'])->name('group.show');
+    Route::put('group/{id}', [GroupController::class, 'update'])->name('group.update');
+    Route::delete('group/{id}', [GroupController::class, 'destroy'])->name('group.delete');
+
+    Route::get('permission/{id}/data_akses', [PermissionController::class, 'data_akses']);
 });

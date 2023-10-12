@@ -210,21 +210,9 @@ class MenuSeeder extends Seeder
             ->insert([
                 'group_id' => 1,
                 'parent_id' => 0,
-                'section_id' => 4,
+                'section_id' => 8,
                 'name_menu' => 'Group',
                 'url' => '/group',
-                'icons' => '',
-                'order' => 2,
-                'status' => 1,
-            ]);
-
-        DB::table('menus')
-            ->insert([
-                'group_id' => 1,
-                'parent_id' => 0,
-                'section_id' => 8,
-                'name_menu' => 'Setting',
-                'url' => '/setting',
                 'icons' => '',
                 'order' => 2,
                 'status' => 1,
