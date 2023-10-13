@@ -84,4 +84,22 @@ class NavHelper{
 
         return $result;
     }
+
+    public static function create_checked($group_id, $name_menu, $aksi)
+    {
+        $result = DB::table('groups')
+            ->join('action_groups', 'groups.id', '=', 'action_groups.group_id')
+            ->join('actions', 'action_groups.action_id', '=', 'actions.id')
+            ->select('actions.id')
+            ->where([
+                'groups.id' => $group_id,
+                'actions.name' => $name_menu,
+                'actions.action' => $aksi,
+            ])
+            ->first();
+
+        if ($result != null) {
+            return true;
+        }
+    }
 }

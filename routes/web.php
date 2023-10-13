@@ -44,64 +44,77 @@ Route::middleware(['auth'])->group(function () {
     
     Route::get('/create-section', [SectionController::class, 'section']);
     
+    // Shop
     Route::get('shop', [ShopController::class, 'index'])->name('shop.index');
     Route::post('shop', [ShopController::class, 'store'])->name('master.shop.store');
     Route::get('shop/api', [ShopController::class, 'shop_api'])->name('shop.api');
     Route::get('shop/edit/{id}', [ShopController::class, 'edit']);
     Route::put('shop/update', [ShopController::class,'update'])->name('master.shop.update');
     
+    // SKU
     Route::get('sku', [SKUController::class, 'index'])->name('master.sku');
     Route::get('list-sku', [SKUController::class, 'list_sku'])->name('master.list-sku');
     Route::post('sku', [SKUController::class, 'store'])->name('master.sku.store');
     
+    // Size
     Route::get('size', [SizeController::class, 'index'])->name('master.size');
     Route::post('size', [SizeController::class, 'store'])->name('master.size.store');
     Route::delete('size/{id}', [SizeController::class, 'destroy']);
     
+    // Color
     Route::get('color', [ColorController::class, 'index'])->name('master.color');
     Route::post('color', [ColorController::class, 'store'])->name('master.color.store');
+    Route::delete('color/{id}', [ColorController::class, 'destroy']);
     
+    // Users
     Route::get('users', [UserController::class, 'index'])->name('users.index');
     Route::get('users/{id}', [UserController::class, 'show'])->name('users.show');
     Route::post('users', [UserController::class, 'store'])->name('users.store');
     Route::post('users/update/{id}', [UserController::class, 'update'])->name('users.update');
 
+    // Seller
     Route::get('seller', [SellerController::class, 'index'])->name('seller.index');
     Route::get('seller/{id}', [SellerController::class, 'show'])->name('seller.show');
     Route::post('seller', [SellerController::class, 'store'])->name('seller.store');
     Route::post('seller/update/{id}', [SellerController::class, 'update'])->name('seller.update');
 
+    // Sales
     Route::get('sales', [SalesController::class, 'index'])->name('sales.index');
     Route::get('sales/{id}', [SalesController::class, 'show'])->name('sales.show'); 
     Route::put('sales/{id}', [SalesController::class, ''])->name('sales.show');
     Route::post('/sales/{id}/update',[SalesController::class,'update_status']);
-    
     Route::get('returnsales', [ControllersReturnSalesController::class, 'index'])->name('returnsales.index');
+    
+    // Conversion
     Route::get('conversion', [ConversionController::class, 'index'])->name('conversion.index');
     Route::get('conversion/api/{shop_id}', [ConversionController::class, 'api'])->name('conversion.api');
-    Route::get('laporan', [ReportController::class, 'index'])->name('laporan.index');
-    Route::delete('color/{id}', [ColorController::class, 'destroy']);
     
+    // SKU
     Route::delete('sku/{id}', [SKUController::class, 'destroy']);
     Route::get('sku/edit/{id}', [SKUController::class, 'edit']);
     Route::put('/sku/update', [SKUController::class, 'update'])->name('master.sku.update');
     
+    // Goodreceive
     Route::get('goodsreceive', [GoodsReceiveController::class, 'index'])->name('goodsreceive.index');
     Route::get('goodsreceive/{id}', [GoodsReceiveController::class, 'show'])->name('goodsreceive.show');
     Route::post('goodsreceive/{id}/confirm', [GoodsReceiveController::class, 'confirm'])->name('goodsreceive.confirm');
     
+    // Returnsales
     Route::get('returnwarehouse', [ReturnWarehouseController::class, 'index'])->name('returnwarehouse.index');
     Route::get('returnwarehouse/{id}', [ReturnWarehouseController::class, 'show'])->name('returnwarehouse.show');
     Route::post('returnwarehouse/{id}/confirm', [ReturnWarehouseController::class, 'confirm'])->name('returnwarehouse.confirm');
     
+    // Stokopname
     Route::get('stockopname', [StockOpnameController::class, 'index'])->name('stockopname.index');
     Route::get('stockopname/{id}', [StockOpnameController::class, 'show'])->name('stockopname.show');
     Route::post('stockopname/{id}/confirm', [StockOpnameController::class, 'confirm'])->name('stockopname.confirm');
     
+    // Laporan
     Route::get('laporan', [ReportController::class, 'index'])->name('laporan.index');
     Route::get('laporan/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'laporan_stock'])->name('laporan.stock');
     Route::get('laporan-excel/{type}/{date_start}/{date_end}/{shop_id}', [ReportController::class, 'download_excel'])->name('laporan.excel');
     
+    // Adjusment
     Route::get('adjusment/detail/{id}', [AdjusmentController::class, 'detail_adjusment'])->name('adjusment.edit');
     Route::get('adjusment/in', [AdjusmentController::class, 'adjusment_in'])->name('adjusment.in');
     Route::get('adjusment/out', [AdjusmentController::class, 'adjusment_out'])->name('adjusment.out');
@@ -110,11 +123,14 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('adjusment/delete/{id}', [AdjusmentController::class, 'delete'])->name('adjusment.delete');
     Route::post('adjusment/confirm/{id}', [AdjusmentController::class, 'confirm'])->name('adjusment.confirm');
     
+    // Group
     Route::get('group', [GroupController::class, 'index'])->name('group.index');
     Route::post('group/store', [GroupController::class, 'store'])->name('group.store');
     Route::get('group/{id}', [GroupController::class, 'show'])->name('group.show');
     Route::put('group/{id}', [GroupController::class, 'update'])->name('group.update');
     Route::delete('group/{id}', [GroupController::class, 'destroy'])->name('group.delete');
 
-    Route::get('permission/{id}/data_akses', [PermissionController::class, 'data_akses']);
+    // Hak Akses Menu
+    Route::get('permission/data-akses/{id}', [PermissionController::class, 'data_akses'])->name('permission.data-akses');
+    Route::post('permission/data-akses/edit_akses', [PermissionController::class, 'edit_akses'])->name('permission.edit-akses');
 });
