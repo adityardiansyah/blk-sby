@@ -18,6 +18,7 @@ use App\Http\Controllers\StockOpnameController;
 use App\Http\Controllers\AdjusmentController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\PermissionController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
