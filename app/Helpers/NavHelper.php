@@ -4,11 +4,12 @@ use App\Http\Controllers\SectionController;
 use Illuminate\Support\Facades\DB;
 
 class NavHelper{
-    public static function list_menu()
+    public static function list_menu($group)
     {
         $data = DB::table('menus')
                     ->select('name_menu', 'url', 'section_id', 'icons', 'order')
-                    ->where('status', '1')
+                    ->where('status', 'active')
+                    ->where('group_id', $group)
                     ->orderBy('order', 'ASC')
                     ->get();
         $result = [];
@@ -83,5 +84,23 @@ class NavHelper{
         });
 
         return $result;
+    }
+
+    public static function create_checked($group_id, $name_menu, $aksi)
+    {
+        $result = DB::table('groups')
+            ->join('action_groups', 'groups.id', '=', 'action_groups.group_id')
+            ->join('actions', 'action_groups.action_id', '=', 'actions.id')
+            ->select('actions.id')
+            ->where([
+                'groups.id' => $group_id,
+                'actions.name' => $name_menu,
+                'actions.action' => $aksi,
+            ])
+            ->first();
+
+        if ($result != null) {
+            return true;
+        }
     }
 }

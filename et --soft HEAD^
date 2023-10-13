@@ -1,0 +1,566 @@
+[33mcommit e168f50c4a9d9a9eb186511e0305ab58af530090[m[33m ([m[1;36mHEAD -> [m[1;32mramasakti[m[33m, [m[1;31morigin/ramasakti[m[33m)[m
+Author: ramasakti <ramasakti1337@gmail.com>
+Date:   Tue Sep 26 13:39:18 2023 +0700
+
+    perbaiki bug dan export excel laravel
+
+[33mcommit e355bec13c3043f89f8a19aec4fc649b33d02cfa[m[33m ([m[1;33mtag: 1.0.9[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Merge: 217084a bfa9296
+Author: Aditya Ardiansyah <aditya.ardiansyah@behaestex.co.id>
+Date:   Thu Jun 1 11:53:31 2023 +0700
+
+    Merge branch 'staging' into 'master'
+    
+    Update bug
+    
+    See merge request edp/sispeg!65
+
+[33mcommit bfa929616ccde35e1cc80c648dd746e324ae47ce[m[33m ([m[1;31morigin/staging[m[33m)[m
+Merge: 2655c98 c39a266
+Author: Aditya Ardiansyah <aditya.ardiansyah@behaestex.co.id>
+Date:   Thu Jun 1 11:42:53 2023 +0700
+
+    Merge branch 'adit' into 'staging'
+    
+    Update bug
+    
+    See merge request edp/sispeg!64
+
+[33mcommit c39a26641228e626310f7d69abdd87646151eac7[m[33m ([m[1;31morigin/adit[m[33m)[m
+Author: adityardiansyah <03adityaardiansyah1999@gmail.com>
+Date:   Thu Jun 1 11:42:00 2023 +0700
+
+    update bug
+
+[33mcommit 217084a4ac8761cb317061f21ce4245a08a73032[m[33m ([m[1;33mtag: 1.0.8[m[33m, [m[1;33mtag: 1.0.7[m[33m)[m
+Merge: 79a4402 2655c98
+Author: Aditya Ardiansyah <aditya.ardiyansah@behaestex.co.id>
+Date:   Tue May 2 11:01:56 2023 +0700
+
+    Merge branch 'staging' into 'master'
+    
+    Update menu
+    
+    See merge request edp/sispeg!63
+
+[33mcommit 2655c984375beb740f915a43d111b7e4bbeb0c9f[m
+Merge: 04d5d20 6964ee2
+Author: Aditya Ardiansyah <aditya.ardiyansah@behaestex.co.id>
+Date:   Wed Apr 12 09:38:43 2023 +0700
+
+    Merge branch 'adit' into 'staging'
+    
+    Update
+    
+    See merge request edp/sispeg!62
+
+[33mcommit 6964ee2aa53b52640ac692f457b7a57b8b710627[m
+Merge: 20bbac6 a29f5b0
+Author: adityardiansyah <03adityaardiansyah1999@gmail.com>
+Date:   Wed Apr 12 09:37:21 2023 +0700
+
+    update
+
+[33mcommit a29f5b0548ccb0805bffbe095af529b74b9f9a1f[m
+Author: Sindy0111 <sindynovianti3001@gmail.com>
+Date:   Tue Apr 11 07:51:34 2023 +0700
+
+    edit dan simpan
+
+[33mcommit 20bbac6562b2bad82f4a08e43692813b09fc6f8c[m
+Author: nadia2911 <nadiaadiba29@gmail.com>
+Date:   Fri Apr 7 13:46:46 2023 +0700
+
+    edit password dan status user
+
+[33mcommit c7eebdfc7698af134302428bd42736b78aca8b47[m
+Author: Sindy0111 <sindynovianti3001@gmail.com>
+Date:   Wed Apr 5 16:03:13 2023 +0700
+
+    button simpan pada seller
+
+[33mcommit 1d669ea174afef6f5eb786af60ac91a2c0addc20[m
+Author: nadia2911 <nadiaadiba29@gmail.com>
+Date:   Wed Apr 5 16:03:13 2023 +0700
+
+     edit menu users
+
+[33mcommit 19ab43ee68b4732d74b3a0b9424612f9574cc9f9[m
+Author: Sindy0111 <sindynovianti3001@gmail.com>
+Date:   Tue Apr 4 16:11:32 2023 +0700
+
+    edit menu selles
+
+[33mcommit f163f72f2529a511b02b39b6a1aa6d0805c6cfd5[m
+Author: nadia2911 <nadiaadiba29@gmail.com>
+Date:   Tue Apr 4 16:10:39 2023 +0700
+
+    update total qty stock opname, dan edit users
+
+[33mcommit 9203253bdd5a6e7cccb1ac4fc422f80d2bf5c1a0[m
+Author: Sindy0111 <sindynovianti3001@gmail.com>
+Date:   Mon Apr 3 16:02:13 2023 +0700
+
+    Tombol edit pada menu seller
+
+[33mcommit 4a6b307c76467900b2f6da1bf792cedeaa3628b7[m
+Author: nadia2911 <nadiaadiba29@gmail.com>
+Date:   Mon Apr 3 15:59:09 2023 +0700
+
+    tombol edit pada menu user
+
+[33mcommit d8383e8d66bbb2f20d94b6a594981d8cb25230c6[m
+Merge: 5946799 04d5d20
+Author: Sindy0111 <sindynovianti3001@gmail.com>
+Date:   Mon Apr 3 13:52:37 2023 +0700
+
+    update
+
+[33mcommit b848525462ed268ebd2ea76da3a6e73a365ff44e[m
+Merge: 4766158 04d5d20
+Author: nadia2911 <nadiaadiba29@gmail.com>
+Date:   Mon Apr 3 13:41:18 2023 +0700
+
+    Merge branch 'staging' of https://git.pxlxng.com/edp/sispeg into nadia
+
+[33mcommit 47661580197dd33d5ec18b0e4cd3a11645f03728[m
+Author: nadia2911 <nadiaadiba29@gmail.com>
+Date:   Mon Apr 3 13:41:13 2023 +0700
+
+    update
+
+[33mcommit 2184619c29a6f1451a63abe0ca99fe3057f13e1d[m
+Author: nadia2911 <nadiaadiba29@gmail.com>
+Date:   Mon Apr 3 13:38:48 2023 +0700
+
+    Update
+
+[33mcommit 5946799f56f23450036ad1da4c5b876e16552d89[m
+Merge: 505071f 70a8d00
+Author: Sindy0111 <sindynovianti3001@gmail.com>
+Date:   Mon Apr 3 12:59:49 2023 +0700
+
+    Update
+
+[33mcommit db86f638cad7274f3a95ad131b6253bc3e602547[m
+Author: nadia2911 <nadiaadiba29@gmail.com>
+Date:   Mon Apr 3 12:59:28 2023 +0700
+
+    update
+
+[33mcommit 04d5d2086ba9c8d481940adee2e2e8e3047c1031[m
+Merge: 70a8d00 8568a82
+Author: Aditya Ardiansyah <aditya.ardiyansah@behaestex.co.id>
+Date:   Mon Apr 3 12:58:32 2023 +0700
+
+    Merge branch 'adit' into 'staging'
+    
+    Update
+    
+    See merge request edp/sispeg!61
+
+[33mcommit 8568a82946a2aba3863c77bf0370e8c7de9f9f0f[m
+Merge: 5f1805f 70a8d00
+Author: adityardiansyah <03adityaardiansyah1999@gmail.com>
+Date:   Mon Apr 3 12:56:31 2023 +0700
+
+    Merge branch 'staging' of https://git.pxlxng.com/edp/sispeg into adit
+
+[33mcommit 5f1805f68c10adbbdea3efc88ecb4cd9c3c34437[m
+Author: adityardiansyah <03adityaardiansyah1999@gmail.com>
+Date:   Mon Apr 3 12:56:11 2023 +0700
+
+    update
+
+[33mcommit a69e7d821ea5bb4d7eb7e23ff9125c7d8ddfbce8[m
+Merge: 6e9bb20 eb82d0c
+Author: adityardiansyah <03adityaardiansyah1999@gmail.com>
+Date:   Mon Apr 3 12:09:06 2023 +0700
+
+    Update
+
+[33mcommit 6e9bb20d6f1f1a06b31a3ce9450196cc286b4290[m
+Merge: 5884696 505071f
+Author: adityardiansyah <03adityaardiansyah1999@gmail.com>
+Date:   Mon Apr 3 12:08:40 2023 +0700
+
+    Update
+
+[33mcommit 505071fbaeb24adb97a4bdee8188e3a40722bdd6[m
+Author: Sindy0111 <sindynovianti3001@gmail.com>
+Date:   Fri Mar 31 16:36:54 2023 +0700
+
+    Menambahkan kolom Nama Toko dan Menampilkan data pada dashboard
+
+[33mcommit eb82d0cfdf941a59b7798d875e94824a367a8616[m
+Author: nadia2911 <nadiaadiba29@gmail.com>
+Date:   Fri Mar 31 16:25:23 2023 +0700
+
+    Menampilkan data dan button open pada stock opname
+
+[33mcommit 70a8d001354633c0bcbbab5f57c10ca5cd9ee176[m
+Merge: 13e7ec0 5884696
+Author: Aditya Ardiansyah <aditya.ardiyansah@behaestex.co.id>
+Date:   Fri Mar 31 10:09:44 2023 +0700
+
+    Merge branch 'adit' into 'staging'
+    
+    Update fitur retur gudang & retur penjualan
+    
+    See merge request edp/sispeg!60
+
+[33mcommit 58846961c0bb0b1de60fecb0db112cdbe7fc7f25[m
+Author: adityardiansyah <03adityaardiansyah1999@gmail.com>
+Date:   Fri Mar 31 10:08:01 2023 +0700
+
+    update
+
+[33mcommit 11db42423a9ac6cf5055a8cabeb377fc84ffd6a1[m
+Merge: 2020153 5531c0e
+Author: adityardiansyah <03adityaardiansyah1999@gmail.com>
+Date:   Fri Mar 31 09:32:32 2023 +0700
+
+    Merge branch 'nadia' into adit
+
+[33mcommit 5531c0e3615e8adf346e3d326ca251182b2dfe21[m
+Author: nadia2911 <nadiaadiba29@gmail.com>
+Date:   Thu Mar 30 15:31:18 2023 +0700
+
+    Menampilkan data retur gudang dan menambahkan button open
+
+[33mcommit 20201538fa1f5096716b5f56ea6cc3b75c44e159[m
+Author: Sindy0111 <sindynovianti3001@gmail.com>
+Date:   Thu Mar 30 15:30:34 2023 +0700
+
+    Menampilkan data return penjualan
+
+[33mcommit 13e7ec0ce2c1395bbf7503d5f9bf69a17f844a38[m
+Merge: 9d30f7a 4e9f0d4
+Author: Aditya Ardiansyah <aditya.ardiyansah@behaestex.co.id>
+Date:   Wed Mar 29 15:15:33 2023 +0700
+
+    Merge branch 'adit' into 'staging'
+    
+    Update penerimaan & penjualan
+    
+    See merge request edp/sispeg!59
+
+[33mcommit 4e9f0d4680e892ef1ea7be5e109785fee297fb5f[m
+Author: adityardiansyah <03adityaardiansyah1999@gmail.com>
+Date:   Wed Mar 29 14:57:38 2023 +0700
+
+    update
+
+[33mcommit a316f1b26a60a781fc9572200fc8a4ebd8c27c34[m
+Merge: 405676b a95cc83
+Author: adityardiansyah <03adityaardiansyah1999@gmail.com>
+Date:   Wed Mar 29 14:56:14 2023 +0700
+
+    Merge branch 'sindy' into adit
+
+[33mcommit 405676b5f84582d34de5161da60efd9af920bfd9[m
+Merge: 95860be 6ee09b1
+Author: adityardiansyah <03adityaardiansyah1999@gmail.com>
+Date:   Wed Mar 29 14:49:14 2023 +0700
+
+    Merge branch 'nadia' into adit
+
+[33mcommit 6ee09b179c070f987bd50c2a32a79c23a22fbb5f[m
+Author: nadia2911 <nadiaadiba29@gmail.com>
+Date:   Wed Mar 29 14:45:07 2023 +0700
+
+    Memperbaiki BUG goodsreceive
+
+[33mcommit a95cc8380606a140f2fd2994fd3d1178426b2e96[m
+Author: Sindy0111 <sindynovianti3001@gmail.com>
+Date:   Wed Mar 29 14:44:59 2023 +0700
+
+    Memperbaiki Bug Sales
+
+[33mcommit 95860bead005370a434e9424c6708e7d3bf2a1ae[m
+Merge: db48160 f77330e
+Author: adityardiansyah <03adityaardiansyah1999@gmail.com>
+Date:   Wed Mar 29 08:19:23 2023 +0700
+
+    update
+
+[33mcommit db48160829777c073f2bf2bbc438bf7e6f38ab87[m
+Author: nadia2911 <nadiaadiba29@gmail.com>
+Date:   Tue Mar 28 15:52:56 2023 +0700
+
+    menampilkan data detail goodsreceive
+
+[33mcommit f77330ee8d66f94228577e158bf0b5f151cdbecf[m
+Author: Sindy0111 <sindynovianti3001@gmail.com>
+Date:   Tue Mar 28 15:46:09 2023 +0700
+
+    Menampilkan popup detail penjualan
+
+[33mcommit abb6389ba1348e696e80dbe6e7853ba7a95877f0[m
+Merge: ececdaf 9d30f7a
+Author: nadia2911 <nadiaadiba29@gmail.com>
+Date:   Tue Mar 28 07:45:13 2023 +0700
+
+    Merge branch 'staging' of https://git.pxlxng.com/edp/sispeg into nadia
+
+[33mcommit ececdaf744b4101113e730f68220aa49488b54ee[m
+Author: nadia2911 <nadiaadiba29@gmail.com>
+Date:   Mon Mar 27 15:58:50 2023 +0700
+
+    menampilkan data pada goodsreceive
+
+[33mcommit d3307e461d32ed3f679a600ab43fb4d25e8693f2[m
+Author: Sindy0111 <sindynovianti3001@gmail.com>
+Date:   Mon Mar 27 15:58:49 2023 +0700
+
+    Menampilkan data penjualan (sales)
+
+[33mcommit 592e89e3ed65f2c93fae140b644e4d3cc8010927[m
+Merge: 5b076b9 9d30f7a
+Author: Sindy0111 <sindynovianti3001@gmail.com>
+Date:   Mon Mar 27 08:54:54 2023 +0700
+
+    Merge branch 'staging' of https://git.pxlxng.com/edp/sispeg into sindy
+
+[33mcommit 9d30f7a06b6d5019c046a4aee65ee4a6c3f45aea[m
+Merge: 6a4b398 79a4402
+Author: Aditya Ardiansyah <aditya.ardiyansah@behaestex.co.id>
+Date:   Fri Mar 24 13:45:28 2023 +0700
+
+    Merge branch 'master' into 'staging'
+    
+    Update
+    
+    See merge request edp/sispeg!58
+
+[33mcommit 79a4402bb7f53667747b6020f08a1dfdaea7f338[m[33m ([m[1;33mtag: 1.0.6[m[33m)[m
+Merge: ba5d793 cb7144e
+Author: Aditya Ardiansyah <aditya.ardiyansah@behaestex.co.id>
+Date:   Fri Mar 24 13:23:58 2023 +0700
+
+    Merge branch 'adit' into 'master'
+    
+    update bamus di sync master produk
+    
+    See merge request edp/sispeg!57
+
+[33mcommit cb7144e47c8feb5357ad031663c6727b4b0e9d2e[m
+Author: adityardiansyah <03adityaardiansyah1999@gmail.com>
+Date:   Fri Mar 24 13:19:58 2023 +0700
+
+    update bamus di sync master produk
+
+[33mcommit ba5d79312d0b298a977ca656d21a27cb4eaf0742[m[33m ([m[1;33mtag: 1.0.5[m[33m)[m
+Merge: b28696d 6a4b398
+Author: Aditya Ardiansyah <aditya.ardiyansah@behaestex.co.id>
+Date:   Wed Mar 8 10:29:25 2023 +0700
+
+    Merge branch 'staging' into 'master'
+    
+    Update optimasi lemot
+    
+    See merge request edp/sispeg!56
+
+[33mcommit 6a4b39856eed2d5c8013fa9b97aea6baf61df332[m
+Merge: ddd8f42 5483018
+Author: Aditya Ardiansyah <aditya.ardiyansah@behaestex.co.id>
+Date:   Tue Mar 7 17:30:41 2023 +0700
+
+    Merge branch 'adit' into 'staging'
+    
+    optimasi master
+    
+    See merge request edp/sispeg!55
+
+[33mcommit 5483018083e8f125151d2a2000d2b4bad78a34a0[m
+Author: adityardiansyah <03adityaardiansyah1999@gmail.com>
+Date:   Tue Mar 7 17:29:17 2023 +0700
+
+    optimasi master
+
+[33mcommit b28696d76017de69087b606a21347281d2f78e8a[m[33m ([m[1;33mtag: 1.0.4[m[33m)[m
+Merge: b45c0ee ddd8f42
+Author: Aditya Ardiansyah <aditya.ardiyansah@behaestex.co.id>
+Date:   Tue Mar 7 09:38:43 2023 +0700
+
+    Merge branch 'staging' into 'master'
+    
+    Update SKU
+    
+    See merge request edp/sispeg!54
+
+[33mcommit 5b076b9e4b09b70094cf4c807a5002e9dacf6e93[m
+Merge: 1136b17 ddd8f42
+Author: Sindy0111 <sindynovianti3001@gmail.com>
+Date:   Fri Mar 3 07:58:19 2023 +0700
+
+    Merge branch 'staging' of https://git.pxlxng.com/edp/sispeg into sindy
+
+[33mcommit f56c30f50f547ad80974fb81c46a03a24f9fd474[m
+Merge: 1822724 ddd8f42
+Author: nadia2911 <nadiaadiba29@gmail.com>
+Date:   Fri Mar 3 07:49:36 2023 +0700
+
+    Merge branch 'staging' of https://git.pxlxng.com/edp/sispeg into nadia
+
+[33mcommit ddd8f42df743cb2b7571d66386c5be57f407e72a[m
+Merge: 2f07655 889d508
+Author: Aditya Ardiansyah <aditya.ardiyansah@behaestex.co.id>
+Date:   Thu Mar 2 19:27:43 2023 +0700
+
+    Merge branch 'adit' into 'staging'
+    
+    update
+    
+    See merge request edp/sispeg!53
+
+[33mcommit 889d508bbb44b30b0e11a68d2497beba8d0c852d[m
+Author: Aditya Ardiansyah <aditya.ardiyansah@behaestex.co.id>
+Date:   Thu Mar 2 19:26:57 2023 +0700
+
+    update
+
+[33mcommit 2f07655046fbd0f5ad44f7fd54e305df20e35d7c[m
+Merge: bba6c07 c83a12a
+Author: Aditya Ardiansyah <aditya.ardiyansah@behaestex.co.id>
+Date:   Thu Mar 2 18:47:00 2023 +0700
+
+    Merge branch 'adit' into 'staging'
+    
+    update bug
+    
+    See merge request edp/sispeg!52
+
+[33mcommit c83a12aa2b3c885fa001617bdd851a065cf746db[m
+Author: Aditya Ardiansyah <aditya.ardiyansah@behaestex.co.id>
+Date:   Thu Mar 2 18:46:16 2023 +0700
+
+    update bug
+
+[33mcommit 1136b17944e358038c6bc2324f2453b79bd5ee46[m
+Author: Sindy0111 <sindynovianti3001@gmail.com>
+Date:   Thu Mar 2 16:48:04 2023 +0700
+
+    modif edit shop
+
+[33mcommit 182272446d24dd30fddc72930a20260f9e34e134[m
+Author: nadia2911 <nadiaadiba29@gmail.com>
+Date:   Thu Mar 2 16:47:06 2023 +0700
+
+    modif edit sku
+
+[33mcommit b45c0ee4c108fcfb01c695da5a08d9c3cc6606a0[m[33m ([m[1;33mtag: 1.0.3[m[33m)[m
+Merge: aa031b9 bba6c07
+Author: Aditya Ardiansyah <aditya.ardiyansah@behaestex.co.id>
+Date:   Thu Mar 2 16:34:46 2023 +0700
+
+    Merge branch 'staging' into 'master'
+    
+    update config
+    
+    See merge request edp/sispeg!51
+
+[33mcommit bba6c07d25dfbccbb0ae86a09010dd1ea7365391[m
+Merge: a454ba0 0267e70
+Author: Aditya Ardiansyah <aditya.ardiyansah@behaestex.co.id>
+Date:   Thu Mar 2 16:21:55 2023 +0700
+
+    Merge branch 'adit' into 'staging'
+    
+    update config
+    
+    See merge request edp/sispeg!50
+
+[33mcommit 0267e707a5666a2981933f532f67ef2cb94a430e[m
+Author: Aditya Ardiansyah <aditya.ardiyansah@behaestex.co.id>
+Date:   Thu Mar 2 16:21:19 2023 +0700
+
+    update config
+
+[33mcommit aa031b9ee65a0a9e3c73a43c298ef590516276ed[m[33m ([m[1;33mtag: 1.0.2[m[33m)[m
+Merge: 9f5de98 a454ba0
+Author: Aditya Ardiansyah <aditya.ardiyansah@behaestex.co.id>
+Date:   Thu Mar 2 16:18:23 2023 +0700
+
+    Merge branch 'staging' into 'master'
+    
+    Update Fitur SKU
+    
+    See merge request edp/sispeg!49
+
+[33mcommit a454ba005bca9896541bb22f853e08789db42d20[m
+Merge: 4492c4f b0303cd
+Author: Aditya Ardiansyah <aditya.ardiyansah@behaestex.co.id>
+Date:   Thu Mar 2 15:19:39 2023 +0700
+
+    Merge branch 'adit' into 'staging'
+    
+    Update Fitur SKU
+    
+    See merge request edp/sispeg!48
+
+[33mcommit b0303cd69d02080185cc24f0be109c95dab3a987[m
+Merge: 4e91abd eedc150
+Author: Aditya Ardiansyah <aditya.ardiyansah@behaestex.co.id>
+Date:   Thu Mar 2 15:09:52 2023 +0700
+
+    update
+
+[33mcommit eedc15058b5d067c26e5c4e8849d1fac051a3c9d[m
+Author: nadia2911 <nadiaadiba29@gmail.com>
+Date:   Thu Mar 2 09:24:41 2023 +0700
+
+    Modif delete sku
+
+[33mcommit 4e91abdfaac8098f20997ed9faa5d20747fe0831[m
+Author: Sindy0111 <sindynovianti3001@gmail.com>
+Date:   Thu Mar 2 09:23:08 2023 +0700
+
+    Modif tambah pada Shop
+
+[33mcommit 491350566aee3b46f40f4f8284180d5428be3486[m
+Author: Sindy0111 <sindynovianti3001@gmail.com>
+Date:   Wed Mar 1 15:25:33 2023 +0700
+
+    Modifikasi delete size
+
+[33mcommit b6690edc6fd8e975bc9679bb42bdcd515aaca4d1[m
+Author: nadia2911 <nadiaadiba29@gmail.com>
+Date:   Wed Mar 1 15:19:05 2023 +0700
+
+    modifikasi delete warna
+
+[33mcommit 4492c4fdaa38ce087f25731461d68bec56afdab5[m
+Merge: 648b807 d3273eb
+Author: Aditya Ardiansyah <aditya.ardiyansah@behaestex.co.id>
+Date:   Tue Feb 28 16:00:08 2023 +0700
+
+    Merge branch 'adit' into 'staging'
+    
+    Update master color
+    
+    See merge request edp/sispeg!47
+
+[33mcommit d3273ebe6ee4ca58348533e564cc64362a65c51f[m
+Author: Aditya Ardiansyah <aditya.ardiyansah@behaestex.co.id>
+Date:   Tue Feb 28 15:58:02 2023 +0700
+
+    update master color
+
+[33mcommit 951d3bc3d985e2a424a55706f7f513e48c709f9a[m
+Merge: 70f3cea 0f3faee
+Author: Aditya Ardiansyah <aditya.ardiyansah@behaestex.co.id>
+Date:   Tue Feb 28 15:48:49 2023 +0700
+
+    update nadia
+
+[33mcommit 648b807eb6dcf8426814a80b48300690db8c28aa[m
+Merge: 68b5d97 70f3cea
+Author: Aditya Ardiansyah <aditya.ardiyansah@behaestex.co.id>
+Date:   Tue Feb 28 13:16:32 2023 +0700
+
+    Merge branch 'adit' into 'staging'
+    
+    Update config
+    
+    See merge request edp/sispeg!46

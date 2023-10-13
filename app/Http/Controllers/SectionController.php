@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Session;
 use App\Helpers\NavHelper;
 use App\Http\Repository\SectionRepository;
 use App\Http\Repository\MenuRepository;
+use Illuminate\Support\Facades\File;
 
 class SectionController extends Controller
 {
@@ -18,7 +19,7 @@ class SectionController extends Controller
         $this->section = $sctn;
         $this->menu = $menu;
         $this->middleware(function ($request, $next){
-            Session::put('menu_active','/section');
+            Session::put('menu_active','/create-section');
             return $next($request);
         });
     }
@@ -98,28 +99,85 @@ class SectionController extends Controller
         ]);
     }
 
-
-
-
-
-
-    public function coba()
+    public function detailSection($id)
     {
-        $data = $this->section->get_all_section();
+        $data = $this->section->get_section($id);
+        $menu = $this->menu->get_menu_by_section($data->id);
+        $result = [];
 
-        foreach ($data as $key) {
-            $menu = $this->menu->get_menu($key->menu_id);
-            $key->menu = $menu;
+        foreach ($menu as $m) {
+            $hasSection = $this->section->get_section($m->section_id);
+
+            if ($hasSection) {
+                $sectionData = [
+                    'section_id' => $m->section_id,
+                    'section' => $hasSection->name_section,
+                    'icons' => $hasSection->icons,
+                    'order' => $hasSection->order,
+                    'status' => $hasSection->status, 
+                    'menu' => [
+                        [
+                            'url' => $m->url,
+                            'menu' => $m->name_menu,
+                            'order' => $m->order
+                        ]
+                    ]
+                ];
+
+                // Check if the section_id already exists in $result
+                $sectionIdExists = false;
+                foreach ($result as &$existingSection) {
+                    if ($existingSection['section_id'] === $m->section_id) {
+                        $existingSection['menu'][] = [
+                            'url' => $m->url,
+                            'menu' => $m->name_menu,
+                            'order' => $m->order
+                        ];
+
+                        $sectionIdExists = true;
+                        break;
+                    }
+                }
+
+                if (!$sectionIdExists) {
+                    $result[] = $sectionData;
+                }
+
+                foreach ($result as &$section) {
+                    $aktif = [];
+                    foreach ($section['menu'] as $menu) {
+                        $aktif[] = $menu['url'];
+                    }
+                    $section['aktif'] = $aktif;
+                }
+            } else {
+                // Menu tanpa section
+                $result[] = [
+                    'section_id' => $value->section_id,
+                    'section' => $value->name_menu,
+                    'icons' => $value->icons,
+                    'order' => $value->order,
+                    'url' => $value->url
+                ];
+            }
         }
 
+        usort($result, function ($a, $b) {
+            return $a['order'] <=> $b['order'];
+        });
+
         return response()->json([
-            'p' => $data
+            'payload' => $result
         ]);
     }
 
     public function section()
     {
-        return view('page.create-section');
+        $iconPath = public_path('assets/extensions/bootstrap-icons/icons');
+        $icons = File::allFiles($iconPath);
+        $data = $this->section->get_all_section();
+        
+        return view('page.create-section', compact('icons', 'data'));
     }
 
     /**
@@ -140,7 +198,14 @@ class SectionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name_section' => 'required',
+            'icons' => 'required',
+        ]);
+
+        $this->section->store($request);
+
+        return back()->with('success', 'Berhasil menambah section baru');
     }
 
     /**
@@ -160,9 +225,15 @@ class SectionController extends Controller
      * @param  \App\Models\Section  $section
      * @return \Illuminate\Http\Response
      */
-    public function edit(Section $section)
+    public function edit($id)
     {
-        //
+        $data = $this->section->get_section($id);
+        $section = $this->section->get_all_section();
+        $menu = $this->menu->get_menu_by_section($data->id);
+        $listMenu = $this->menu->get_all_menu();
+        $iconPath = public_path('assets/extensions/bootstrap-icons/icons');
+        $icons = File::allFiles($iconPath);
+        return view('page.section.edit', compact('data', 'menu', 'listMenu', 'section', 'icons'));
     }
 
     /**
@@ -172,9 +243,19 @@ class SectionController extends Controller
      * @param  \App\Models\Section  $section
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Section $section)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name_section' => 'required',
+        ]);
+
+        if (!$request) {
+            return back()->with('failed', 'Gagal update section!');
+        }
+
+        $this->section->update($request, $id);
+
+        return back()->with('success', 'Berhasil update section');
     }
 
     /**
@@ -186,5 +267,10 @@ class SectionController extends Controller
     public function destroy(Section $section)
     {
         //
+    }
+
+    public function menuBySection()
+    {
+        $section = $this->section->get_all_section_active();
     }
 }

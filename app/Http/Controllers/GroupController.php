@@ -3,27 +3,37 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use App\Http\Repository\GroupRepository;
+use App\Models\Group;
+use App\Models\UserGroup;
 
 class GroupController extends Controller
 {
     protected $group;
 
-    public function __construct(GroupRepository $group) {
+    public function __construct(GroupRepository $group)
+    {
         $this->group = $group;
+        $this->middleware(function ($request, $next){
+            Session::put('menu_active','/group');
+            return $next($request);
+        });
     }
 
     public function index()
     {
         $data = $this->group->group();
-        return view('page.group', compact('data'));
+        return view('permissions.group', compact('data'));
     }
 
-    public function api($id)
+    public function show($id)
     {
         $data = $this->group->detail_group($id);
         return response()->json([
-            'payload' => $data
+            'success' => true,
+            'message' => 'Detail Data group',
+            'data'    => $data
         ]);
     }
 
@@ -46,19 +56,33 @@ class GroupController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'description' => 'required'
+            'description' => 'required',
         ]);
 
-        $this->group->update($request, $id);
+        $data = $this->group->update($request, $id);
 
         return response()->json([
-            'success' => TRUE,
-            'message' => 'Berhasil mengupdate data!'
+            'success' => true,
+            'message' => 'Data Group berhasil diperbarui.',
+            'data' => $data,
         ]);
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
-        return $this->group->delete($id);
+        $data = Group::findOrFail($id);
+
+        if (UserGroup::where('group_id', $data->id)->exists()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data tidak dapat dihapus'
+            ]);
+        } else {
+            $data->delete();
+            return response()->json([
+                'status' => true,
+                'message' => 'Data Group berhasil dihapus'
+            ]);
+        }
     }
 }

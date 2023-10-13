@@ -33,9 +33,4 @@ class GroupRepository{
             'updated_at' => date('Y-m-d H:i:s')
         ]); 
     }
-
-    public function delete($id)
-    {
-        return DB::table('groups')->where('id', $id)->delete();
-    }
 }

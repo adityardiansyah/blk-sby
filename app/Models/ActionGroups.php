@@ -5,12 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Menu extends Model
+class ActionGroups extends Model
 {
     use HasFactory;
-
-    public function section()
-    {
-        return $this->belongsTo(Section::class);
-    }
 }

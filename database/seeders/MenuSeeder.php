@@ -23,7 +23,7 @@ class MenuSeeder extends Seeder
                 'url' => '/sku',
                 'icons' => '',
                 'order' => 1,
-                'status' => 1,
+                'status' => 'active',
             ]);
 
         DB::table('menus')
@@ -35,7 +35,7 @@ class MenuSeeder extends Seeder
                 'url' => '/color',
                 'icons' => '',
                 'order' => 2,
-                'status' => 1,
+                'status' => 'active',
             ]);
         
         DB::table('menus')
@@ -47,7 +47,7 @@ class MenuSeeder extends Seeder
                 'url' => '/size',
                 'icons' => '',
                 'order' => 3,
-                'status' => 1,
+                'status' => 'active',
             ]);
 
         DB::table('menus')
@@ -59,7 +59,7 @@ class MenuSeeder extends Seeder
                 'url' => '/shop',
                 'icons' => '',
                 'order' => 1,
-                'status' => 1,
+                'status' => 'active',
             ]);
 
         DB::table('menus')
@@ -71,7 +71,7 @@ class MenuSeeder extends Seeder
                 'url' => '/seller',
                 'icons' => '',
                 'order' => 2,
-                'status' => 1,
+                'status' => 'active',
             ]);
         
         DB::table('menus')
@@ -83,7 +83,7 @@ class MenuSeeder extends Seeder
                 'url' => '/adjusment/in',
                 'icons' => '',
                 'order' => 1,
-                'status' => 1,
+                'status' => 'active',
             ]);
         
         DB::table('menus')
@@ -95,7 +95,7 @@ class MenuSeeder extends Seeder
                 'url' => '/adjusment/out',
                 'icons' => '',
                 'order' => 2,
-                'status' => 1,
+                'status' => 'active',
             ]);
         
         DB::table('menus')
@@ -107,7 +107,7 @@ class MenuSeeder extends Seeder
                 'url' => '/users',
                 'icons' => '',
                 'order' => 1,
-                'status' => 1,
+                'status' => 'active',
             ]);
 
         DB::table('menus')
@@ -119,7 +119,7 @@ class MenuSeeder extends Seeder
                 'url' => '/create-section',
                 'icons' => '',
                 'order' => 3,
-                'status' => 1,
+                'status' => 'active',
             ]);
 
         DB::table('menus')
@@ -131,7 +131,7 @@ class MenuSeeder extends Seeder
                 'url' => '/conversion',
                 'icons' => '',
                 'order' => 1,
-                'status' => 1,
+                'status' => 'active',
             ]);
 
         DB::table('menus')
@@ -143,7 +143,7 @@ class MenuSeeder extends Seeder
                 'url' => '/goodsreceive',
                 'icons' => '',
                 'order' => 2,
-                'status' => 1,
+                'status' => 'active',
             ]);
 
         DB::table('menus')
@@ -155,7 +155,7 @@ class MenuSeeder extends Seeder
                 'url' => '/returnwarehouse',
                 'icons' => '',
                 'order' => 3,
-                'status' => 1,
+                'status' => 'active',
             ]);
 
         DB::table('menus')
@@ -167,7 +167,7 @@ class MenuSeeder extends Seeder
                 'url' => '/sales',
                 'icons' => '',
                 'order' => 1,
-                'status' => 1,
+                'status' => 'active',
             ]);
 
         DB::table('menus')
@@ -179,7 +179,7 @@ class MenuSeeder extends Seeder
                 'url' => '/returnsales',
                 'icons' => '',
                 'order' => 2,
-                'status' => 1,
+                'status' => 'active',
             ]);
 
         DB::table('menus')
@@ -191,7 +191,7 @@ class MenuSeeder extends Seeder
                 'url' => '/stockopname',
                 'icons' => '',
                 'order' => 3,
-                'status' => 1,
+                'status' => 'active',
             ]);
 
         DB::table('menus')
@@ -203,19 +203,19 @@ class MenuSeeder extends Seeder
                 'url' => '/laporan',
                 'icons' => '',
                 'order' => 1,
-                'status' => 1,
+                'status' => 'active',
             ]);
         
         DB::table('menus')
             ->insert([
                 'group_id' => 1,
                 'parent_id' => 0,
-                'section_id' => 4,
+                'section_id' => 8,
                 'name_menu' => 'Group',
                 'url' => '/group',
                 'icons' => '',
                 'order' => 2,
-                'status' => 1,
+                'status' => 'active',
             ]);
 
         DB::table('menus')
@@ -227,7 +227,7 @@ class MenuSeeder extends Seeder
                 'url' => '/setting',
                 'icons' => '',
                 'order' => 2,
-                'status' => 1,
+                'status' => 'active',
             ]);
     }
 }

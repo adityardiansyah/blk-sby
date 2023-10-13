@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="page-heading">
-        <h3>Seller</h3>
+        <h3>Penjualan</h3>
     </div>
     <div class="page-content">
         <section class="section">
@@ -121,6 +121,7 @@
                                     <table class="table table-striped table-bordered" id="table1">
                                         <thead>
                                             <tr>
+                                                <th>No.</th>
                                                 <th>Nama Item</th>
                                                 <th>SKU</th>
                                                 <th>Jumlah</th>
@@ -132,7 +133,7 @@
                                                 <th>Notes</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="detail">
+                                        <tbody class="spinners" id="detail">
                                     </table>
                                 </div>
                             </div>
@@ -304,6 +305,20 @@
                 type: 'get',
                 data: {},
                 url: "{{ url('sales') }}/" + id,
+                beforeSend: function() {
+                    $('.spinners').prop('disabled', true);
+                    $("#detail").html('');
+                    var spinnerHtml = `
+                        <tr>
+                        <td colspan="10" class="text-center">
+                        <div class="spinner-border text-primary mt-2" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        </td>
+                        </tr>
+                    `;
+                    $("#detail").append(spinnerHtml);
+                    },
                 success: function(data) {
                     $("#detail").html('');
                     console.log(data);
@@ -315,14 +330,16 @@
                     $('#notes').val(data.data.notes);
                     $('#id').val(data.data.id);
                     let detail = data.data.detail
+                    let itemNumber = 1;
                     $.each(detail, function(i, item) {
                         console.log(item);
-                        var newListItem = "<tr> <td>" + item.item_name + "</td> <td>" + item.sku +
+                        var newListItem = "<tr> <td> " + itemNumber + " </td> <td>" + item.item_name + "</td> <td>" + item.sku +
                             "</td><td>" + item.qty + "</td><td>" + item.unit + "</td><td>" + item
                             .unit_price + "</td><td>" + item.bruto_price + "</td><td>" + item.discount +
                             "</td><td>" + item.nett_total + "</td><td>" + item.notes + "</td>" + item +
                             "</tr>";
                         $("#detail").append(newListItem);
+                        itemNumber++;
                     });
                     if (data.data.status == 'open') {
                         $('#btn-open').hide();
