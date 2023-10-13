@@ -31,7 +31,7 @@
                                         <button value="{{ $item->id }}" type="button"
                                             class="btn btn-warning btn-sm groupEdit" data-bs-toggle="modal"
                                             data-bs-target="#modal_edit">Edit</button>
-                                        <a href="" class="btn btn-primary btn-sm">Kelola Akses</a>
+                                        <a href="{{ route('permission.data-akses', ['id' => $item->id]) }}" class="btn btn-primary btn-sm">Kelola Akses</a>
                                         <a href="#" onclick="deleteGroup({{ $item->id }})">
                                             <button type="button" class="btn btn-danger btn-sm">Hapus</button>
                                         </a>
