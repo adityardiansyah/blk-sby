@@ -16,8 +16,8 @@ class MenuRepository{
     public function get_all_menu()
     {
         return DB::table('menus')
-                ->select('name_menu', 'url', 'section_id', 'icons', 'order')
-                ->where('status', '1')
+                ->select('id', 'name_menu', 'url', 'section_id', 'icons', 'order')
+                ->where('status', 'active')
                 ->orderBy('order', 'ASC')
                 ->get();
     }
@@ -27,16 +27,45 @@ class MenuRepository{
         return DB::table('menus')->where('id', $id)->first();
     }
 
+    public function get_menu_by_section($section)
+    {
+        return DB::table('menus')->where('section_id', $section)->get();
+    }
+
     public function store($request)
     {
-        return DB::table('menu_sections')
+        $menu = DB::table('menus')->where('section_id', $request->section_id)->orderBy('order', 'DESC')->first();
+        return DB::table('menus')
                 ->insert([
-                    'group_id' => $request,
-                    'section_id' => $request,
-                    'name_menu' => $request,
-                    'url' => $request,
-                    'icons' => $request,
-                    'order' => $request
+                    'group_id' => 1,
+                    'parent_id' => $request->parent_id,
+                    'section_id' => $request->section_id,
+                    'name_menu' => $request->name_menu,
+                    'url' => $request->url,
+                    'icons' => '',
+                    'order' => ($menu != NULL) ? $menu->order + 1 : 1,
+                    'status' => 'active'
                 ]);
+    }
+
+    public function update($request, $id)
+    {
+        if ($request->status !== NULL) {
+            return DB::table('menus')->where('id', $id)->update([
+                'name_menu' => $request->name_menu,
+                'url' => $request->url,
+                'section_id' => $request->section_id,
+                'parent_id' => $request->parent_id,
+                'status' => 'active'
+            ]);
+        }else{
+            return DB::table('menus')->where('id', $id)->update([
+                'name_menu' => $request->name_menu,
+                'url' => $request->url,
+                'section_id' => $request->section_id,
+                'parent_id' => $request->parent_id,
+                'status' => 'inactive'
+            ]);
+        }
     }
 }
