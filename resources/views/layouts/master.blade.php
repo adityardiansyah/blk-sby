@@ -58,7 +58,7 @@
                         </li>
                         @if (!empty(Auth::user()->user_group[0]))    
                             @if (Auth::user()->user_group[0]->group_id == 1 || Auth::user()->user_group[0]->group_id == 2)
-                                @foreach (NavHelper::list_menu() as $item)
+                                @foreach (NavHelper::list_menu(Auth::user()->user_group[0]->group_id) as $item)
                                     @if ($item['section_id'] != NULL)
                                         <li class="sidebar-item  has-sub">
                                             <a href="#" class='sidebar-link'>

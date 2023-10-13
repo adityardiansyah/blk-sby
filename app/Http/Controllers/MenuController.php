@@ -40,7 +40,16 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $request->validate([
+            'section_id' => 'required',
+            'name_menu' => 'required',
+            'url' => 'required',
+            'parent_id' => 'required',
+        ]);
+
+        $this->menu->store($request);
+
+        return back()->with('success', 'Berhasil menambah menu baru!');
     }
 
     /**
@@ -74,7 +83,16 @@ class MenuController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'name_menu' => 'required',
+            'url' => 'required',
+            'section_id' => 'required',
+            'parent_id' => 'required',
+        ]);
+
         $this->menu->update($request, $id);
+
+        return back()->with('success', 'Berhasil update section');
     }
 
     /**

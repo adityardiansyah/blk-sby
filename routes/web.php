@@ -38,9 +38,12 @@ Route::get('/section/{id}', [SectionController::class, 'detailSection']);
 // URL::forceScheme('https');
 Route::middleware(['auth'])->group(function () {
     Route::get('/create-section', [SectionController::class, 'section']);
+    Route::post('/section/store', [SectionController::class, 'store']);
     Route::get('/section/edit/{id}', [SectionController::class, 'edit']);
     Route::post('section/update/{id}', [SectionController::class, 'update']);
     Route::get('/menu/{id}', [MenuController::class, 'menuApi']);
+    Route::post('/menu/store', [MenuController::class, 'store']);
+    Route::post('/menu/update/{id}', [MenuController::class, 'update']);
     Route::get('/',[HomeController::class, 'index'])->name('home.index');
     Route::get('shop', [ShopController::class, 'index'])->name('shop.index');
     Route::post('shop', [ShopController::class, 'store'])->name('master.shop.store');

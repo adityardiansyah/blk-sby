@@ -17,7 +17,7 @@ class MenuRepository{
     {
         return DB::table('menus')
                 ->select('id', 'name_menu', 'url', 'section_id', 'icons', 'order')
-                ->where('status', '1')
+                ->where('status', 'active')
                 ->orderBy('order', 'ASC')
                 ->get();
     }
@@ -34,19 +34,38 @@ class MenuRepository{
 
     public function store($request)
     {
-        return DB::table('menu_sections')
+        $menu = DB::table('menus')->where('section_id', $request->section_id)->orderBy('order', 'DESC')->first();
+        return DB::table('menus')
                 ->insert([
-                    'group_id' => $request,
-                    'section_id' => $request,
-                    'name_menu' => $request,
-                    'url' => $request,
-                    'icons' => $request,
-                    'order' => $request
+                    'group_id' => 1,
+                    'parent_id' => $request->parent_id,
+                    'section_id' => $request->section_id,
+                    'name_menu' => $request->name_menu,
+                    'url' => $request->url,
+                    'icons' => '',
+                    'order' => ($menu != NULL) ? $menu->order + 1 : 1,
+                    'status' => 'active'
                 ]);
     }
 
     public function update($request, $id)
     {
-        return DB::table('menus')->where('id', $id)->update($request);
+        if ($request->status !== NULL) {
+            return DB::table('menus')->where('id', $id)->update([
+                'name_menu' => $request->name_menu,
+                'url' => $request->url,
+                'section_id' => $request->section_id,
+                'parent_id' => $request->parent_id,
+                'status' => 'active'
+            ]);
+        }else{
+            return DB::table('menus')->where('id', $id)->update([
+                'name_menu' => $request->name_menu,
+                'url' => $request->url,
+                'section_id' => $request->section_id,
+                'parent_id' => $request->parent_id,
+                'status' => 'inactive'
+            ]);
+        }
     }
 }

@@ -198,7 +198,14 @@ class SectionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name_section' => 'required',
+            'icons' => 'required',
+        ]);
+
+        $this->section->store($request);
+
+        return back()->with('success', 'Berhasil menambah section baru');
     }
 
     /**
@@ -221,11 +228,12 @@ class SectionController extends Controller
     public function edit($id)
     {
         $data = $this->section->get_section($id);
+        $section = $this->section->get_all_section();
         $menu = $this->menu->get_menu_by_section($data->id);
         $listMenu = $this->menu->get_all_menu();
         $iconPath = public_path('assets/extensions/bootstrap-icons/icons');
         $icons = File::allFiles($iconPath);
-        return view('page.section.edit', compact('data', 'menu', 'listMenu', 'icons'));
+        return view('page.section.edit', compact('data', 'menu', 'listMenu', 'section', 'icons'));
     }
 
     /**
@@ -259,5 +267,10 @@ class SectionController extends Controller
     public function destroy(Section $section)
     {
         //
+    }
+
+    public function menuBySection()
+    {
+        $section = $this->section->get_all_section_active();
     }
 }

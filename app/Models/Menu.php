@@ -11,6 +11,6 @@ class Menu extends Model
 
     public function section()
     {
-        return $this->hasOne(Section::class);
+        return $this->belongsTo(Section::class);
     }
 }

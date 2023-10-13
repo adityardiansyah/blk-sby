@@ -4,11 +4,12 @@ use App\Http\Controllers\SectionController;
 use Illuminate\Support\Facades\DB;
 
 class NavHelper{
-    public static function list_menu()
+    public static function list_menu($group)
     {
         $data = DB::table('menus')
                     ->select('name_menu', 'url', 'section_id', 'icons', 'order')
-                    ->where('status', '1')
+                    ->where('status', 'active')
+                    ->where('group_id', $group)
                     ->orderBy('order', 'ASC')
                     ->get();
         $result = [];
