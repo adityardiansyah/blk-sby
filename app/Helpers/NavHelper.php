@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\SectionController;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Blade;
 
 class NavHelper{
     public static function list_menu($group)
@@ -94,7 +95,6 @@ class NavHelper{
             ->select('actions.id')
             ->where([
                 'groups.id' => $group_id,
-                'actions.name' => $name_menu,
                 'actions.action' => $aksi,
             ])
             ->first();
@@ -102,5 +102,71 @@ class NavHelper{
         if ($result != null) {
             return true;
         }
+    }
+
+    public static function cekAkses($user_id, $menu, $aksi)
+    {
+        $cekAkses = DB::table('users')
+            ->join('user_groups', 'users.id', '=', 'user_groups.user_id')
+            ->join('groups', 'user_groups.group_id', '=', 'groups.id')
+            ->join('action_groups', 'groups.id', '=', 'action_groups.group_id')
+            ->join('actions', 'action_groups.action_id', '=', 'actions.id')
+            ->select('actions.id')
+            ->where([
+                'users.id' => $user_id,
+                'actions.action' => $aksi,
+            ])
+            ->first();
+
+        if ($cekAkses != null) {
+            return true;
+        }
+    }
+
+    public static function addButton($nama)
+    {
+        return Blade::render("<x-add nama='$nama' />");
+    }
+
+    public static function editButton($nama, $id, $endpoint)
+    {
+        return Blade::render("<x-edit nama='$nama' id='$id' endpoint='$endpoint' />");
+    }
+
+    public static function simpan($nama)
+    {
+        return Blade::render("<x-simpan nama='$nama'/>");
+    }
+
+    public static function action()
+    {
+        $menu = DB::table('menus')
+            ->where('url', Session::get('menu_active'))
+            ->first();
+
+        if (empty($menu)) {
+            return [];
+        }else{
+            $cekAkses = DB::table('users')
+                ->join('user_groups', 'users.id', '=', 'user_groups.user_id')
+                ->join('groups', 'user_groups.group_id', '=', 'groups.id')
+                ->join('action_groups', 'groups.id', '=', 'action_groups.group_id')
+                ->join('actions', 'action_groups.action_id', '=', 'actions.id')
+                ->select('actions.id', 'actions.action')
+                ->where([
+                    'users.id' => Auth::user()->id,
+                    'actions.menu_id' => $menu->id,
+                ])
+                ->get();
+            $arr = "";
+            foreach ($cekAkses as $key => $value) {
+                $button = DB::table('button')->where('action_id', $value->id)->first();
+                if ($button) {
+                    $arr .= Blade::render($button->code);
+                }
+            }
+            return $arr;
+        }
+        
     }
 }
