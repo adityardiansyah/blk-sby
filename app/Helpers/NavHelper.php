@@ -86,6 +86,26 @@ class NavHelper{
         return $result;
     }
 
+    public static function cekAkses($user_id, $menu, $aksi)
+    {
+        $cekAkses = DB::table('users')
+            ->join('user_groups', 'users.id', '=', 'user_groups.user_id')
+            ->join('groups', 'user_groups.group_id', '=', 'groups.id')
+            ->join('action_groups', 'groups.id', '=', 'action_groups.group_id')
+            ->join('actions', 'action_groups.action_id', '=', 'actions.id')
+            ->select('actions.id')
+            ->where([
+                'users.id' => $user_id,
+                'actions.name' => $menu,
+                'actions.action' => $aksi,
+            ])
+            ->first();
+
+        if ($cekAkses != null) {
+            return true;
+        }
+    }
+
     public static function create_checked($group_id, $name_menu, $aksi)
     {
         $result = DB::table('groups')

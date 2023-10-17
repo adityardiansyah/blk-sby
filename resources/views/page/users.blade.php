@@ -8,8 +8,9 @@
         <section class="section">
             <div class="card">
                 <div class="card-header">
-                    <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
-                        data-bs-target="#modal_add"><i class="bi bi-plus"></i> Tambah User</button>
+                    @if (NavHelper::cekAkses(Auth::user()->id, $menu, 'tambah'))
+                    <x-add addButton="Tes"/>
+                    @endif
                 </div>
                 <div class="card-body">
                     <table class="table table-striped" id="table1">
@@ -34,8 +35,10 @@
                                         <span class="">{{ Str::ucfirst($item->status) }}</span>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-warning btn-sm"
-                                            onclick="detail({{ $item->id }})">Edit</button>
+                                        @if (NavHelper::cekAkses(Auth::user()->id, $menu, 'ubah'))
+                                            <button type="button" class="btn btn-warning btn-sm"
+                                                onclick="detail({{ $item->id }})">Edit</button>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
