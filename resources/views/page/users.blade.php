@@ -8,8 +8,7 @@
         <section class="section">
             <div class="card">
                 <div class="card-header">
-                    <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
-                        data-bs-target="#modal_add"><i class="bi bi-plus"></i> Tambah User</button>
+                    {!! NavHelper::action('header') !!}
                 </div>
                 <div class="card-body">
                     <table class="table table-striped" id="table1">
@@ -34,8 +33,7 @@
                                         <span class="">{{ Str::ucfirst($item->status) }}</span>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-warning btn-sm"
-                                            onclick="detail({{ $item->id }})">Edit</button>
+                                        {!! NavHelper::action('tabel', $item->id) !!}
                                     </td>
                                 </tr>
                             @endforeach
@@ -101,18 +99,13 @@
                                 </div>
                             </div>
                         </div>
-                        @if (Auth::user()->id == 1 && 2)
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary ml-1" id="button-save">
-                                    <i class="bx bx-check d-block d-sm-none"></i>
-                                    <span class="d-none d-sm-block">Simpan</span>
-                                </button>
-                        @endif
+                    <div class="modal-footer">
+                        {!! NavHelper::simpan(route('users.update', ['id' => $item->id])) !!}
                         <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
                             <i class="bx bx-x d-block d-sm-none"></i>
                             <span class="d-none d-sm-block">Tutup</span>
                         </button>
-                </div>
+                    </div>
                 </form>
             </div>
         </div>
@@ -250,29 +243,19 @@
             });
         });
 
-        function detail(id) {
-            $('#modal_update').modal('show');
+        const detail = async (id, endpoint) => {
+            $('#modal_update').modal('show')
 
-            $.ajax({
-                type: 'get',
-                data: {},
-                url: "{{ url('users') }}/" + id,
-                success: function(data) {
-                    console.log(data);
-                    $('#name').val(data.data.name);
-                    $('#username').val(data.data.username);
-                    $('#password').val(data.data.password);
-                    $('#status').val(data.data.status);
-                    $('#id').val(data.data.id);
-                    let detail = data.data.detail
-                    $.each(detail, function(i, item) {
-                        console.log(item);
-                    });
-                },
-                complete: function() {
+            const response = await fetch(`${endpoint}/${id}`)
+            const data = await response.json()
 
-                }
-            });
+            if (response.ok) {
+                $('#name').val(data.data.name);
+                $('#username').val(data.data.username);
+                $('#password').val(data.data.password);
+                $('#status').val(data.data.status);
+                $('#id').val(data.data.id);
+            }
         }
 
         $('body').on('click', '#button-save', function() {
