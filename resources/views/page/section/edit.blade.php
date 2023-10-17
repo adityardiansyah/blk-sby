@@ -222,7 +222,6 @@
                 const status = $(`#status-act`)
                 const formEditMenu = $('#formEditMenu')
 
-                console.log(data.payload)
                 name_menu.val(data.payload.name_menu)
                 url.val(data.payload.url)
                 parent_id.val(data.payload.parent_id)

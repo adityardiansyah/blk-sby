@@ -15,9 +15,11 @@ class CreateActionsTable extends Migration
     {
         Schema::create('actions', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('action');
+            $table->unsignedBigInteger('menu_id');
+            $table->unsignedBigInteger('master_action_id');
             $table->timestamps();
+            $table->foreign('menu_id')->references('id')->on('menus')->cascadeOnDelete();
+            $table->foreign('master_action_id')->references('id')->on('master_actions')->cascadeOnDelete();
         });
     }
 

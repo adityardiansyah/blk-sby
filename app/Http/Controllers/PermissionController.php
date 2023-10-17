@@ -8,6 +8,7 @@ use App\Models\Group;
 use App\Models\UserGroup;
 use App\Models\Actions;
 use App\Models\ActionGroups;
+use App\Models\MasterAction;
 use App\Http\Repository\MenuRepository;
 use App\Http\Repository\PermissionRepository;
 use Illuminate\Support\Facades\DB;
@@ -26,9 +27,10 @@ class PermissionController extends Controller
     public function data_akses($id)
     {
         $groups = Group::find($id);
+        $master_action = MasterAction::get();
         $menus = $this->menu->get_all_menu();
 
-        return view('permissions.data-akses', compact('groups', 'menus'));
+        return view('page.permissions.data-akses', compact('groups', 'master_action', 'menus'));
     }
 
 

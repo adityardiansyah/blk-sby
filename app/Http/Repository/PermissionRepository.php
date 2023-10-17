@@ -11,27 +11,28 @@ class PermissionRepository
 {
     public function actionId($request, Actions $actions, ActionGroups $actionGroups)
     {
-        $menu       = $request->menu;
-        $aksi       = $request->aksi;
-        $group_id   = $request->group_id;
+        $menu_id = $request->menu_id;
+        $aksi = $request->aksi;
+        $group_id = $request->group_id;
 
-        $cek = DB::table('action_groups AS A')
-            ->join('actions AS B', 'B.id', '=', 'A.action_id')
-            ->select('B.id')
+        $cek = DB::table('action_groups AS AG')
+            ->join('actions AS A', 'A.id', '=', 'AG.action_id')
+            ->select('A.id')
             ->where([
-                'B.name' => $menu,
-                'B.action' => $aksi,
-                'A.group_id' => $group_id
+                'A.menu_id' => $menu_id,
+                'A.master_action_id' => $aksi,
+                'AG.group_id' => $group_id,
             ])
             ->first();
 
         if ($cek == null) {
-            $actions->name       = $menu;
-            $actions->action       = $aksi;
+
+            $actions->menu_id = $menu_id;
+            $actions->master_action_id = $aksi;
             $actions->save();
             $last_id = $actions->id;
 
-            $actionGroups->action_id    = $last_id;
+            $actionGroups->action_id = $last_id;
             $actionGroups->group_id = $group_id;
             $actionGroups->save();
         } else {

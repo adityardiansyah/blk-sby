@@ -17,6 +17,7 @@ use App\Http\Controllers\ReturnWarehouseController;
 use App\Http\Controllers\StockOpnameController;
 use App\Http\Controllers\AdjusmentController;
 use App\Http\Controllers\SectionController;
+use App\Http\Controllers\MenuController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\PermissionController;
 use App\Models\User;
@@ -37,6 +38,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/',[HomeController::class, 'index'])->name('home.index');
     
     Route::get('/create-section', [SectionController::class, 'section']);
+    Route::get('/section/edit/{id}', [SectionController::class, 'edit']);
+    Route::post('/section/update/{id}', [SectionController::class, 'update']);
     Route::get('/',[HomeController::class, 'index'])->name('home.index');
     Route::get('shop', [ShopController::class, 'index'])->name('shop.index');
     Route::post('shop', [ShopController::class, 'store'])->name('master.shop.store');
@@ -122,6 +125,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('group/{id}', [GroupController::class, 'show'])->name('group.show');
     Route::put('group/{id}', [GroupController::class, 'update'])->name('group.update');
     Route::delete('group/{id}', [GroupController::class, 'destroy'])->name('group.delete');
+
+    // Menu
+    Route::get('/menu/{id}', [MenuController::class, 'menuApi']);
+    Route::post('/menu/update/{id}', [MenuController::class, 'update']);
 
     // Hak Akses Menu
     Route::get('permission/data-akses/{id}', [PermissionController::class, 'data_akses'])->name('permission.data-akses');
