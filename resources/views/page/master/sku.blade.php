@@ -8,7 +8,8 @@
     <section class="section">
         <div class="card">
             <div class="card-header">
-                <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#modal_add"><i class="bi bi-plus"></i> Tambah</button>
+                {!! NavHelper::section('header') !!}
+                {{-- <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#modal_add"><i class="bi bi-plus"></i> Tambah</button> --}}
             </div>
             <div class="card-body">
                 <table class="table table-striped" id="table-view">
@@ -204,7 +205,7 @@
 
     });
 
-    function edit_data(id){
+    function detail(id){
         $('#modal_edit').modal('show');
 
         $.ajax({
