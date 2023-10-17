@@ -177,7 +177,7 @@ class SectionController extends Controller
         $icons = File::allFiles($iconPath);
         $data = $this->section->get_all_section();
         
-        return view('page.create-section', compact('icons', 'data'));
+        return view('page.section.create-section', compact('icons', 'data'));
     }
 
     /**

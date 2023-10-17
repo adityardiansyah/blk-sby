@@ -100,7 +100,10 @@
                             </div>
                         </div>
                     <div class="modal-footer">
-                        {!! NavHelper::simpan(route('users.update', ['id' => $item->id])) !!}
+                        <button type="submit" class="btn btn-primary ml-1 btn-simpan">
+                            <i class="bx bx-check d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Simpan</span>
+                        </button>
                         <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
                             <i class="bx bx-x d-block d-sm-none"></i>
                             <span class="d-none d-sm-block">Tutup</span>
@@ -243,19 +246,28 @@
             });
         });
 
-        const detail = async (id, endpoint) => {
+        function detail(id) {
             $('#modal_update').modal('show')
 
-            const response = await fetch(`${endpoint}/${id}`)
-            const data = await response.json()
-
-            if (response.ok) {
-                $('#name').val(data.data.name);
-                $('#username').val(data.data.username);
-                $('#password').val(data.data.password);
-                $('#status').val(data.data.status);
-                $('#id').val(data.data.id);
-            }
+            $.ajax({
+                type: 'get',
+                data: {},
+                url: "{{ url('users') }}/" + id,
+                success: function(data) {
+                    console.log(data);
+                    $('#name').val(data.data.name);
+                    $('#username').val(data.data.username);
+                    $('#password').val(data.data.password);
+                    $('#status').val(data.data.status);
+                    $('#id').val(data.data.id);
+                    let detail = data.data.detail
+                    $.each(detail, function(i, item) {
+                        console.log(item);
+                    });
+                },
+                complete: function() {
+                }
+            })
         }
 
         $('body').on('click', '#button-save', function() {
