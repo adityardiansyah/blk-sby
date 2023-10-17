@@ -138,7 +138,7 @@ class NavHelper{
         return Blade::render("<x-simpan nama='$nama'/>");
     }
 
-    public static function action()
+    public static function action($position, $id = 0)
     {
         $menu = DB::table('menus')
             ->where('url', Session::get('menu_active'))
@@ -147,22 +147,20 @@ class NavHelper{
         if (empty($menu)) {
             return [];
         }else{
-            $cekAkses = DB::table('users')
-                ->join('user_groups', 'users.id', '=', 'user_groups.user_id')
-                ->join('groups', 'user_groups.group_id', '=', 'groups.id')
-                ->join('action_groups', 'groups.id', '=', 'action_groups.group_id')
+            $cekAkses = DB::table('action_groups')
                 ->join('actions', 'action_groups.action_id', '=', 'actions.id')
                 ->select('actions.id', 'actions.action')
                 ->where([
-                    'users.id' => Auth::user()->id,
+                    'action_groups.group_id' => Auth::user()->user_group[0]->group_id,
                     'actions.menu_id' => $menu->id,
                 ])
                 ->get();
             $arr = "";
             foreach ($cekAkses as $key => $value) {
-                $button = DB::table('button')->where('action_id', $value->id)->first();
+                $button = DB::table('button')->where('position', $position)->where('name', $value->action)->first();
                 if ($button) {
-                    $arr .= Blade::render($button->code);
+                    $x = str_replace('[id]', $id, $button->code);
+                    $arr .= Blade::render($x);
                 }
             }
             return $arr;

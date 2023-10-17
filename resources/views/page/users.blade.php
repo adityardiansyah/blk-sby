@@ -8,9 +8,7 @@
         <section class="section">
             <div class="card">
                 <div class="card-header">
-                    @if (NavHelper::cekAkses(Auth::user()->id, 'User', 'tambah'))
-                        {!! NavHelper::addButton('Tombol Rama') !!}
-                    @endif
+                    {!! NavHelper::action('header') !!}
                 </div>
                 <div class="card-body">
                     <table class="table table-striped" id="table1">
@@ -35,9 +33,7 @@
                                         <span class="">{{ Str::ucfirst($item->status) }}</span>
                                     </td>
                                     <td>
-                                        @if (NavHelper::cekAkses(Auth::user()->id, 'User', 'tambah'))
-                                            {!! NavHelper::action() !!}
-                                        @endif
+                                        {!! NavHelper::action('tabel', $item->id) !!}
                                     </td>
                                 </tr>
                             @endforeach

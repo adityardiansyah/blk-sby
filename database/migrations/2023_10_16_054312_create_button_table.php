@@ -17,6 +17,7 @@ class CreateButtonTable extends Migration
             $table->id();
             $table->text('code');
             $table->string('name');
+            $table->enum('position', ['tabel', 'header']);
             $table->timestamps();
         });
     }
