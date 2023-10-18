@@ -13,4 +13,9 @@ class Menu extends Model
     {
         return $this->belongsTo(Section::class);
     }
+
+    public function actions()
+    {
+        return $this->hasMany(Action::class, 'menu_id');
+    }
 }

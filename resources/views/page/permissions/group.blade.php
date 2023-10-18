@@ -8,10 +8,9 @@
         <section class="section">
             <div class="card">
                 <div class="card-header">
-                    <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
-                        data-bs-target="#modal_add"><i class="bi bi-plus"></i> Tambah Group</button>
+                    {{-- {!! NavHelper::action('header') !!} --}}
                 </div>
-                <div class="card-body">
+                <div class="card-body table-responsive">
                     <table class="table table-striped" id="table1">
                         <thead>
                             <tr>

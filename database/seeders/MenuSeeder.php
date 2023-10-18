@@ -205,8 +205,8 @@ class MenuSeeder extends Seeder
             ->insert([
                 'parent_id' => 0,
                 'section_id' => 8,
-                'name_menu' => 'Setting',
-                'url' => '/setting',
+                'name_menu' => 'Aksi',
+                'url' => '/button',
                 'icons' => '',
                 'order' => 2,
                 'status' => 'active',

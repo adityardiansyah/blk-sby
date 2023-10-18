@@ -20,6 +20,7 @@ use App\Http\Controllers\SectionController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\ButtonController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -131,6 +132,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/menu/api/{id}', [MenuController::class, 'menuApi']);
     Route::post('/menu/store', [MenuController::class, 'store']);
     Route::post('/menu/update/{id}', [MenuController::class, 'update']);
+
+    // Button
+    Route::get('button', [ButtonController::class, 'index'])->name('button.index');
+    Route::post('button/store', [ButtonController::class, 'store'])->name('button.store');
 
     // Hak Akses Menu
     Route::get('permission/data-akses/{id}', [PermissionController::class, 'data_akses'])->name('permission.data-akses');

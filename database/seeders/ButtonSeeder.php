@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class ButtonSeeder extends Seeder
 {
@@ -14,25 +14,24 @@ class ButtonSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('button')
+        DB::table('master_actions')
             ->insert([
-                'code' => '<button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#modal_add"><i class="bi bi-plus"></i> Tambah</button>',
-                'name' => 'tambah',
-                'position' => 'header'
-            ]);
-
-        DB::table('button')
-            ->insert([
-                'code' => '<button type="button" class="btn btn-warning btn-sm" onclick="detail([id])">Edit</button>',
-                'name' => 'edit',
-                'position' => 'table'
-            ]);
-
-        DB::table('button')
-            ->insert([
-                'code' => '',
-                'name' => 'delete',
-                'position' => 'table'
+                [
+                    'name' => 'lihat',
+                    'description' => 'Hak untuk mengakses halaman',
+                ],
+                [
+                    'name' => 'tambah',
+                    'description' => 'Tombol aksi untuk menambah data',
+                ],
+                [
+                    'name' => 'edit',
+                    'description' => 'Tombol aksi untuk mengedit data',
+                ],
+                [
+                    'name' => 'hapus',
+                    'description' => 'Tombol aksi untuk menghapus data',
+                ]
             ]);
     }
 }
