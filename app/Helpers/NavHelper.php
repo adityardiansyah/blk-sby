@@ -95,11 +95,11 @@ class NavHelper
             ->join('groups', 'user_groups.group_id', '=', 'groups.id')
             ->join('action_groups', 'groups.id', '=', 'action_groups.group_id')
             ->join('actions', 'action_groups.action_id', '=', 'actions.id')
-            ->select('actions.id')
+            ->join('master_actions', 'actions.master_action_id', '=', 'master_actions.id')
             ->where([
                 'users.id' => $user_id,
                 'actions.name' => $menu,
-                'actions.action' => $aksi,
+                'master_actions.name' => $aksi,
             ])
             ->first();
 
@@ -107,6 +107,7 @@ class NavHelper
             return true;
         }
     }
+
 
     public static function create_checked($group_id, $menu_id, $aksi)
     {
@@ -121,17 +122,6 @@ class NavHelper
             ->first();
 
         return $result !== null;
-    }
-
-
-    public static function addButton($nama)
-    {
-        return Blade::render("<x-add nama='$nama' />");
-    }
-
-    public static function editButton($nama, $id, $endpoint)
-    {
-        return Blade::render("<x-edit nama='$nama' id='$id' endpoint='$endpoint' />");
     }
 
     public static function simpan($nama)
