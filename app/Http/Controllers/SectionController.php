@@ -9,6 +9,7 @@ use App\Helpers\NavHelper;
 use App\Http\Repository\SectionRepository;
 use App\Http\Repository\MenuRepository;
 use Illuminate\Support\Facades\File;
+use DB;
 
 class SectionController extends Controller
 {
@@ -30,11 +31,18 @@ class SectionController extends Controller
      */
     public function index()
     {
-        $data = $this->menu->get_all_menu();
+        $data = DB::table('menus')
+                    ->select('menus.name_menu', 'menus.url', 'menus.section_id', 'menus.icons', 'menus.order')
+                    ->join('actions', 'actions.menu_id', '=', 'menus.id')
+                    ->join('master_actions', 'master_actions.id', '=', 'actions.master_action_id')
+                    ->join('action_groups', 'action_groups.action_id', '=', 'actions.id')
+                    ->where('master_actions.name', 'lihat')
+                    ->where('action_groups.group_id', 1)
+                    ->get();
         $result = [];
 
         foreach ($data as $value) {
-            $hasSection = $this->section->get_section($value->section_id);
+            $hasSection = DB::table('menu_sections')->where('id', $value->section_id)->first();
 
             if ($hasSection) {
                 $sectionData = [

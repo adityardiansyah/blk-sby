@@ -9,11 +9,14 @@ class NavHelper
     public static function list_menu($group)
     {
         $data = DB::table('menus')
-            ->select('name_menu', 'url', 'section_id', 'icons', 'order')
-            ->where('status', 'active')
-            ->where('group_id', $group)
-            ->orderBy('order', 'ASC')
-            ->get();
+                    ->select('menus.name_menu', 'menus.url', 'menus.section_id', 'menus.icons', 'menus.order')
+                    ->join('actions', 'actions.menu_id', '=', 'menus.id')
+                    ->join('master_actions', 'master_actions.id', '=', 'actions.master_action_id')
+                    ->join('action_groups', 'action_groups.action_id', '=', 'actions.id')
+                    ->where('master_actions.name', 'lihat')
+                    ->where('action_groups.group_id',$group)
+                    ->get();
+                    
         $result = [];
 
         foreach ($data as $value) {
