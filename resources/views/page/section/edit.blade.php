@@ -213,7 +213,7 @@
 
             const detail = async (id) => {
                 $('#modal-edit').modal('show')
-                const response = await fetch(`/menu/${id}`)
+                const response = await fetch(`/menu/api/${id}`)
                 const data = await response.json()
 
                 const token = $('input[name="_token"]').val()

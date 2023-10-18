@@ -13,6 +13,16 @@ class NavHelper{
                     ->where('group_id', $group)
                     ->orderBy('order', 'ASC')
                     ->get();
+
+        $datax = DB::table('menus')
+                    ->select('menu.name_menu', 'menu.url', 'menu.section_id', 'menu.icons', 'menu.order')
+                    ->join('actions', 'actions.menu_id', '=', 'menu.id')
+                    ->join('master_actions', 'master_actions.name', '=', 'actions.action')
+                    ->join('action_groups', 'action_groups.action_id', '=', 'actions.id')
+                    ->where('master_actions', 'lihat')
+                    ->where('action_groups.group_id', $group)
+                    ->get();
+
         $result = [];
 
         foreach ($data as $value) {

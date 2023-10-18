@@ -9,7 +9,7 @@
         <section class="section">
             <div class="card">
                 <div class="card-header">
-                    {!! NavHelper::section('header') !!}
+                    {!! NavHelper::action('header') !!}
                     {{-- <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
                         data-bs-target="#modal_add"><i class="bi bi-plus"></i> Tambah</button> --}}
                 </div>
@@ -37,7 +37,7 @@
                                         <span class="">{{ Str::ucfirst($item->status) }}</span>
                                     </td>
                                     <td>
-                                        {!! NavHelper::action('tabel', $m->id) !!}
+                                        {!! NavHelper::action('tabel', $item->id) !!}
                                         {{-- <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                             data-bs-target="#modal_edit"
                                             onclick="edit_data({{ $item->id }})">Edit</button> --}}

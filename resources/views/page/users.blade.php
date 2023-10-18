@@ -140,27 +140,27 @@
                         <div class="row">
                             <label>Nama</label>
                             <div class="form-group">
-                                <input type="text" placeholder="Nama" class="form-control" name="name"
+                                <input type="text" placeholder="Nama" class="form-control" name="name_create"
                                     id="name" required value="{{ old('name') }}">
                             </div>
                             <label>Username</label>
                             <div class="form-group">
-                                <input type="text" placeholder="Username" class="form-control" name="username"
+                                <input type="text" placeholder="Username" class="form-control" name="username_create"
                                     id="username" required value="{{ old('username') }}">
                             </div>
                             <label>Password</label>
                             <div class="form-group">
-                                <input type="text" placeholder="password" class="form-control" name="password"
+                                <input type="text" placeholder="password" class="form-control" name="password_create"
                                     id="password" required value="{{ old('password') }}">
                             </div>
                             <label>Confirm Password</label>
                             <div class="form-group">
-                                <input type="text" placeholder="password" class="form-control" name="repassword"
+                                <input type="text" placeholder="password" class="form-control" name="repassword_create"
                                     id="repassword" required value="{{ old('repassword') }}">
                             </div>
                             <label>Status</label>
                             <div class="form-group">
-                                <select class="form-control" name="status" id="status" class="form-control choices"
+                                <select class="form-control" name="status_create" id="status" class="form-control choices"
                                     required value="{{ old('status') }}">
                                     <option value="active">active</option>
                                     <option value="nonactive">nonactive</option>
@@ -190,11 +190,11 @@
 
             e.preventDefault();
 
-            var name = $("input[name=name]").val();
-            var username = $("input[name=username]").val();
-            var password = $("input[name=password]").val();
-            var repassword = $("input[name=repassword]").val();
-            var status = $('select[name=status] option').filter(':selected').val();
+            var name = $("input[name=name_create]").val();
+            var username = $("input[name=username_create]").val();
+            var password = $("input[name=password_create]").val();
+            var repassword = $("input[name=repassword_create]").val();
+            var status = $('select[name=status_create] option').filter(':selected').val();
             let token = $('input[name="_token"]').val();
 
             if (password !== repassword) {

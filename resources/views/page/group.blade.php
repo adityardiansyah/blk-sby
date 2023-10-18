@@ -31,7 +31,7 @@
                                         @method('DELETE')
                                         <button type="submit" name="submit" class="btn btn-danger btn-sm">Delete</button>
                                     </form>
-                                    {!! NavHelper::section('tabel', $item->id) !!}
+                                    {!! NavHelper::action('tabel', $item->id) !!}
                                     {{-- <button type="button" class="btn btn-warning btn-sm" onclick="edit({{ $item->id }})">Edit</button> --}}
                                 </td>
                             </tr>
