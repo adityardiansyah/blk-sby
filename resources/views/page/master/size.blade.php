@@ -8,9 +8,8 @@
     <section class="section">
         <div class="card">
             <div class="card-header">
-                {{-- <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <a href="/size" class="btn btn-primary ">+ Tambah</a> --}}
-                <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#modal_add"><i class="bi bi-plus"></i> Tambah</button>
+                {!! NavHelper::action('header') !!}
+                {{-- <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#modal_add"><i class="bi bi-plus"></i> Tambah</button> --}}
             </div>
 
             <div class="card-body">

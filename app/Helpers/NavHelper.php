@@ -4,15 +4,16 @@ use App\Http\Controllers\SectionController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Blade;
 
-class NavHelper{
+class NavHelper
+{
     public static function list_menu($group)
     {
         $data = DB::table('menus')
-                    ->select('name_menu', 'url', 'section_id', 'icons', 'order')
-                    ->where('status', 'active')
-                    ->where('group_id', $group)
-                    ->orderBy('order', 'ASC')
-                    ->get();
+            ->select('name_menu', 'url', 'section_id', 'icons', 'order')
+            ->where('status', 'active')
+            ->where('group_id', $group)
+            ->orderBy('order', 'ASC')
+            ->get();
         $result = [];
 
         foreach ($data as $value) {
@@ -87,23 +88,6 @@ class NavHelper{
         return $result;
     }
 
-    public static function create_checked($group_id, $name_menu, $aksi)
-    {
-        $result = DB::table('groups')
-            ->join('action_groups', 'groups.id', '=', 'action_groups.group_id')
-            ->join('actions', 'action_groups.action_id', '=', 'actions.id')
-            ->select('actions.id')
-            ->where([
-                'groups.id' => $group_id,
-                'actions.action' => $aksi,
-            ])
-            ->first();
-
-        if ($result != null) {
-            return true;
-        }
-    }
-
     public static function cekAkses($user_id, $menu, $aksi)
     {
         $cekAkses = DB::table('users')
@@ -111,10 +95,11 @@ class NavHelper{
             ->join('groups', 'user_groups.group_id', '=', 'groups.id')
             ->join('action_groups', 'groups.id', '=', 'action_groups.group_id')
             ->join('actions', 'action_groups.action_id', '=', 'actions.id')
-            ->select('actions.id')
+            ->join('master_actions', 'actions.master_action_id', '=', 'master_actions.id')
             ->where([
                 'users.id' => $user_id,
-                'actions.action' => $aksi,
+                'actions.name' => $menu,
+                'master_actions.name' => $aksi,
             ])
             ->first();
 
@@ -123,14 +108,20 @@ class NavHelper{
         }
     }
 
-    public static function addButton($nama)
-    {
-        return Blade::render("<x-add nama='$nama' />");
-    }
 
-    public static function editButton($nama, $id, $endpoint)
+    public static function create_checked($group_id, $menu_id, $aksi)
     {
-        return Blade::render("<x-edit nama='$nama' id='$id' endpoint='$endpoint' />");
+        $result = DB::table('action_groups')
+            ->join('actions', 'action_groups.action_id', '=', 'actions.id')
+            ->select('actions.id')
+            ->where([
+                'action_groups.group_id' => $group_id,
+                'actions.menu_id' => $menu_id,
+                'actions.master_action_id' => $aksi,
+            ])
+            ->first();
+
+        return $result !== null;
     }
 
     public static function simpan($nama)
@@ -146,10 +137,11 @@ class NavHelper{
 
         if (empty($menu)) {
             return [];
-        }else{
+        } else {
             $cekAkses = DB::table('action_groups')
                 ->join('actions', 'action_groups.action_id', '=', 'actions.id')
-                ->select('actions.id', 'actions.action')
+                ->join('master_actions', 'actions.master_action_id', '=', 'master_actions.id')
+                ->select('master_actions.name') // Ganti 'master_actions.id' dengan 'master_actions.name'
                 ->where([
                     'action_groups.group_id' => Auth::user()->user_group[0]->group_id,
                     'actions.menu_id' => $menu->id,
@@ -157,7 +149,7 @@ class NavHelper{
                 ->get();
             $arr = "";
             foreach ($cekAkses as $key => $value) {
-                $button = DB::table('button')->where('position', $position)->where('name', $value->action)->first();
+                $button = DB::table('button')->where('position', $position)->where('name', $value->name)->first();
                 if ($button) {
                     $x = str_replace('[id]', $id, $button->code);
                     $arr .= Blade::render($x);
@@ -165,6 +157,5 @@ class NavHelper{
             }
             return $arr;
         }
-        
     }
 }

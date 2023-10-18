@@ -8,7 +8,8 @@
         <section class="section">
             <div class="card">
                 <div class="card-header">
-                    <button class="btn btn-primary btn-sm" onclick="modalAddSection()">Tambah Section</button>
+                    {!! NavHelper::action('header') !!}
+                    {{-- <button class="btn btn-primary btn-sm" onclick="modalAddSection()">Tambah Section</button> --}}
                 </div>
                 <div class="card-body">
                     <table class="table table-striped" id="table1">
@@ -39,7 +40,7 @@
     </div>
 
     {{-- Modal Tambah Section --}}
-    <div class="modal fade text-left modal-lg" id="modal-section" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+    <div class="modal fade text-left modal-lg" id="modal_add" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">

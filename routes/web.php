@@ -20,6 +20,7 @@ use App\Http\Controllers\SectionController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\ButtonController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -40,6 +41,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/create-section', [SectionController::class, 'section']);
     Route::get('/section/edit/{id}', [SectionController::class, 'edit']);
     Route::post('/section/update/{id}', [SectionController::class, 'update']);
+    Route::post('/section/store', [SectionController::class, 'store']);
     Route::get('/',[HomeController::class, 'index'])->name('home.index');
     Route::get('shop', [ShopController::class, 'index'])->name('shop.index');
     Route::post('shop', [ShopController::class, 'store'])->name('master.shop.store');
@@ -127,8 +129,13 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('group/{id}', [GroupController::class, 'destroy'])->name('group.delete');
 
     // Menu
-    Route::get('/menu/{id}', [MenuController::class, 'menuApi']);
+    Route::get('/menu/api/{id}', [MenuController::class, 'menuApi']);
+    Route::post('/menu/store', [MenuController::class, 'store']);
     Route::post('/menu/update/{id}', [MenuController::class, 'update']);
+
+    // Button
+    Route::get('button', [ButtonController::class, 'index'])->name('button.index');
+    Route::post('button/store', [ButtonController::class, 'store'])->name('button.store');
 
     // Hak Akses Menu
     Route::get('permission/data-akses/{id}', [PermissionController::class, 'data_akses'])->name('permission.data-akses');

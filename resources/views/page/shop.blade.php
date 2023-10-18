@@ -9,8 +9,9 @@
         <section class="section">
             <div class="card">
                 <div class="card-header">
-                    <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
-                        data-bs-target="#modal_add"><i class="bi bi-plus"></i> Tambah</button>
+                    {!! NavHelper::action('header') !!}
+                    {{-- <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
+                        data-bs-target="#modal_add"><i class="bi bi-plus"></i> Tambah</button> --}}
                 </div>
 
                 <div class="card-body">
@@ -36,9 +37,10 @@
                                         <span class="">{{ Str::ucfirst($item->status) }}</span>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                        {!! NavHelper::action('tabel', $item->id) !!}
+                                        {{-- <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                             data-bs-target="#modal_edit"
-                                            onclick="edit_data({{ $item->id }})">Edit</button>
+                                            onclick="edit_data({{ $item->id }})">Edit</button> --}}
                                     </td>
                                 </tr>
                             @endforeach
@@ -258,7 +260,7 @@
 
         });
 
-        function edit_data(id) {
+        function detail(id) {
             $('#modal_edit').modal('show');
 
             $.ajax({

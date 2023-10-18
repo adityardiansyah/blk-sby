@@ -24,7 +24,7 @@ class GroupController extends Controller
     public function index()
     {
         $data = $this->group->group();
-        return view('permissions.group', compact('data'));
+        return view('page.permissions.group', compact('data'));
     }
 
     public function show($id)

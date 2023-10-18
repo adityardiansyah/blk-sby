@@ -10,6 +10,6 @@
                 <button type="submit" name="submit" class="btn btn-danger btn-sm">Delete</button>
         </form>
         @endif
-        <button type="button" class="btn btn-warning btn-sm" onclick="edit_data({{ $item->id }})">Edit</button>
+        {!! NavHelper::action('tabel', $item->id) !!}
     </td>
 </tr>

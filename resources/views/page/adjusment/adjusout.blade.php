@@ -8,7 +8,8 @@
     <section class="section">
         <div class="card">
             <div class="card-header">
-                <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#modal_add"><i class="bi bi-plus"></i> Tambah</button>
+                {!! NavHelper::action('header') !!}
+                {{-- <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#modal_add"><i class="bi bi-plus"></i> Tambah</button> --}}
             </div>
     
             <div class="card-body">
@@ -44,7 +45,7 @@
                                             
                                             @if (Auth::user()->id == 1)
                                                 <button type="submit" name="submit" class="btn btn-danger btn-sm">Delete</button>
-                                                <button type="button" class="btn btn-warning btn-sm" onclick="edit({{ $item->id }}, {{ $item->shop_id }}, {{ $item->conversion_id }}, {{ $item->qty }}, '{{ $item->notes }}', '{{ $item->status }}')">Edit</button>
+                                                {!! NavHelper::action('tabel', $item->id) !!}
                                                 @if ($item->status != 'confirmed')
                                                     <button type="button" class="btn btn-success btn-sm" onclick="konfirmasi({{ $item->id }}, {{ $item->conversion_id }}, {{ $item->qty }})">Confirm</button>
                                                 @endif
@@ -293,66 +294,79 @@ $("#shop-edit").change(() => {
     })
 })
 
-function edit(id, shopId, conversionId, qty, notes, status) {
+async function detail(id) {
     $('#modal_edit').modal('show');
 
-    $.ajax({
-        type: 'GET',
-        url: "{{ url('shop/api') }}",
-        data: {},
-        success: (data) => {
-            $.each(data.data, function(index, shop) {
-                let id = shop.id
-                let label = shop.name
-                let selected = (shopId == id) ? 'selected' : '';
+    const adjusment = async () => {
+        const response = await $.ajax({
+            type: 'GET',
+            url: `/adjusment/detail/${id}`
+        })
+        return response
+    }
+    const adjusmentData = await adjusment()
+    const shopId = adjusmentData.data.shop_id
+    const conversionId = adjusmentData.data.conversion_id
+    
+    const shop = async () => {
+        const response = await $.ajax({
+            type: 'GET',
+            url: `/shop/api`
+        })
 
-                $('#shop-edit').append('<option ' + selected + ' value="' + id + '">' + label + '</option>');
-            })
-        }
+        return response
+    }
+
+    const shopData = await shop()
+
+    shopData.data.map(item => {
+        let id = item.id
+        let label = item.name
+        let selected = (shopId == id) ? 'selected' : ''
+
+        $('#shop-edit').append('<option ' + selected + ' value="' + id + '">' + label + '</option>')
     })
 
     $("#shop-edit").select2({
         dropdownParent: $("#modal_edit")
     })
 
-    $.ajax({
-        type: 'GET',
-        url: "{{ url('conversion/api') }}/" + shopId,
-        data: { shop_id: shopId },
-        success: (data) => {
-            $('#conversion_id-edit').empty();
-            $.each(data.data, function(index, product) {
-                let id = product.id
-                let sku = product.sku;
-                let color = product.color;
-                let size = product.size;
-                let selected = (conversionId == id) ? 'selected' : '';
+     // Fetch conversion
+     const conversion = async () => {
+            const response = await $.ajax({
+                type: 'GET',
+                url: `/conversion/api/${shopId}`
+            })
 
-                let label = sku;
-                if (color !== null) {
-                    label += ' - ' + color;
-                }
-                if (size !== null) {
-                    label += ' - ' + size;
-                }
-
-                $('#conversion_id-edit').append('<option ' + selected + ' value="' + id + '">' + label + '</option>');
-            });
+            return response
         }
-    })
+        const conversionData = await conversion()
+        conversionData.data.map(item => {
+            let id = item.id
+            let sku = item.sku
+            let color = item.color
+            let size = item.size
+            let selected = (conversionId == id) ? 'selected' : ''
+            let label = sku;
+            if (color !== null) label += ' - ' + color;
+            if (size !== null) label += ' - ' + size;
+
+            $('#conversion_id-edit').append('<option ' + selected + ' value="' + id + '">' + label + '</option>')
+        })
 
     $("#conversion_id-edit").select2({
         dropdownParent: $("#modal_edit")
     })
 
-    $('#qty-edit').val(qty) 
-    $('#notes-edit').val(notes)
-
-    if (status === 'open') {
-        $('#status-open').prop('checked', true);
-    } else if (status === 'confirmed') {
-        $('#status-confirm').prop('checked', true);
-    }
+    $('#qty-edit').val(adjusmentData.data.qty) 
+        $('#notes-edit').val(adjusmentData.data.notes)
+    
+        // Checked untuk radio button
+        if (adjusmentData.data.status === 'open') {
+            $('#status-open').prop('checked', true);
+        } else if (adjusmentData.data.status === 'confirmed') {
+            $('#status-confirm').prop('checked', true);
+        }
 
     $(".btn-update").click(function(e){
     

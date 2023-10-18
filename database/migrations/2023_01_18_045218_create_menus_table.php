@@ -15,7 +15,6 @@ class CreateMenusTable extends Migration
     {
         Schema::create('menus', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('group_id');
             $table->unsignedBigInteger('parent_id');
             $table->unsignedBigInteger('section_id');
             $table->string('name_menu');
@@ -24,7 +23,6 @@ class CreateMenusTable extends Migration
             $table->integer('order');
             $table->string('status');
             $table->timestamps();
-            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
             $table->foreign('section_id')->references('id')->on('menu_sections')->onDelete('cascade');
             
         });

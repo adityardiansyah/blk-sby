@@ -91,11 +91,6 @@ class SectionRepository{
     {
         $section = DB::table('menu_sections')->orderBy('order', 'DESC')->first();
 
-        DB::table('menus')
-            ->insert([
-                ''
-            ]);
-
         return DB::table('menu_sections')->insert([
             'name_section' => $request->name_section,
             'icons' => $request->icons,

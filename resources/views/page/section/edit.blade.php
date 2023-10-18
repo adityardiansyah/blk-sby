@@ -49,7 +49,8 @@
                                         <td>{{ $m->order }}</td>
                                         <td>{{ $m->status }}</td>
                                         <td>
-                                            <button class="btn btn-warning btn-sm" onclick="editModal({{ $m->id }})">Edit</button>
+                                            {!! NavHelper::action('tabel', $m->id) !!}
+                                            {{-- <button class="btn btn-warning btn-sm" onclick="detail({{ $m->id }})">Edit</button> --}}
                                         </td>
                                     </tr>
                                 @endforeach
@@ -210,9 +211,9 @@
                 }
             }
 
-            const editModal = async (id) => {
+            const detail = async (id) => {
                 $('#modal-edit').modal('show')
-                const response = await fetch(`/menu/${id}`)
+                const response = await fetch(`/menu/api/${id}`)
                 const data = await response.json()
 
                 const token = $('input[name="_token"]').val()

@@ -100,7 +100,10 @@
                             </div>
                         </div>
                     <div class="modal-footer">
-                        {!! NavHelper::simpan(route('users.update', ['id' => $item->id])) !!}
+                        <button type="submit" class="btn btn-primary ml-1 btn-simpan">
+                            <i class="bx bx-check d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Simpan</span>
+                        </button>
                         <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
                             <i class="bx bx-x d-block d-sm-none"></i>
                             <span class="d-none d-sm-block">Tutup</span>
@@ -137,27 +140,27 @@
                         <div class="row">
                             <label>Nama</label>
                             <div class="form-group">
-                                <input type="text" placeholder="Nama" class="form-control" name="name"
+                                <input type="text" placeholder="Nama" class="form-control" name="name_create"
                                     id="name" required value="{{ old('name') }}">
                             </div>
                             <label>Username</label>
                             <div class="form-group">
-                                <input type="text" placeholder="Username" class="form-control" name="username"
+                                <input type="text" placeholder="Username" class="form-control" name="username_create"
                                     id="username" required value="{{ old('username') }}">
                             </div>
                             <label>Password</label>
                             <div class="form-group">
-                                <input type="text" placeholder="password" class="form-control" name="password"
+                                <input type="text" placeholder="password" class="form-control" name="password_create"
                                     id="password" required value="{{ old('password') }}">
                             </div>
                             <label>Confirm Password</label>
                             <div class="form-group">
-                                <input type="text" placeholder="password" class="form-control" name="repassword"
+                                <input type="text" placeholder="password" class="form-control" name="repassword_create"
                                     id="repassword" required value="{{ old('repassword') }}">
                             </div>
                             <label>Status</label>
                             <div class="form-group">
-                                <select class="form-control" name="status" id="status" class="form-control choices"
+                                <select class="form-control" name="status_create" id="status" class="form-control choices"
                                     required value="{{ old('status') }}">
                                     <option value="active">active</option>
                                     <option value="nonactive">nonactive</option>
@@ -187,11 +190,11 @@
 
             e.preventDefault();
 
-            var name = $("input[name=name]").val();
-            var username = $("input[name=username]").val();
-            var password = $("input[name=password]").val();
-            var repassword = $("input[name=repassword]").val();
-            var status = $('select[name=status] option').filter(':selected').val();
+            var name = $("input[name=name_create]").val();
+            var username = $("input[name=username_create]").val();
+            var password = $("input[name=password_create]").val();
+            var repassword = $("input[name=repassword_create]").val();
+            var status = $('select[name=status_create] option').filter(':selected').val();
             let token = $('input[name="_token"]').val();
 
             if (password !== repassword) {
@@ -243,19 +246,28 @@
             });
         });
 
-        const detail = async (id, endpoint) => {
+        function detail(id) {
             $('#modal_update').modal('show')
 
-            const response = await fetch(`${endpoint}/${id}`)
-            const data = await response.json()
-
-            if (response.ok) {
-                $('#name').val(data.data.name);
-                $('#username').val(data.data.username);
-                $('#password').val(data.data.password);
-                $('#status').val(data.data.status);
-                $('#id').val(data.data.id);
-            }
+            $.ajax({
+                type: 'get',
+                data: {},
+                url: "{{ url('users') }}/" + id,
+                success: function(data) {
+                    console.log(data);
+                    $('#name').val(data.data.name);
+                    $('#username').val(data.data.username);
+                    $('#password').val(data.data.password);
+                    $('#status').val(data.data.status);
+                    $('#id').val(data.data.id);
+                    let detail = data.data.detail
+                    $.each(detail, function(i, item) {
+                        console.log(item);
+                    });
+                },
+                complete: function() {
+                }
+            })
         }
 
         $('body').on('click', '#button-save', function() {

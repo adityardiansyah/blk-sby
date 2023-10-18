@@ -8,7 +8,8 @@
     <section class="section">
         <div class="card">
             <div class="card-header">
-                <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#modal_add"><i class="bi bi-plus"></i> Tambah</button>
+                {!! NavHelper::action('header') !!}
+                {{-- <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#modal_add"><i class="bi bi-plus"></i> Tambah</button> --}}
             </div>
     
             <div class="card-body">
@@ -20,8 +21,8 @@
                             <th>Tgl. dibuat</th>
                             <th>
                                 @if (Auth::user()->id == 1)
-                                Action</th>
-                            @endif
+                                    Action</th>
+                                @endif
                         </tr>
                     </thead>
                     <tbody>

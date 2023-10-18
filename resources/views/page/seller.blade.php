@@ -8,7 +8,8 @@
     <section class="section">
         <div class="card">
             <div class="card-header">
-                <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#modal_add"><i class="bi bi-plus"></i> Tambah</button>
+                {!! NavHelper::action('header') !!}
+                {{-- <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#modal_add"><i class="bi bi-plus"></i> Tambah</button> --}}
             </div>
             <div class="card-body">
                 <table class="table table-striped" id="table1">
@@ -35,7 +36,8 @@
                                     <span class="">{{ Str::ucfirst($item->status) }}</span>
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-warning btn-sm" onclick="detail({{ $item->id }})">Edit</button>
+                                    {!! NavHelper::action('tabel', $item->id) !!}
+                                    {{-- <button type="button" class="btn btn-warning btn-sm" onclick="detail({{ $item->id }})">Edit</button> --}}
                                 </td>
                             </tr>
                         @endforeach
