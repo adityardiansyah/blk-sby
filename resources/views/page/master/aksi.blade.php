@@ -7,11 +7,10 @@
     <div class="page-content">
         <section class="section">
             <div class="card">
-                <div class="card-body">
+                <div class="card-header">
+                    
                     {!! NavHelper::action('header') !!}
                 </div>
-            </div>
-            <div class="card">
                 <div class="card-body table-responsive">
                     <table class="table table-striped" id="table1">
                         <thead>
@@ -29,7 +28,7 @@
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->description }}</td>
                                     <td>
-                                        {!! NavHelper::action('table', $item->id) !!}
+                                        {!! NavHelper::action('tabel', $item->id) !!}
                                     </td>
                                 </tr>
                             @endforeach

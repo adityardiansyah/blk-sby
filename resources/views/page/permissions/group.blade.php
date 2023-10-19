@@ -7,11 +7,9 @@
     <div class="page-content">
         <section class="section">
             <div class="card">
-                <div class="card-body">
+                <div class="card-header">
                     {!! NavHelper::action('header') !!}
                 </div>
-            </div>
-            <div class="card">
                 <div class="card-body table-responsive">
                     <table class="table table-striped" id="table1">
                         <thead>

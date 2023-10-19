@@ -7,12 +7,11 @@
 <div class="page-content">
     <section class="section">
         <div class="card">
-            <div class="card-body">
+            <div class="card-header">
+                {{-- <button type="button" class="btn btn-warning float-end" data-bs-toggle="modal" data-bs-target="#modal_add"><i class="bi bi-eye"></i></button> --}}
                 <a href="{{ route('stockopname.index') }}"><button class="btn btn-secondary float-end ms-2">Reset</button></a>
                 <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#modal_filter"><i class="bi bi-funnel"></i> Filter</button>
             </div>
-        </div>
-        <div class="card">
             <div class="card-body">
                 <table class="table table-striped" id="table1">
                     <thead>

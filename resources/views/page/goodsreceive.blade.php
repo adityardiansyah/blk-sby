@@ -7,14 +7,12 @@
     <div class="page-content">
         <section class="section">
             <div class="card">
-                <div class="card-body">
+                <div class="card-header">
                     <a href="{{ route('goodsreceive.index') }}"><button
                             class="btn btn-secondary float-end ms-2">Reset</button></a>
                     <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
                         data-bs-target="#modal_filter"><i class="bi bi-funnel"></i> Filter</button>
                 </div>
-            </div>
-            <div class="card">
                 <div class="card-body table-responsive">
                     <table class="table table-striped" id="table1">
                         <thead>
@@ -311,7 +309,7 @@
                         </tr>
                     `;
                     $("#detail_gr").append(spinnerHtml);
-                },
+                    },
                 success: function(data) {
                     $("#detail_gr").html('');
                     console.log(data);
@@ -331,7 +329,7 @@
                             " </td> <td> " + item.sku +
                             " </td> <td> " + item.qty + " </td> <td> " + item.purchase_price +
                             " </td>" + item + "</tr>";
-                        itemNumber++;
+                            itemNumber++;
                         $("#detail_gr").append(newListItem);
                     });
                     if (data.data.status == 'open') {

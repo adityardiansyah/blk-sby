@@ -8,11 +8,12 @@
     <div class="page-content">
         <section class="section">
             <div class="card">
-                <div class="card-body">
+                <div class="card-header">
                     {!! NavHelper::action('header') !!}
+                    {{-- <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
+                        data-bs-target="#modal_add"><i class="bi bi-plus"></i> Tambah</button> --}}
                 </div>
-            </div>
-            <div class="card">
+
                 <div class="card-body">
                     <table class="table table-striped" id="table1">
                         <thead>
