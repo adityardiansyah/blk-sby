@@ -7,10 +7,11 @@
     <div class="page-content">
         <section class="section">
             <div class="card">
-                <div class="card-header">
+                <div class="card-body">
                     {!! NavHelper::action('header') !!}
-                    {{-- <button class="btn btn-primary btn-sm" onclick="modalAddSection()">Tambah Section</button> --}}
                 </div>
+            </div>
+            <div class="card">
                 <div class="card-body">
                     <table class="table table-striped" id="table1">
                         <thead>

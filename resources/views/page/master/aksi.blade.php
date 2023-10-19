@@ -8,15 +8,10 @@
         <section class="section">
             <div class="card">
                 <div class="card-body">
-                    {{-- {!! NavHelper::action('header') !!} --}}
-                    <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
-                        data-bs-target="#modal_add"><i class="bi bi-plus"></i> Tambah</button>
+                    {!! NavHelper::action('header') !!}
                 </div>
             </div>
             <div class="card">
-                <div class="card-header">
-
-                </div>
                 <div class="card-body table-responsive">
                     <table class="table table-striped" id="table1">
                         <thead>
@@ -34,6 +29,7 @@
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->description }}</td>
                                     <td>
+                                        {!! NavHelper::action('table', $item->id) !!}
                                     </td>
                                 </tr>
                             @endforeach

@@ -7,11 +7,14 @@
     <div class="page-content">
         <section class="section">
             <div class="card">
-                <div class="card-header">
-                    {{-- <button type="button" class="btn btn-warning float-end" data-bs-toggle="modal" data-bs-target="#modal_add"><i class="bi bi-eye"></i></button> --}}
-                    <a href="{{ route('returnwarehouse.index') }}"><button class="btn btn-secondary float-end ms-2">Reset</button></a>
-                    <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#modal_filter"><i class="bi bi-funnel"></i> Filter</button>
+                <div class="card-body">
+                    <a href="{{ route('returnwarehouse.index') }}"><button
+                            class="btn btn-secondary float-end ms-2">Reset</button></a>
+                    <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
+                        data-bs-target="#modal_filter"><i class="bi bi-funnel"></i> Filter</button>
                 </div>
+            </div>
+            <div class="card">
                 <div class="card-body">
                     <table class="table table-striped" id="table1">
                         <thead>
@@ -159,18 +162,16 @@
     </div>
     </div>
 
-    <div class="modal fade text-left" id="modal_filter" role="dialog"
-    aria-labelledby="myModalLabel33" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered"
-        role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel33">Filter</h4>
-                <button type="button" class="close btn-tutup" data-bs-dismiss="modal"
-                    aria-label="Close">
-                    <i data-feather="x"></i>
-                </button>
-            </div>
+    <div class="modal fade text-left" id="modal_filter" role="dialog" aria-labelledby="myModalLabel33"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel33">Filter</h4>
+                    <button type="button" class="close btn-tutup" data-bs-dismiss="modal" aria-label="Close">
+                        <i data-feather="x"></i>
+                    </button>
+                </div>
                 <div class="modal-body">
                     <form action="{{ route('returnwarehouse.index') }}" method="get">
                         <div class="col-md-12" id="filter">
@@ -203,19 +204,18 @@
                                 </select>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-light-secondary btn-tutup"
-                        data-bs-dismiss="modal">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-secondary btn-tutup" data-bs-dismiss="modal">
                         <i class="bx bx-x d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">Tutup</span>
                     </button>
                     <input type="submit" class="btn btn-primary" value="Terapkan">
                 </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 @endsection
 
 @push('js')

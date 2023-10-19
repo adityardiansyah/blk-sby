@@ -7,9 +7,11 @@
     <div class="page-content">
         <section class="section">
             <div class="card">
-                <div class="card-header">
-                    {{-- {!! NavHelper::action('header') !!} --}}
+                <div class="card-body">
+                    {!! NavHelper::action('header') !!}
                 </div>
+            </div>
+            <div class="card">
                 <div class="card-body table-responsive">
                     <table class="table table-striped" id="table1">
                         <thead>
@@ -29,10 +31,13 @@
                                     <td>
                                         <button value="{{ $item->id }}" type="button"
                                             class="btn btn-warning btn-sm groupEdit" data-bs-toggle="modal"
-                                            data-bs-target="#modal_edit">Edit</button>
-                                        <a href="{{ route('permission.data-akses', ['id' => $item->id]) }}" class="btn btn-primary btn-sm">Kelola Akses</a>
+                                            data-bs-target="#modal_edit" title="Edit"><i
+                                                class="bi bi-pencil"></i></button>
+                                        <a href="{{ route('permission.data-akses', ['id' => $item->id]) }}"
+                                            class="btn btn-primary btn-sm" title="Atur Akses"><i class="bi bi-grid"></i></a>
                                         <a href="#" onclick="deleteGroup({{ $item->id }})">
-                                            <button type="button" class="btn btn-danger btn-sm">Hapus</button>
+                                            <button type="button" class="btn btn-danger btn-sm" title="Hapus"><i
+                                                    class="bi bi-trash"></i></button>
                                         </a>
                                     </td>
                                 </tr>

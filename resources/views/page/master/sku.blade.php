@@ -7,12 +7,13 @@
 <div class="page-content">
     <section class="section">
         <div class="card">
-            <div class="card-header">
-                {!! NavHelper::action('header') !!}
-                {{-- <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#modal_add"><i class="bi bi-plus"></i> Tambah</button> --}}
-            </div>
             <div class="card-body">
-                <table class="table table-striped" id="table-view">
+                {!! NavHelper::action('header') !!}
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-striped" id="table1">
                     <thead>
                         <tr>
                             <th>No.</th>
@@ -23,7 +24,7 @@
                     </thead>
                     <tbody class="list-sku">
                         <tr>
-                            <td colspan="3"></td>
+                            <td colspan="4"></td>
                         </tr>
                     </tbody>
                 </table>

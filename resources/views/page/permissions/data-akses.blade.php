@@ -24,7 +24,7 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $menu->name_menu }}</td>
                                     <td>
-                                        <div class="form-check form-switch">
+                                        <div class="form-check form-check-inline">
                                             <input 
                                                 id="allCheck-{{ $menu->name_menu }}"
                                                 onclick="checkAll('{{ $menu->name_menu }}')"
@@ -32,9 +32,10 @@
                                                 type="checkbox"
                                                 data-menu="{{ $menu->name_menu }}" 
                                                 data-aksi="{{ $master_action[0]->id }}"
+                                                {{ NavHelper::create_checked($groups->id, $menu->id, $master_action[1]->id) ? 'checked' : '' }}
                                                 
                                             />
-                                            <label class="form-check-label" for="semua">All</label>
+                                            <label class="form-check-label" for="semua">semua</label>
                                         </div>
                                     </td>
                                     <td>

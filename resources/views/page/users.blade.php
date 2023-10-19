@@ -7,8 +7,12 @@
     <div class="page-content">
         <section class="section">
             <div class="card">
-                <div class="card-header">
+                <div class="card-body">
                     {!! NavHelper::action('header') !!}
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
                 </div>
                 <div class="card-body">
                     <table class="table table-striped" id="table1">
@@ -33,7 +37,7 @@
                                         <span class="">{{ Str::ucfirst($item->status) }}</span>
                                     </td>
                                     <td>
-                                        {!! NavHelper::action('tabel', $item->id) !!}
+                                        {!! NavHelper::action('table', $item->id) !!}
                                     </td>
                                 </tr>
                             @endforeach
