@@ -21,7 +21,9 @@ class DatabaseSeeder extends Seeder
         $this->call(GroupSeeder::class);
         $this->call(UserGroupSeeder::class);
         $this->call(MenuSeeder::class);
+        $this->call(MasterActionSeeder::class);
         $this->call(ButtonSeeder::class);
+        $this->call(ActionSeeder::class);
         // \App\Models\User::factory(10)->create();
     }
 }

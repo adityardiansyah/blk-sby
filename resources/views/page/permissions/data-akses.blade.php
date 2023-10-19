@@ -23,20 +23,31 @@
                                     <input type="hidden" value="{{ $groups->id }}" class="group_id" id="group_id">
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $menu->name_menu }}</td>
-                                    {{-- <td>
+                                    <td>
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input semua-checkbox" type="checkbox"
-                                                data-menu="{{ $menu->name_menu }}" data-aksi="'lihat', 'tambah', 'ubah', 'hapus'"
-                                                {{ NavHelper::create_checked($groups->id, $menu->name_menu, ['lihat', 'tambah', 'ubah', 'hapus']) ? 'checked' : 'null' }}>
+                                            <input 
+                                                id="allCheck-{{ $menu->name_menu }}"
+                                                onclick="checkAll('{{ $menu->name_menu }}')"
+                                                class="form-check-input semua-checkbox" 
+                                                type="checkbox"
+                                                data-menu="{{ $menu->name_menu }}" 
+                                                data-aksi="{{ $master_action[0]->id }}"
+                                                
+                                            />
                                             <label class="form-check-label" for="semua">All</label>
                                         </div>
-                                    </td> --}}
+                                    </td>
                                     <td>
                                         @foreach ($master_action as $item)
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox"
-                                                    data-menu_id="{{ $menu->id }}" data-aksi="{{ $item->id }}"
-                                                    {{ NavHelper::create_checked($groups->id, $menu->id, $item->id) ? 'checked' : '' }}>
+                                                <input 
+                                                    onclick="checkManual('{{ $menu->name_menu }}')"
+                                                    class="form-check-input checkbox-{{ $menu->name_menu }}" 
+                                                    type="checkbox"
+                                                    data-menu_id="{{ $menu->id }}" 
+                                                    data-aksi="{{ $item->id }}"
+                                                    {{ NavHelper::create_checked($groups->id, $menu->id, $item->id) ? 'checked' : '' }}
+                                                />
                                                 <label class="form-check-label" for="read">{{ $item->name }}</label>
                                             </div>
                                         @endforeach
@@ -53,6 +64,36 @@
 
 @push('js')
     <script>
+        const checkAll = async (name) => {
+            const checkAll = document.getElementById(`allCheck-${name}`)
+            const baris = document.getElementsByClassName(`checkbox-${name}`)
+            
+            if (checkAll.checked) {
+                for (let i=0; i < baris.length; i++) {
+                    if (!baris[i].checked) baris[i].checked = true
+                }
+            }else{
+                for (let i=0; i < baris.length; i++) {
+                    if (baris[i].checked) baris[i].checked = false
+                }
+            }
+
+            // Insert data
+        }
+
+        const checkManual = async (name) => {
+            const checkAll = document.getElementById(`allCheck-${name}`)
+            const baris = document.getElementsByClassName(`checkbox-${name}`)
+
+            for (let i=0; i < baris.length; i++) {
+                if (!baris[i].checked) {
+                    checkAll.checked = false
+                }else{
+                    checkAll.checked = true
+                }
+            }
+        }
+
         $(".form-check-input").on('click', function() {
             let data = $(this).data();
             const menu_id = data.menu_id;
