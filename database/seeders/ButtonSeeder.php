@@ -34,5 +34,12 @@ class ButtonSeeder extends Seeder
                 'name' => 'delete',
                 'position' => 'table'
             ]);
+
+        DB::table('button')
+            ->insert([
+                'code' => '',
+                'name' => 'save',
+                'position' => 'table'
+            ]);
     }
 }

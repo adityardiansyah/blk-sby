@@ -27,6 +27,18 @@ class ActionSeeder extends Seeder
                 'master_action_id' => 1
             ]);
 
+        DB::table('actions')
+            ->insert([
+                'menu_id' => 16,
+                'master_action_id' => 1
+            ]);
+
+        DB::table('actions')
+            ->insert([
+                'menu_id' => 19,
+                'master_action_id' => 1
+            ]);
+
         DB::table('action_groups')
             ->insert([
                 'action_id' => 1,
@@ -36,6 +48,18 @@ class ActionSeeder extends Seeder
         DB::table('action_groups')
             ->insert([
                 'action_id' => 2,
+                'group_id' => 1
+            ]);
+
+        DB::table('action_groups')
+            ->insert([
+                'action_id' => 3,
+                'group_id' => 1
+            ]);
+
+        DB::table('action_groups')
+            ->insert([
+                'action_id' => 4,
                 'group_id' => 1
             ]);
     }

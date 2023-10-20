@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 use App\Http\Repository\ButtonRepository;
+use Illuminate\Support\Facades\Session;
 
 class ButtonController extends Controller
 {
     protected $button;
-
     public function __construct(ButtonRepository $button) {
 
         $this->button = $button;
@@ -18,26 +17,25 @@ class ButtonController extends Controller
             return $next($request);
         });
     }
-
+    
     public function index()
     {
         $data = $this->button->button();
 
-        return view('page.master.aksi', compact('data'));
+        return view('page.master.button', compact('data'));
     }
 
-    public function store(Request $request)
+    public function update(Request $request)
     {
+        return $request->all();
         $request->validate([
+            'code' => 'required',
             'name' => 'required',
-            'description' => 'required'
+            'position' => 'required',
         ]);
 
-        $this->button->store($request);
+        $this->button->update($request);
 
-        return response()->json([
-            'success' => TRUE,
-            'message' => 'Berhasil menambah data!'
-        ]);
+        return back()->with('success', 'Berhasil update tombol');
     }
 }

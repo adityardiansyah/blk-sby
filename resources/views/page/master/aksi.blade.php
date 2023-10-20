@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="page-heading">
-        <h3>Aksi</h3>
+        <h3>Master Aksi</h3>
     </div>
     <div class="page-content">
         <section class="section">
@@ -43,7 +43,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel33">Tambah button Baru</h4>
+                    <h4 class="modal-title" id="myModalLabel33">Tambah aksi Baru</h4>
                     <button type="button" class="close btn-tutup" data-bs-dismiss="modal" aria-label="Close">
                         <i data-feather="x"></i>
                     </button>
@@ -57,11 +57,11 @@
                         </ul>
                     </div>
                 @endif
-                <form action="" id="buttonForm" method="POST" enctype="multipart/form-data">
+                <form action="" id="aksi" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="row">
-                            <label>Nama</label>
+                            <label>Nama Aksi</label>
                             <div class="form-button">
                                 <input type="text" placeholder="Nama" class="form-control" name="name" id="name"
                                     required value="{{ old('name') }}">
@@ -92,25 +92,25 @@
 @push('js')
     <script>
         $(document).ready(function() {
-            $('#buttonForm').submit(function(event) {
+            $('#aksi').submit(function(event) {
                 event.preventDefault();
 
                 let csrfToken = $('meta[name="csrf-token"]').attr('content');
 
                 $.ajax({
                     type: 'POST',
-                    url: '{{ route('button.store') }}',
+                    url: '{{ route('action.store') }}',
                     data: $(this).serialize(),
                     headers: {
                         'X-CSRF-TOKEN': csrfToken
                     },
                     success: async function(data) {
                         message(data.message, data.success);
-                        $('#buttonForm')[0].reset();
-                        window.location.href = '{{ route('button.index') }}';
+                        $('#aksi')[0].reset();
+                        window.location.href = '{{ route('action.index') }}';
                     },
                     error: function(error) {
-                        alert('Terjadi kesalahan saat menyimpan data button.');
+                        alert('Terjadi kesalahan saat menyimpan data aksi.');
                     }
                 });
             });

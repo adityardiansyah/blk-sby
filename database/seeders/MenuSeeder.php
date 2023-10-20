@@ -105,17 +105,6 @@ class MenuSeeder extends Seeder
         DB::table('menus')
             ->insert([
                 'parent_id' => 0,
-                'section_id' => 4,
-                'name_menu' => 'Create Section',
-                'url' => '/create-section',
-                'icons' => '',
-                'order' => 3,
-                'status' => 'active',
-            ]);
-
-        DB::table('menus')
-            ->insert([
-                'parent_id' => 0,
                 'section_id' => 5,
                 'name_menu' => 'Daftar Produk',
                 'url' => '/conversion',
@@ -197,6 +186,17 @@ class MenuSeeder extends Seeder
                 'name_menu' => 'Group',
                 'url' => '/group',
                 'icons' => '',
+                'order' => 1,
+                'status' => 'active',
+            ]);
+
+        DB::table('menus')
+            ->insert([
+                'parent_id' => 0,
+                'section_id' => 8,
+                'name_menu' => 'Create Section',
+                'url' => '/create-section',
+                'icons' => '',
                 'order' => 2,
                 'status' => 'active',
             ]);
@@ -206,9 +206,20 @@ class MenuSeeder extends Seeder
                 'parent_id' => 0,
                 'section_id' => 8,
                 'name_menu' => 'Aksi',
+                'url' => '/action',
+                'icons' => '',
+                'order' => 3,
+                'status' => 'active',
+            ]);
+
+        DB::table('menus')
+            ->insert([
+                'parent_id' => 0,
+                'section_id' => 8,
+                'name_menu' => 'Tombol',
                 'url' => '/button',
                 'icons' => '',
-                'order' => 2,
+                'order' => 4,
                 'status' => 'active',
             ]);
     }

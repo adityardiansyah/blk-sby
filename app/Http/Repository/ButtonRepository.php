@@ -7,29 +7,31 @@ use Illuminate\Support\Facades\DB;
 class ButtonRepository{
     public function button()
     {
-        return DB::table('master_actions')->get();
+        return DB::table('button')->get();
     }
 
     public function detail_button($id)
     {   
-        return DB::table('master_actions')->where('id', $id)->first();
+        return DB::table('button')->where('id', $id)->first();
     }
 
     public function store($request)
     {
-        return DB::table('master_actions')
+        return DB::table('button')
                 ->insert([
                     'name' => $request->name,
-                    'description' => $request->description,
+                    'code' => $request->code,
+                    'position' => $request->position,
                     'created_at' => date('Y-m-d H:i:s')
                 ]);
     }
 
-    public function update($request, $id)
+    public function update($request)
     {
-        return DB::table('master_actions')->where('id', $id)->update([
+        return DB::table('button')->where('id', $request->id)->update([
             'name' => $request->name,
-            'description' => $request->description,
+            'code' => $request->code,
+            'position' => $request->position,
             'updated_at' => date('Y-m-d H:i:s')
         ]); 
     }
