@@ -35,7 +35,7 @@
                                         </td>
                                         <td><input type="text" placeholder="Position" class="form-control"
                                                 name="position" required id="position-{{ $item->id }}"
-                                                value="{{ $item->position }}"></td>
+                                                value="{{ $item->position }}" disabled></td>
                                         <td>
                                             <input type="hidden" name="id" value="{{ $item->id }}">
                                             <button onclick="save({{ $item->id }})" type="submit" class="btn btn-primary ml-1 btn-simpan">
@@ -110,13 +110,14 @@
 @push('js')
     <script>
         function save(id) {
-            // let token = $('input[name="_token"]').val()
+            let token = $('input[name="_token"]').val()
             let name = $(`#name-${id}`).val()
             let code = $(`#code-${id}`).val()
             let position = $(`#position-${id}`).val()
             
-            console.log(name)
+            console.log(code)
             const formData = new FormData()
+            formData.append('_token', token)
             formData.append('id', id)
             formData.append('name', name)
             formData.append('code', code)
@@ -126,9 +127,12 @@
                 url: '{{ route('button.update') }}',
                 type: 'post',
                 headers: {
-                    "X-CSRF-TOKEN": $('input[name="_token"]').val(),
+                    "X-CSRF-TOKEN": token,
                 },
                 data: formData,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
                 success: function(response) {},
                 error: function(error) {}
             });
