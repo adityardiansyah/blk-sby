@@ -26,14 +26,13 @@
                                     <td>
                                         <div class="form-check form-check-inline">
                                             <input 
-                                                id="allCheck-{{ $menu->name_menu }}"
-                                                onclick="checkAll('{{ $menu->name_menu }}')"
-                                                class="form-check-input semua-checkbox" 
+                                                id="allCheck-{{ $menu->id }}"
+                                                onclick="checkAll('{{ $menu->id }}')"
+                                                class="form-check-input semua-checkbox-{{ $menu->id }} all-checked" 
                                                 type="checkbox"
-                                                data-menu="{{ $menu->name_menu }}" 
+                                                data-menu_id="{{ $menu->id }}" 
                                                 data-aksi="{{ $master_action[0]->id }}"
-                                                {{ NavHelper::create_checked($groups->id, $menu->id, $master_action[1]->id) ? 'checked' : '' }}
-                                                
+                                                {{ NavHelper::switched($groups->id, $menu->id) ? 'checked' : '' }}
                                             />
                                             <label class="form-check-label" for="semua">semua</label>
                                         </div>
@@ -42,12 +41,12 @@
                                         @foreach ($master_action as $item)
                                             <div class="form-check form-check-inline">
                                                 <input 
-                                                    onclick="checkManual('{{ $menu->name_menu }}')"
-                                                    class="form-check-input checkbox-{{ $menu->name_menu }}" 
+                                                    onclick="checkManual('{{ $menu->id }}', this.checked)"
+                                                    class="form-check-input checkbox-{{ $menu->id }} indiv-checked" 
                                                     type="checkbox"
                                                     data-menu_id="{{ $menu->id }}" 
                                                     data-aksi="{{ $item->id }}"
-                                                    {{ NavHelper::create_checked($groups->id, $menu->id, $item->id) ? 'checked' : '' }}
+                                                    {{ NavHelper::create_checked($groups->id, $menu->id, $item->id) ? 'checked' : NavHelper::create_checked($groups->id, $menu->id, $item->id) }}
                                                 />
                                                 <label class="form-check-label" for="read">{{ $item->name }}</label>
                                             </div>
@@ -65,37 +64,48 @@
 
 @push('js')
     <script>
-        const checkAll = async (name) => {
-            const checkAll = document.getElementById(`allCheck-${name}`)
-            const baris = document.getElementsByClassName(`checkbox-${name}`)
+        function checkAll(menuName) {
+            const switchBtn = document.getElementById(`allCheck-${menuName}`);
+            const checkboxes = document.querySelectorAll(`.checkbox-${menuName}`);
+
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = switchBtn.checked;
+            });           
             
-            if (checkAll.checked) {
-                for (let i=0; i < baris.length; i++) {
-                    if (!baris[i].checked) baris[i].checked = true
-                }
-            }else{
-                for (let i=0; i < baris.length; i++) {
-                    if (baris[i].checked) baris[i].checked = false
-                }
-            }
+            const menu_id = switchBtn.getAttribute('data-menu_id')
+            const group_id = $("#group_id").val()
+            const status = switchBtn.checked
 
-            // Insert data
+            $.ajax({
+                method: "post",
+                url: "{{ route('permission.all-akses') }}",
+                headers: {
+                    "X-CSRF-TOKEN": $('input[name="_token"]').val(),
+                },
+                data: {
+                    menu_id,
+                    status,
+                    group_id
+                },
+                success: async function(data) {
+                    if (data.status) {
+                        message(data.message, data.success);
+                    }
+                }
+            })
         }
 
-        const checkManual = async (name) => {
-            const checkAll = document.getElementById(`allCheck-${name}`)
-            const baris = document.getElementsByClassName(`checkbox-${name}`)
+        // Fungsi untuk memeriksa apakah semua checkbox dalam suatu kelompok aktif atau tidak
+        function checkManual(menuName) {
+            const checkboxes = document.querySelectorAll(`.checkbox-${menuName}`);
+            const switchBtn = document.getElementById(`allCheck-${menuName}`);
 
-            for (let i=0; i < baris.length; i++) {
-                if (!baris[i].checked) {
-                    checkAll.checked = false
-                }else{
-                    checkAll.checked = true
-                }
-            }
+            const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+
+            switchBtn.checked = allChecked;
         }
 
-        $(".form-check-input").on('click', function() {
+        $(".indiv-checked").on('click', function() {
             let data = $(this).data();
             const menu_id = data.menu_id;
             const aksi = data.aksi;

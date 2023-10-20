@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SISPEG</title>
-    
+    <title>STARTER KIT | BHS</title>
+
     <link rel="stylesheet" href="{{ asset('assets/css/main/app.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/main/app-dark.css') }}">
-    
+
     <link rel="stylesheet" href="{{ asset('assets/css/shared/iconly.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/extensions/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/pages/datatables.css') }}">
@@ -18,14 +18,84 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.3/dist/sweetalert2.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
-        .select2-container{
-            width: 100%!important;
+        .select2-container {
+            width: 100% !important;
         }
-        
+
+        .bg-dark{
+            background-color: #1F2937 !important;
+            border: none !important;
+        }
+
+        .btn-dark{
+            background-color: #1F2937 !important;
+            border: none !important;
+        }
+
+        .btn-dark:hover{
+            background-color: #374151 !important;
+            border: none !important;
+        }
+
+        .bg-primary {
+            background-color: #303F9F !important;
+            border: none !important;
+        }
+
+        .btn-primary {
+            background-color: #303F9F !important;
+            border: none !important;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8 !important;
+        }
+
+        .bg-secondary {
+            background-color: #4b5563 !important;
+            border: none !important;
+        }
+
+        .btn-secondary {
+            background-color: #4b5563 !important;
+            border: none !important;
+        }
+
+        .btn-secondary:hover {
+            background: #9ca3af !important;
+        }
+
+        .bg-success {
+            background-color: #059669 !important;
+            border: none !important;
+        }
+
+        .btn-success {
+            background-color: #059669 !important;
+            border: none !important;
+        }
+
+        .btn-success:hover {
+            background: #10b981 !important;
+        }
+
+        .bg-danger {
+            background-color: #dc2626 !important;
+            border: none !important;
+        }
+
+        .btn-danger {
+            background-color: #dc2626 !important;
+            border: none !important;
+        }
+
+        .btn-danger:hover {
+            background: #ef4444 !important;
+        }
     </style>
 </head>
 
-<body> 
+<body>
     <div id="app">
         <div id="sidebar" class="active">
             <div class="sidebar-wrapper active">
@@ -52,38 +122,42 @@
                 <div class="sidebar-menu">
                     <ul class="menu">
                         <li class="sidebar-title">Hi, {{ Auth::user()->name }}</li>
-                        <li class="sidebar-item {{ Session::get('menu_active') == 'dashboard'? 'active': '' }} ">
+                        <li class="sidebar-item {{ Session::get('menu_active') == 'dashboard' ? 'active' : '' }} ">
                             <a href="{{ url('/') }}" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
                                 <span>Dashboard</span>
                             </a>
                         </li>
-                                @foreach (NavHelper::list_menu(Auth::user()->user_group[0]->group_id) as $item)
-                                    @if ($item['section_id'] != NULL)
-                                        <li class="sidebar-item  has-sub">
-                                            <a href="#" class='sidebar-link'>
-                                                <i class="bi bi-{{ $item['icons'] }}"></i>
-                                                <span>{{ $item['section'] }}</span>
-                                            </a>
-                                            <ul class="submenu {{ in_array(Session::get('menu_active'), $item['aktif']) ? 'active': '' }}">
-                                                @foreach ($item['menu'] as $key)
-                                                    <li class="submenu-item {{ Session::get('menu_active') == $key['url'] ? 'active': '' }}">
-                                                        <a href="{{ $key['url'] }}">{{ $key['menu'] }}</a>
-                                                    </li>
-                                                @endforeach
-                                            </ul>
-                                        </li>
-                                    @else
-                                        <li class="sidebar-item {{ Session::get('menu_active') == 'dashboard'? 'active': '' }} ">
-                                            <a href="{{ url('/') }}" class='sidebar-link'>
-                                                <i class="bi bi-grid-fill"></i>
-                                                <span>{{ $item['section'] }}</span>
-                                            </a>
-                                        </li>
-                                    @endif
-                                @endforeach
+                        @foreach (NavHelper::list_menu(Auth::user()->user_group[0]->group_id) as $item)
+                            @if ($item['section_id'] != null)
+                                <li class="sidebar-item  has-sub">
+                                    <a href="#" class='sidebar-link'>
+                                        <i class="bi bi-{{ $item['icons'] }}"></i>
+                                        <span>{{ $item['section'] }}</span>
+                                    </a>
+                                    <ul
+                                        class="submenu {{ in_array(Session::get('menu_active'), $item['aktif']) ? 'active' : '' }}">
+                                        @foreach ($item['menu'] as $key)
+                                            <li
+                                                class="submenu-item {{ Session::get('menu_active') == $key['url'] ? 'active' : '' }}">
+                                                <a href="{{ $key['url'] }}">{{ $key['menu'] }}</a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </li>
+                            @else
+                                <li
+                                    class="sidebar-item {{ Session::get('menu_active') == 'dashboard' ? 'active' : '' }} ">
+                                    <a href="{{ url('/') }}" class='sidebar-link'>
+                                        <i class="bi bi-grid-fill"></i>
+                                        <span>{{ $item['section'] }}</span>
+                                    </a>
+                                </li>
+                            @endif
+                        @endforeach
                         <li class="sidebar-item">
-                            <a href="{{ route('logout') }}" class='sidebar-link' onclick="event.preventDefault();
+                            <a href="{{ route('logout') }}" class='sidebar-link'
+                                onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">
                                 <i class="bi bi-arrow-left-square"></i>
                                 <span>Logout</span>
@@ -134,18 +208,19 @@
         $('.select2').select2({
             dropdownParent: $("#modal_add"),
         });
-        function message(title, success='true') {
+
+        function message(title, success = 'true') {
             Toastify({
                 text: title,
                 duration: 7000,
-                close:true,
-                gravity:"top",
+                close: true,
+                gravity: "top",
                 position: "right",
-                backgroundColor: (success)? "#61876E": "#F55050",
+                backgroundColor: (success) ? "#61876E" : "#F55050",
             }).showToast();
         }
     </script>
-    @if(session()->has('message'))
+    @if (session()->has('message'))
         @php
             $message = Session::get('message');
         @endphp
@@ -153,14 +228,15 @@
             Toastify({
                 text: "{{ $message['content'] }}",
                 duration: 7000,
-                close:true,
-                gravity:"top",
+                close: true,
+                gravity: "top",
                 position: "right",
-                backgroundColor: ("{{ $message['type'] }}" == 'success')? "#61876E": "#F55050",
+                backgroundColor: ("{{ $message['type'] }}" == 'success') ? "#61876E" : "#F55050",
             }).showToast();
         </script>
     @endif
 
     @stack('js')
 </body>
+
 </html>

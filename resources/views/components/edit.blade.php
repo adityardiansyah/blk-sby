@@ -1,1 +1,0 @@
-<button type="button" class="btn btn-warning btn-sm" onclick="detail('{{ $id }}', '{{ $endpoint }}')">{{ $nama }}</button>

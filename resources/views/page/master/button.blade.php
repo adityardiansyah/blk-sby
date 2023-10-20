@@ -115,7 +115,6 @@
             let code = $(`#code-${id}`).val()
             let position = $(`#position-${id}`).val()
             
-            console.log(code)
             const formData = new FormData()
             formData.append('_token', token)
             formData.append('id', id)
@@ -133,8 +132,11 @@
                 contentType: false,
                 processData: false,
                 dataType: 'json',
-                success: function(response) {},
-                error: function(error) {}
+                success: async function(data) {
+                    if (data.status) {
+                        message(data.message, data.success);
+                    }
+                },
             });
         }
     </script>

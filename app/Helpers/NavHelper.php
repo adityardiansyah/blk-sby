@@ -13,7 +13,7 @@ class NavHelper
                     ->join('actions', 'actions.menu_id', '=', 'menus.id')
                     ->join('master_actions', 'master_actions.id', '=', 'actions.master_action_id')
                     ->join('action_groups', 'action_groups.action_id', '=', 'actions.id')
-                    ->where('master_actions.name', 'lihat')
+                    ->where('master_actions.name', 'view')
                     ->where('action_groups.group_id',$group)
                     ->get();
                     
@@ -111,6 +111,20 @@ class NavHelper
         }
     }
 
+    public static function switched($group_id, $menu_id)
+    {
+        $master_action = DB::table('master_actions')->get();
+
+        $result = DB::table('action_groups')
+            ->join('actions', 'action_groups.action_id', '=', 'actions.id')
+            ->where('action_groups.group_id', $group_id)
+            ->where('actions.menu_id', $menu_id)
+            ->get();
+
+        if (count($master_action) === count($result)) {
+            return $result !== null;
+        }
+    }
 
     public static function create_checked($group_id, $menu_id, $aksi)
     {

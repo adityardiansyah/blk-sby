@@ -17,25 +17,25 @@ class ActionSeeder extends Seeder
     {
         DB::table('actions')
             ->insert([
-                'menu_id' => 17,
+                'menu_id' => 2,
                 'master_action_id' => 1
             ]);
 
         DB::table('actions')
             ->insert([
-                'menu_id' => 18,
+                'menu_id' => 3,
                 'master_action_id' => 1
             ]);
 
         DB::table('actions')
             ->insert([
-                'menu_id' => 16,
+                'menu_id' => 4,
                 'master_action_id' => 1
             ]);
 
         DB::table('actions')
             ->insert([
-                'menu_id' => 19,
+                'menu_id' => 5,
                 'master_action_id' => 1
             ]);
 

@@ -34,8 +34,7 @@
             "Database\\Seeders\\": "database/seeders/"
         },
         "files": [
-            "app/Helpers/NavHelper.php",
-            "app/Helpers/PermissionHelper.php"
+            "app/Helpers/NavHelper.php"
         ]
     },
     "autoload-dev": {

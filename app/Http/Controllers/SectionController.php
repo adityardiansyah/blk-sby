@@ -9,7 +9,7 @@ use App\Helpers\NavHelper;
 use App\Http\Repository\SectionRepository;
 use App\Http\Repository\MenuRepository;
 use Illuminate\Support\Facades\File;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class SectionController extends Controller
 {

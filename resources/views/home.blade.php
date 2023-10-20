@@ -17,7 +17,7 @@
                             </div>
                             <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                 <h6 class="text-muted font-semibold">Total Toko</h6>
-                                <h6 class="font-light mb-0">{{ $shop }}</h6>
+                                <h6 class="font-light mb-0">ABC</h6>
                             </div>
                         </div>
                     </div>
@@ -34,7 +34,7 @@
                             </div>
                             <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                 <h6 class="text-muted font-semibold">Total Seller</h6>
-                                <h6 class="font-light mb-0">{{ $seller }}</h6>
+                                <h6 class="font-light mb-0">ABC</h6>
                             </div>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                             </div>
                             <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                 <h6 class="text-muted font-semibold">Penjualan Bulan ini</h6>
-                                <h6 class="font-light mb-0">{{ $salesmonth }} pcs</h6>
+                                <h6 class="font-light mb-0">ABC</h6>
                             </div>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                             </div>
                             <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                 <h6 class="text-muted font-semibold">Penjualan Tahun ini</h6>
-                                <h6 class="font-light mb-0">{{ $salesyear }} pcs</h6>
+                                <h6 class="font-light mb-0">ABC</h6>
                             </div>
                         </div>
                     </div>
@@ -85,7 +85,7 @@
                             </div>
                             <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                 <h6 class="text-muted font-semibold">Pendapatan Bulan ini</h6>
-                                <h6 class="font-extrabold mb-0">Rp. {{ number_format($sales, 2, '.', ',') }}</h6>
+                                <h6 class="font-extrabold mb-0">ABC</h6>
                             </div>
                         </div>
                     </div>

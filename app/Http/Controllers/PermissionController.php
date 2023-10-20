@@ -43,4 +43,14 @@ class PermissionController extends Controller
             'message' => 'Akses berhasil di ubah'
         ]);
     }
+
+    public function all_access(Request $request)
+    {
+        $this->permission->all_access($request);
+
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Akses berhasil di ubah'
+        ]);
+    }
 }

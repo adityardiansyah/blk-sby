@@ -19,11 +19,15 @@ class MasterActionSeeder extends Seeder
         DB::table('master_actions')
             ->insert([
                 [
-                    'name' => 'lihat',
+                    'name' => 'view',
                     'description' => 'Hak untuk mengakses halaman',
                 ],
                 [
-                    'name' => 'tambah',
+                    'name' => 'detail',
+                    'description' => 'ombol aksi untuk melihat detail data',
+                ],
+                [
+                    'name' => 'add',
                     'description' => 'Tombol aksi untuk menambah data',
                 ],
                 [
@@ -31,7 +35,7 @@ class MasterActionSeeder extends Seeder
                     'description' => 'Tombol aksi untuk mengedit data',
                 ],
                 [
-                    'name' => 'hapus',
+                    'name' => 'delete',
                     'description' => 'Tombol aksi untuk menghapus data',
                 ]
             ]);

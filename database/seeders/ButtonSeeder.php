@@ -17,13 +17,13 @@ class ButtonSeeder extends Seeder
         DB::table('button')
             ->insert([
                 'code' => '<button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#modal_add"><i class="bi bi-plus"></i> Tambah</button>',
-                'name' => 'tambah',
+                'name' => 'add',
                 'position' => 'header'
             ]);
 
         DB::table('button')
             ->insert([
-                'code' => "<button type='button' class='btn btn-warning btn-sm' onclick='detail([id])'>Edit</button>",
+                'code' => "<button type='button' class='btn btn-warning btn-sm groupEdit' onclick='detail([id])' title='Edit'><i class='bi bi-pencil'></i></button>",
                 'name' => 'edit',
                 'position' => 'table'
             ]);

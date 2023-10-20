@@ -45,4 +45,45 @@ class PermissionRepository
             ])->delete();
         }
     }
+
+    public function all_access($request)
+    {
+        $menu_id = $request->menu_id;
+        $group_id = $request->group_id;
+        $status = $request->status;
+
+        $master_action = DB::table('master_actions')->get();
+
+        if ($status === 'true') {
+            // Nyalakan
+            foreach ($master_action as $key => $value) {
+                $master = DB::table('actions')
+                    ->where('menu_id', $menu_id)
+                    ->where('master_action_id', $value->id)
+                    ->first();
+
+                if (!$master) {
+                    $actionId = DB::table('actions')
+                        ->insertGetId([
+                            'menu_id' => $menu_id,
+                            'master_action_id' => $value->id
+                        ]);
+    
+                    if ($actionId) {
+                        DB::table('action_groups')
+                            ->insert([
+                                'action_id' => $actionId,
+                                'group_id' => $group_id
+                            ]);
+                    }
+                }
+
+            }            
+        }else{
+            // Matikan
+            DB::table('actions')
+                ->where('menu_id', $menu_id)
+                ->delete();
+        }
+    }
 }
