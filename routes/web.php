@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\MenuController;
@@ -13,24 +14,29 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 
 Route::get('login', [LoginController::class, 'login']);
-Route::post('login', [LoginController::class, 'check_login'])->name('login'); 
-Route::post('logout', [LoginController::class, 'logout'])->name('logout'); 
+Route::post('login', [LoginController::class, 'check_login'])->name('login');
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 // URL::forceScheme('https');
 Route::middleware(['auth'])->group(function () {
-    Route::get('/',[HomeController::class, 'index'])->name('home.index');
-    
+    Route::get('/', [HomeController::class, 'index'])->name('home.index');
+
+    // Profile User
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/user/{id}', [ProfileController::class, 'show'])->name('user.show');
+    Route::post('users/update-password/{id}', [ProfileController::class, 'updatePassword'])->name('users.update-password');
+
     Route::get('/create-section', [SectionController::class, 'section']);
     Route::get('/section/edit/{id}', [SectionController::class, 'edit']);
     Route::post('/section/update/{id}', [SectionController::class, 'update']);
     Route::post('/section/store', [SectionController::class, 'store']);
-    
+
     // Users
     Route::get('users', [UserController::class, 'index'])->name('users.index');
     Route::get('users/{id}', [UserController::class, 'show'])->name('users.show');
     Route::post('users', [UserController::class, 'store'])->name('users.store');
     Route::post('users/update/{id}', [UserController::class, 'update'])->name('users.update');
-    
+
     // Group
     Route::get('group', [GroupController::class, 'index'])->name('group.index');
     Route::post('group/store', [GroupController::class, 'store'])->name('group.store');
@@ -46,7 +52,7 @@ Route::middleware(['auth'])->group(function () {
     // Master Aksi
     Route::get('action', [ActionController::class, 'index'])->name('action.index');
     Route::post('action/store', [ActionController::class, 'store'])->name('action.store');
-    
+
     // Button
     Route::get('button', [ButtonController::class, 'index'])->name('button.index');
     Route::post('button', [ButtonController::class, 'update'])->name('button.update');

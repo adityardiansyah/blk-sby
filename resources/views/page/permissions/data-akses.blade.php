@@ -25,29 +25,23 @@
                                     <td>{{ $menu->name_menu }}</td>
                                     <td>
                                         <div class="form-check form-check-inline">
-                                            <input 
-                                                id="allCheck-{{ $menu->id }}"
+                                            <input id="allCheck-{{ $menu->id }}"
                                                 onclick="checkAll('{{ $menu->id }}')"
-                                                class="form-check-input semua-checkbox-{{ $menu->id }} all-checked" 
-                                                type="checkbox"
-                                                data-menu_id="{{ $menu->id }}" 
+                                                class="form-check-input semua-checkbox-{{ $menu->id }} all-checked"
+                                                type="checkbox" data-menu_id="{{ $menu->id }}"
                                                 data-aksi="{{ $master_action[0]->id }}"
-                                                {{ NavHelper::switched($groups->id, $menu->id) ? 'checked' : '' }}
-                                            />
+                                                {{ NavHelper::switched($groups->id, $menu->id) ? 'checked' : '' }} />
                                             <label class="form-check-label" for="semua">semua</label>
                                         </div>
                                     </td>
                                     <td>
                                         @foreach ($master_action as $item)
                                             <div class="form-check form-check-inline">
-                                                <input 
-                                                    onclick="checkManual('{{ $menu->id }}', this.checked)"
-                                                    class="form-check-input checkbox-{{ $menu->id }} indiv-checked" 
-                                                    type="checkbox"
-                                                    data-menu_id="{{ $menu->id }}" 
+                                                <input onclick="checkManual('{{ $menu->id }}', this.checked)"
+                                                    class="form-check-input checkbox-{{ $menu->id }} indiv-checked"
+                                                    type="checkbox" data-menu_id="{{ $menu->id }}"
                                                     data-aksi="{{ $item->id }}"
-                                                    {{ NavHelper::create_checked($groups->id, $menu->id, $item->id) ? 'checked' : NavHelper::create_checked($groups->id, $menu->id, $item->id) }}
-                                                />
+                                                    {{ NavHelper::create_checked($groups->id, $menu->id, $item->id) ? 'checked' : NavHelper::create_checked($groups->id, $menu->id, $item->id) }} />
                                                 <label class="form-check-label" for="read">{{ $item->name }}</label>
                                             </div>
                                         @endforeach
@@ -70,8 +64,8 @@
 
             checkboxes.forEach(checkbox => {
                 checkbox.checked = switchBtn.checked;
-            });           
-            
+            });
+
             const menu_id = switchBtn.getAttribute('data-menu_id')
             const group_id = $("#group_id").val()
             const status = switchBtn.checked

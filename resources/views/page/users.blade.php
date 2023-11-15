@@ -10,7 +10,7 @@
                 <div class="card-header">
                     {!! NavHelper::action('header') !!}
                 </div>
-                <div class="card-body">
+                <div class="card-body table-responsive">
                     <table class="table table-striped" id="table1">
                         <thead>
                             <tr>
@@ -81,13 +81,13 @@
                                 </div>
                                 <label>Password</label>
                                 <div class="form-group">
-                                    <input type="text" placeholder="password" class="form-control" name="password"
-                                        id="password" required value="{{ old('password') }}">
+                                    <input type="password" placeholder="password" class="form-control" name="password"
+                                        id="password" required value="{{ old('password') }}" autocomplete="off">
                                 </div>
                                 <label>Confirm Password</label>
                                 <div class="form-group">
-                                    <input type="text" placeholder="password" class="form-control" name="repassword"
-                                        id="repassword" required value="{{ old('repassword') }}">
+                                    <input type="password" placeholder="password" class="form-control" name="repassword"
+                                        id="repassword" required value="{{ old('repassword') }}" autocomplete="off">
                                 </div>
                                 <label>Status</label>
                                 <div class="form-group">
@@ -99,22 +99,22 @@
                                 </div>
                             </div>
                         </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary ml-1 btn-simpan">
-                            <i class="bx bx-check d-block d-sm-none"></i>
-                            <span class="d-none d-sm-block">Simpan</span>
-                        </button>
-                        <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
-                            <i class="bx bx-x d-block d-sm-none"></i>
-                            <span class="d-none d-sm-block">Tutup</span>
-                        </button>
-                    </div>
-                </form>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary ml-1 btn-simpan">
+                                <i class="bx bx-check "></i>
+                                <span class="">Simpan</span>
+                            </button>
+                            <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                                <i class="bx bx-x "></i>
+                                <span class="">Tutup</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-    </div>
 
+    </div>
 
     <div class="modal fade text-left" id="modal_add" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -150,32 +150,43 @@
                             </div>
                             <label>Password</label>
                             <div class="form-group">
-                                <input type="text" placeholder="password" class="form-control" name="password_create"
-                                    id="password" required value="{{ old('password') }}">
+                                <input type="password" placeholder="password" class="form-control"
+                                    name="password_create" id="password" required value="{{ old('password') }}"
+                                    autocomplete="off">
                             </div>
                             <label>Confirm Password</label>
                             <div class="form-group">
-                                <input type="text" placeholder="password" class="form-control" name="repassword_create"
-                                    id="repassword" required value="{{ old('repassword') }}">
+                                <input type="password" placeholder="password" class="form-control"
+                                    name="repassword_create" id="repassword" required value="{{ old('repassword') }}"
+                                    autocomplete="off">
                             </div>
                             <label>Status</label>
                             <div class="form-group">
-                                <select class="form-control" name="status_create" id="status" class="form-control choices"
-                                    required value="{{ old('status') }}">
+                                <select class="form-control" name="status_create" id="status"
+                                    class="form-control choices" required value="{{ old('status') }}">
                                     <option value="active">active</option>
                                     <option value="nonactive">nonactive</option>
+                                </select>
+                            </div>
+                            <label>Role</label>
+                            <div class="form-group">
+                                <select class="form-control" name="group_id" id="group_id" class="form-control choices"
+                                    required value="{{ old('role') }}">
+                                    @foreach ($group as $item)
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light-secondary btn-tutup" data-bs-dismiss="modal">
-                            <i class="bx bx-x d-block d-sm-none"></i>
-                            <span class="d-none d-sm-block">Tutup</span>
+                            <i class="bx bx-x "></i>
+                            <span class="">Tutup</span>
                         </button>
                         <button type="submit" class="btn btn-primary ml-1 btn-simpan">
-                            <i class="bx bx-check d-block d-sm-none"></i>
-                            <span class="d-none d-sm-block">Simpan</span>
+                            <i class="bx bx-check "></i>
+                            <span class="">Simpan</span>
                         </button>
                     </div>
                 </form>
@@ -186,6 +197,29 @@
 
 @push('js')
     <script>
+        $(document).on('click', '#edit', function() {
+            let id = $(this).val();
+            $('#modal_password').modal('show');
+
+            $.ajax({
+                url: 'password/' + id,
+                type: 'GET',
+                success: function(data) {
+                    console.log(data)
+                    if (data.success) {
+                        $('#name_user').val(data.data.name);
+                        $('#username_user').val(data.data.username);
+                        $('#status_user').val(data.data.status);
+                        $('#id_user').val(data.data.id);
+                    }
+                }
+            });
+        });
+
+        function addData(id) {
+            $('#modal_add').modal('show')
+        }
+
         $(".btn-simpan").click(function(e) {
 
             e.preventDefault();
@@ -195,6 +229,7 @@
             var password = $("input[name=password_create]").val();
             var repassword = $("input[name=repassword_create]").val();
             var status = $('select[name=status_create] option').filter(':selected').val();
+            var role = $('select[name=group_id] option').filter(':selected').val();
             let token = $('input[name="_token"]').val();
 
             if (password !== repassword) {
@@ -209,6 +244,7 @@
             fd.append('password', password);
             fd.append('repassword', repassword);
             fd.append('status', status);
+            fd.append('group_id', role);
 
             $.ajax({
                 type: 'POST',
@@ -265,8 +301,7 @@
                         console.log(item);
                     });
                 },
-                complete: function() {
-                }
+                complete: function() {}
             })
         }
 

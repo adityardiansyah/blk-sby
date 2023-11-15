@@ -15,8 +15,8 @@ class GroupController extends Controller
     public function __construct(GroupRepository $group)
     {
         $this->group = $group;
-        $this->middleware(function ($request, $next){
-            Session::put('menu_active','/group');
+        $this->middleware(function ($request, $next) {
+            Session::put('menu_active', '/group');
             return $next($request);
         });
     }

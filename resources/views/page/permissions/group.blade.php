@@ -121,8 +121,8 @@
                         <div class="row">
                             <label>Nama</label>
                             <div class="form-group">
-                                <input type="text" placeholder="Nama" class="form-control" name="name" id="name"
-                                    required value="{{ old('name') }}">
+                                <input type="text" placeholder="Nama" class="form-control" name="name"
+                                    id="name" required value="{{ old('name') }}">
                             </div>
                             <label>Deskripsi</label>
                             <div class="form-group">
@@ -149,6 +149,10 @@
 
 @push('js')
     <script>
+        function addData(id) {
+            $('#modal_add').modal('show')
+        }
+
         function deleteGroup(id) {
             let url = 'group/' + id;
             let csrfToken = $('input[name="_token"]').val();

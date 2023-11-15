@@ -35,6 +35,9 @@ class ButtonController extends Controller
 
         $this->button->update($request);
 
-        return back()->with('success', 'Berhasil update tombol');
+        return response()->json([
+            'success' => TRUE,
+            'message' => 'Berhasil merubah data!'
+        ]);
     }
 }

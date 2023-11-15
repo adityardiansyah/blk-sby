@@ -2,39 +2,52 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Repository\SellerRepository;
 use App\Http\Repository\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
+use App\Models\Group;
+use App\Models\UserGroup;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
     protected $userRepository;
 
-    public function __construct(UserRepository $user) {
-        $this->middleware(function ($request, $next){
-            Session::put('menu_active','/users');
+    public function __construct(UserRepository $user)
+    {
+        $this->middleware(function ($request, $next) {
+            Session::put('menu_active', '/users');
             return $next($request);
         });
         $this->userRepository = $user;
     }
-    
+
     public function index(Request $request)
     {
-        $menu = 'User';
-        $data = $this->userRepository->get_all();
-        return view('page.users', compact('data', 'menu'));
+        $user = Auth::user();
+
+        if ($user && $user->group_id == 1) {
+            $data = $this->userRepository->get_all();
+        } else {
+            $data = $this->userRepository->without_admin();
+        }
+
+        $group = Group::where('id', '<>', 1)->get();
+
+        return view('page.users', compact('data', 'group'));
     }
 
-    public function show($id) {
+    public function show($id)
+    {
         $data = $this->userRepository->get_data_by_id($id);
-        if(!empty($data)){
+        if (!empty($data)) {
             return response()->json([
                 'success' => true,
                 'data' => $data
             ]);
-        }else{
+        } else {
             return response()->json([
                 'success' => false,
                 'data' => []
@@ -45,11 +58,19 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $user = $this->userRepository->create($request->all());
-        
+
+        $group_id = $request->group_id;
+        $user_id = $user->id;
+
+        UserGroup::create([
+            'user_id' => $user_id,
+            'group_id' => $group_id,
+        ]);
+
         return response()->json([
-            'success'=>true,
+            'success' => true,
             'data' => $user,
-            'message' => 'Berhasil ditambahkan!' 
+            'message' => 'Berhasil ditambahkan!'
         ]);
     }
 
@@ -69,5 +90,21 @@ class UserController extends Controller
             'success' => true,
             'message' => 'Data Berhasil Diubah!'
         ]);
+    }
+
+    public function showPassword($id)
+    {
+        $data = $this->userRepository->get_data_by_id($id);
+        if (!empty($data)) {
+            return response()->json([
+                'success' => true,
+                'data' => $data
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'data' => []
+            ]);
+        }
     }
 }

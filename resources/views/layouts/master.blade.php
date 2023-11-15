@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STARTER KIT | BHS</title>
+    <title>SHIO</title>
 
     <link rel="stylesheet" href="{{ asset('assets/css/main/app.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/main/app-dark.css') }}">
@@ -22,17 +22,17 @@
             width: 100% !important;
         }
 
-        .bg-dark{
+        .bg-dark {
             background-color: #1F2937 !important;
             border: none !important;
         }
 
-        .btn-dark{
+        .btn-dark {
             background-color: #1F2937 !important;
             border: none !important;
         }
 
-        .btn-dark:hover{
+        .btn-dark:hover {
             background-color: #374151 !important;
             border: none !important;
         }
@@ -92,6 +92,16 @@
         .btn-danger:hover {
             background: #ef4444 !important;
         }
+
+        @media screen and (max-width:425px) {
+            #main {
+                padding: 1rem;
+            }
+
+            .card .card-body {
+                padding: 1rem;
+            }
+        }
     </style>
 </head>
 
@@ -100,10 +110,10 @@
         <div id="sidebar" class="active">
             <div class="sidebar-wrapper active">
                 <div class="sidebar-header position-relative">
-                    <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex justify-content-between align-items-center mt-2">
                         <div class="logo">
                             <a href="{{ url('/') }}">
-                                <b>SISPEG</b>
+                                <h1 class="">SHIO</h1>
                                 {{-- <img src="assets/images/logo/logo.svg" alt="Logo"
                                     srcset=""> --}}
                             </a>
@@ -121,7 +131,6 @@
                 </div>
                 <div class="sidebar-menu">
                     <ul class="menu">
-                        <li class="sidebar-title">Hi, {{ Auth::user()->name }}</li>
                         <li class="sidebar-item {{ Session::get('menu_active') == 'dashboard' ? 'active' : '' }} ">
                             <a href="{{ url('/') }}" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
@@ -155,6 +164,13 @@
                                 </li>
                             @endif
                         @endforeach
+                        <li class="sidebar-title fw-bold">{{ Auth::user()->name }}</li>
+                        <li class="sidebar-item">
+                            <a href="{{ url('/profile') }}" class='sidebar-link'>
+                                <i class="bi bi-person"></i>
+                                <span>Profile</span>
+                            </a>
+                        </li>
                         <li class="sidebar-item">
                             <a href="{{ route('logout') }}" class='sidebar-link'
                                 onclick="event.preventDefault();
@@ -178,17 +194,6 @@
             </header>
             @yield('content')
 
-            <footer>
-                <div class="footer clearfix mb-0 text-muted">
-                    <div class="float-start">
-                        <p>{{ date('Y') }} &copy; PT. BEHAESTEX</p>
-                    </div>
-                    <div class="float-end">
-                        <p>Crafted with <span class="text-danger"><i class="bi bi-heart"></i></span> by <a
-                                href="">IT BTX</a></p>
-                    </div>
-                </div>
-            </footer>
         </div>
     </div>
     <script src="{{ asset('assets/extensions/jquery/jquery.min.js') }}"></script>

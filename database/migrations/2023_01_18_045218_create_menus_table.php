@@ -24,7 +24,6 @@ class CreateMenusTable extends Migration
             $table->string('status');
             $table->timestamps();
             $table->foreign('section_id')->references('id')->on('menu_sections')->onDelete('cascade');
-            
         });
     }
 

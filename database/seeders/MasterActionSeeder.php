@@ -24,7 +24,7 @@ class MasterActionSeeder extends Seeder
                 ],
                 [
                     'name' => 'detail',
-                    'description' => 'ombol aksi untuk melihat detail data',
+                    'description' => 'Tombol aksi untuk melihat detail data',
                 ],
                 [
                     'name' => 'add',

@@ -18,14 +18,6 @@ class GroupSeeder extends Seeder
             [
                 'name' => 'Admininstrator',
                 'description' => 'Hak Akses untuk Admin',
-            ],
-            [
-                'name' => 'Marketing',
-                'description' => 'Hak Akses untuk marketing',
-            ],
-            [
-                'name' => 'SPG',
-                'description' => 'Hak Akses untuk SPG',
             ]
         ]);
     }

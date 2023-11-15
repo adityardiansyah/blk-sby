@@ -68,7 +68,7 @@ class PermissionRepository
                             'menu_id' => $menu_id,
                             'master_action_id' => $value->id
                         ]);
-    
+
                     if ($actionId) {
                         DB::table('action_groups')
                             ->insert([
@@ -77,9 +77,8 @@ class PermissionRepository
                             ]);
                     }
                 }
-
-            }            
-        }else{
+            }
+        } else {
             // Matikan
             DB::table('actions')
                 ->where('menu_id', $menu_id)
