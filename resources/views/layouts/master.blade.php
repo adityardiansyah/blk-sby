@@ -92,6 +92,14 @@
         .btn-danger:hover {
             background: #ef4444 !important;
         }
+        .btn-close-sidebar{
+            bottom: 0; 
+            padding:10px 16px;
+            background:#2f2871a8; 
+            position:absolute; 
+            text-align:right; 
+            border-radius: 0px 22px 22px 0px;
+        }
 
         @media screen and (max-width:425px) {
             #main {
@@ -120,13 +128,12 @@
                         </div>
                         <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                             <div class="form-check form-switch fs-6">
-                                <input class="form-check-input  me-0" type="hidden" id="toggle-dark">
+                                <input class="form-check-input  me-0" type="checkbox" id="toggle-dark"
+                                    style="cursor: pointer">
+                                <label class="form-check-label"></label>
                             </div>
                         </div>
-                        <div class="sidebar-toggler  x">
-                            <a href="#" class="sidebar-hide d-xl-none d-block"><i
-                                    class="bi bi-x bi-middle"></i></a>
-                        </div>
+                        
                     </div>
                 </div>
                 <div class="sidebar-menu">
@@ -184,11 +191,17 @@
                         </li>
                     </ul>
                 </div>
+                <div class="btn-close-sidebar">
+                    <a href="#" class="text-white right" id="btn-close">
+                        <i class="bi bi-arrow-left bi-middle"></i>
+                    </a>
+                </div>
             </div>
+            
         </div>
         <div id="main">
             <header class="mb-3">
-                <a href="#" class="burger-btn d-block d-xl-none">
+                <a href="#" id="btn-show-sidebar" class="burger-btn d-block d-xl-none">
                     <i class="bi bi-justify fs-3"></i>
                 </a>
             </header>
@@ -210,6 +223,19 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.3/dist/sweetalert2.min.js"></script>
 
     <script>
+        
+        $('#btn-close').click(function() {
+            let side = $('#sidebar');
+            side.removeClass('active');
+            $('.burger-btn').show();
+            let btn = $('#btn-show-sidebar');
+            $(btn).removeClass('d-xl-none');
+        })
+        
+        $('#btn-show-sidebar').click(function(){
+            let btn = $('#btn-show-sidebar');
+            $(btn).addClass('d-xl-none');
+        })
         $('.select2').select2({
             dropdownParent: $("#modal_add"),
         });
