@@ -110,8 +110,8 @@
             }
         }
         
-        const modalAddSection = () => {
-            $('#modal-section').modal('show')
+        const addData = () => {
+            $('#modal_add').modal('show')
         }
     </script>
 @endpush
