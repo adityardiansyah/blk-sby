@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SHIO</title>
+    <title>UPT BLK SURABAYA</title>
 
     <link rel="stylesheet" href="{{ asset('assets/css/main/app.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/main/app-dark.css') }}">
@@ -121,18 +121,18 @@
                     <div class="d-flex justify-content-between align-items-center mt-2">
                         <div class="logo">
                             <a href="{{ url('/') }}">
-                                <h1 class="">SHIO</h1>
+                                <h1 class="">BLK SBY</h1>
                                 {{-- <img src="assets/images/logo/logo.svg" alt="Logo"
                                     srcset=""> --}}
                             </a>
                         </div>
-                        <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
+                        {{-- <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                             <div class="form-check form-switch fs-6">
                                 <input class="form-check-input  me-0" type="checkbox" id="toggle-dark"
                                     style="cursor: pointer">
                                 <label class="form-check-label"></label>
                             </div>
-                        </div>
+                        </div> --}}
                         
                     </div>
                 </div>

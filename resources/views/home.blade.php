@@ -4,7 +4,7 @@
     <div class="page-heading">
         <h3>Dashboard</h3>
     </div>
-    <div class="page-content">
+    {{-- <div class="page-content">
         <section class="row">
             <div class="col-lg-4 ">
                 <div class="card">
@@ -92,5 +92,5 @@
                 </div>
             </div>
         </section>
-    </div>
+    </div> --}}
 @endsection
