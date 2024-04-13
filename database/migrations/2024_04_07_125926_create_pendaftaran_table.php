@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Pendaftaran extends Migration
+class CreatePendaftaranTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class Pendaftaran extends Migration
      */
     public function up()
     {
-        Schema::table('pendaftaran', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('user_id');
+        Schema::create('pendaftaran', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->string('alamat');
             $table->string('no_hp');
             $table->string('pendidikan');
@@ -24,6 +24,7 @@ class Pendaftaran extends Migration
             $table->string('foto');
             $table->string('foto_ktp');
             $table->date('tanggal_pendaftaran');
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
         });
     }
 
