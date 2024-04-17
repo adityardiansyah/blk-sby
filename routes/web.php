@@ -11,6 +11,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ActionController;
 use App\Http\Controllers\ButtonController;
 use App\Http\Controllers\KejuruanController;
+use App\Http\Controllers\PelatihanController;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 
@@ -64,4 +65,5 @@ Route::middleware(['auth'])->group(function () {
     Route::post('permission/data-akses/all_access', [PermissionController::class, 'all_access'])->name('permission.all-akses');
     
     Route::resource('kejuruan', KejuruanController::class);
+    Route::resource('pelatihan', PelatihanController::class);
 });
