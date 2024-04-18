@@ -10,8 +10,10 @@ use App\Http\Controllers\GroupController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ActionController;
 use App\Http\Controllers\ButtonController;
+use App\Http\Controllers\HubungiKamiController;
 use App\Http\Controllers\KejuruanController;
 use App\Http\Controllers\PelatihanController;
+use App\Http\Controllers\ProfilController;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 
@@ -66,4 +68,7 @@ Route::middleware(['auth'])->group(function () {
     
     Route::resource('kejuruan', KejuruanController::class);
     Route::resource('pelatihan', PelatihanController::class);
+    Route::resource('profil', ProfilController::class);
+    Route::resource('hubungi-kami', HubungiKamiController::class);
+    Route::delete('/hubungi-kami/{id}/delete', [HubungiKamiController::class, 'destroy'])->name('hubungi-kami.delete');
 });

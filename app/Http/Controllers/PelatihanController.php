@@ -79,7 +79,7 @@ class PelatihanController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Gagal ditambahkan!'.$th->getMessage()
+                'message' => 'Gagal ditambahkan!'.$e->getMessage()
             ]);
         }
     }
