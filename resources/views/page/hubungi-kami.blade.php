@@ -18,8 +18,8 @@
                                 <div id="inputFormRow">
                                     <div class="input-group mb-3">
                                         <input type="hidden" name="id[]" value="{{ $item->id }}">
-                                        <input type="text" name="nama[]" class="form-control m-input" placeholder="Masukkan nama" autocomplete="off" value="{{ $item->judul }}">
-                                        <input type="text" name="nomor[]" class="form-control m-input" placeholder="Masukkan nomor" autocomplete="off" value="{{ $item->isi }}">
+                                        <input type="text" name="nama[]" class="form-control m-input" placeholder="Masukkan jenis kontak" autocomplete="off" value="{{ $item->judul }}">
+                                        <input type="text" name="nomor[]" class="form-control m-input" placeholder="Masukkan nomor/akun" autocomplete="off" value="{{ $item->isi }}">
                                         <div class="input-group-append">
                                             <button id="removeRow" value="{{ $item->id }}" type="button" class="btn btn-danger">Hapus</button>
                                         </div>
@@ -30,8 +30,8 @@
                             <div id="inputFormRow">
                                 <div class="input-group mb-3">
                                     <input type="hidden" name="id[]">
-                                    <input type="text" name="nama[]" class="form-control m-input" placeholder="Masukkan nama" autocomplete="off">
-                                    <input type="text" name="nomor[]" class="form-control m-input" placeholder="Masukkan nomor" autocomplete="off">
+                                    <input type="text" name="nama[]" class="form-control m-input" placeholder="Masukkan jenis kontak" autocomplete="off">
+                                    <input type="text" name="nomor[]" class="form-control m-input" placeholder="Masukkan nomor/akun" autocomplete="off">
                                     <div class="input-group-append">
                                         <button id="removeRow" type="button" class="btn btn-danger">Hapus</button>
                                     </div>
@@ -59,8 +59,8 @@
             var html = '';
             html += '<div id="inputFormRow">';
             html += '<div class="input-group mb-3">';
-            html += '<input type="text" name="nama[]" class="form-control m-input" placeholder="Masukkan nama" autocomplete="off">';
-            html += '<input type="text" name="nomor[]" class="form-control m-input" placeholder="Masukkan nomor" autocomplete="off">';
+            html += '<input type="text" name="nama[]" class="form-control m-input" placeholder="Masukkan jenis kontak" autocomplete="off">';
+            html += '<input type="text" name="nomor[]" class="form-control m-input" placeholder="Masukkan nomor/akun" autocomplete="off">';
             html += '<div class="input-group-append">';
             html += '<button id="removeRow" type="button" class="btn btn-danger">Hapus</button>';
             html += '</div>';

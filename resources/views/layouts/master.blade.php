@@ -141,7 +141,7 @@
                         <li class="sidebar-item {{ Session::get('menu_active') == 'dashboard' ? 'active' : '' }} ">
                             <a href="{{ url('/') }}" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
-                                <span>Dashboard</span>
+                                <span>Lihat Website</span>
                             </a>
                         </li>
                         @foreach (NavHelper::list_menu(Auth::user()->user_group[0]->group_id) as $item)
@@ -221,6 +221,7 @@
 
     <!-- Load jQuery and SweetAlert JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.3/dist/sweetalert2.min.js"></script>
+    <script type="text/javascript" src="{{ asset('assets/extensions/tinymce/tinymce.min.js') }}"></script>
 
     <script>
         
@@ -250,6 +251,10 @@
                 backgroundColor: (success) ? "#61876E" : "#F55050",
             }).showToast();
         }
+        tinymce.init({
+            selector: 'textarea',  // change this value according to your HTML
+            menubar: 'file edit view'
+        });
     </script>
     @if (session()->has('message'))
         @php

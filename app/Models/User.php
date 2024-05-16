@@ -15,13 +15,15 @@ class User extends Authenticatable
 {
     use HasApiTokens, Notifiable;
 
+    // protected $appends = ['user_group'];
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-      'name', 'username', 'password','status'
+      'name', 'username', 'email','nik','password','status'
   ];
 
     /**
@@ -46,10 +48,5 @@ class User extends Authenticatable
     public function user_group()
     {
         return $this->hasMany(UserGroup::class, 'user_id', 'id');
-    }
-
-    public function getSellerAttribute()
-    {
-      return Seller::where('user_id', Auth::user()->id)->first();
     }
 }

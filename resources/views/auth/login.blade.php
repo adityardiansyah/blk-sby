@@ -43,6 +43,7 @@
                         </label>
                     </div> --}}
                     <button class="btn btn-success btn-block btn-lg shadow-lg mt-5">Log in</button>
+                    <a href="{{ url('/') }}" class="btn btn-light btn-block mt-3">Kembali</a>
                 </form>
             </div>
         </div>

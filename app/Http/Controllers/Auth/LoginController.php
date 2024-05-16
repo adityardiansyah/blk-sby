@@ -55,8 +55,16 @@ class LoginController extends Controller
    
         $credentials = $request->only('username', 'password');
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('/')
-            ->with('message', ['type' => 'success','content' => 'Login Berhasil']);
+            if(Auth::user()->user_group[0]->group_id == 1){
+                return redirect()->intended('/profile')
+                    ->with('message', ['type' => 'success','content' => 'Login Berhasil']);
+            }elseif(Auth::user()->user_group[0]->group_id == 2){
+                return redirect()->intended('/profile')
+                ->with('message', ['type' => 'success','content' => 'Login Berhasil']);
+            }else{
+                return redirect()->intended('/')
+                ->with('message', ['type' => 'success','content' => 'Login Berhasil']);
+            }
         }
   
         return redirect("login")

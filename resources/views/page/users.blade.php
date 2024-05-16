@@ -65,29 +65,28 @@
                     <form action="{{ route('users.update', ['id' => $item->id]) }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
-                        @method('PUT')
                         <input type="hidden" name="id" id="id">
                         <div class="modal-body">
                             <div class="row">
                                 <label>Nama</label>
                                 <div class="form-group">
                                     <input readonly type="text" placeholder="Nama" class="form-control" name="name"
-                                        id="name" required value="{{ old('name') }}">
+                                        id="name_edit" required value="{{ old('name') }}">
                                 </div>
                                 <label>Username</label>
                                 <div class="form-group">
                                     <input readonly type="text" placeholder="Username" class="form-control"
-                                        name="username" id="username" required value="{{ old('username') }}">
+                                        name="username" id="username_edit" required value="{{ old('username') }}">
                                 </div>
                                 <label>Password</label>
                                 <div class="form-group">
                                     <input type="password" placeholder="password" class="form-control" name="password"
-                                        id="password" required value="{{ old('password') }}" autocomplete="off">
+                                        id="password_edit" required value="{{ old('password') }}" autocomplete="off">
                                 </div>
                                 <label>Confirm Password</label>
                                 <div class="form-group">
                                     <input type="password" placeholder="password" class="form-control" name="repassword"
-                                        id="repassword" required value="{{ old('repassword') }}" autocomplete="off">
+                                        id="repassword_edit" required value="{{ old('repassword') }}" autocomplete="off">
                                 </div>
                                 <label>Status</label>
                                 <div class="form-group">
@@ -100,7 +99,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary ml-1 btn-simpan">
+                            <button type="submit" class="btn btn-primary ml-1 button-save">
                                 <i class="bx bx-check "></i>
                                 <span class="">Simpan</span>
                             </button>
@@ -291,9 +290,9 @@
                 url: "{{ url('users') }}/" + id,
                 success: function(data) {
                     console.log(data);
-                    $('#name').val(data.data.name);
-                    $('#username').val(data.data.username);
-                    $('#password').val(data.data.password);
+                    $('#name_edit').val(data.data.name);
+                    $('#username_edit').val(data.data.username);
+                    // $('#password_edit').val(data.data.password);
                     $('#status').val(data.data.status);
                     $('#id').val(data.data.id);
                     let detail = data.data.detail
@@ -307,13 +306,13 @@
 
         $('body').on('click', '#button-save', function() {
             var users_id = $('#id').val();
-            var name = $('#name').val();
-            var username = $('#username').val();
-            var password = $('#password').val();
-            var repassword = $('#repassword').val();
+            var name = $('#name_edit').val();
+            var username = $('#username_edit').val();
+            var password = $('#password_edit').val();
+            var repassword = $('#repassword_edit').val();
             var status = $('select[name=status] option').filter(':selected').val();
             var token = "{{ csrf_token() }}"
-
+            console.log(password + ' -- '+ repassword);
             if (password !== repassword) {
                 message('Password tidak sama!', false);
                 return;

@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="page-heading">
-        <h3>Kejuruan</h3>
+        <h3>Sub Kejuruan</h3>
     </div>
     <div class="page-content">
         <section class="section">
@@ -16,7 +16,7 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nama Kejuruan</th>
+                                <th>Nama Sub Kejuruan</th>
                                 <th>Status</th>
                                 <th>Aksi</th>
                             </tr>

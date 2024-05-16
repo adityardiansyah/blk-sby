@@ -1,0 +1,153 @@
+.d-flex{
+    display: flex;
+}
+
+.f-10{
+    font-size: 10pt;
+}
+
+.work-desc span{
+    color: #a5a5a5;
+    font-size: 10pt;
+    width: 150px;
+}
+
+.work-desc p{
+    font-size: 10pt;
+    margin:0;
+}
+
+.text-black{
+    color: black;
+}
+
+.modal-header{
+  color: #000!important;
+    background-color: #ffffff!important;
+}
+.modal-title{
+  text-align: left;
+    /* color:#fff !important; */
+}
+.ml-auto{
+    margin-left: auto;
+}
+
+.img-fluid{
+    width: 100%;
+    height: auto;
+}
+
+.d-flex {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+}
+
+
+.justify-content-start {
+  -webkit-box-pack: start !important;
+  -ms-flex-pack: start !important;
+  justify-content: flex-start !important;
+}
+
+.justify-content-end {
+  -webkit-box-pack: end !important;
+  -ms-flex-pack: end !important;
+  justify-content: flex-end !important;
+}
+
+.justify-content-center {
+  -webkit-box-pack: center !important;
+  -ms-flex-pack: center !important;
+  justify-content: center !important;
+}
+
+.justify-content-between {
+  -webkit-box-pack: justify !important;
+  -ms-flex-pack: justify !important;
+  justify-content: space-between !important;
+}
+
+.modal-open .select2-container--open { z-index: 999999 !important; width:100% !important; }
+
+.bg-secondary{
+  background-color: #ebebeb;
+}
+
+.img-shop{
+  border-radius: 50px;
+  padding: 8px;
+}
+
+.card-item-header{
+  background-color: #36E8C6;
+  border-radius: 16px 16px 0px 0;
+  padding:16px;
+}
+
+.card-item-body{
+  background-color: #fff;
+  padding:0 16px ;
+  border-radius: 0px 0px 16px 16px;
+}
+
+.thumb-product{
+  border-radius: 4px;
+}
+
+.mt-3{
+  margin-top: 16px;
+}
+
+.card-master{
+  box-shadow: 0 1px 8px rgb(177 177 177);
+  border-radius:16px;
+  transition: 1s all;
+}
+
+.card-master:hover{
+  transform: scale(1.1);
+}
+
+.card-product{
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 5px #b3b3b3;
+}
+
+.product-img{
+  max-height: 250px;
+}
+
+.card-desc{
+  border-top:1px solid #d9d9d9;
+  display: none;
+}
+
+.inner-header-page{
+  overflow: visible;
+  position: relative;
+}
+.inner-header-page::before{
+    position: absolute;
+    content: "";
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: block;
+    background: #ffffff;
+    opacity: 0.6;
+}
+
+.right-side-detail ul.social-info li a{
+  background-color: #fff;
+}
+
+.text-elipsis{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 300px;
+}

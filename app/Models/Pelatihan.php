@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Pelatihan extends Model
 {
@@ -18,5 +19,21 @@ class Pelatihan extends Model
         'tanggal_pelaksanaan',
         'kuota',
         'status',
+        'berkas_seleksi',
+        'sub_kejuruan',
     ];
+
+    function riwayat_pelatihan(){
+        return $this->hasMany(RiwayatPelatihan::class, 'pelatihan_id', 'id');
+    }
+
+    /**
+     * Get the sub_kejuruan associated with the Pelatihan
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function kejuruan()
+    {
+        return $this->hasOne(Kejuruan::class, 'id', 'sub_kejuruan');
+    }
 }

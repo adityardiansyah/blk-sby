@@ -16,6 +16,7 @@
                         <thead>
                             <tr>
                                 <th>No</th>
+                                <th>Sub Kejuruan</th>
                                 <th>Nama Pelatihan</th>
                                 <th>Tanggal Pelaksanaan</th>
                                 <th>Tanggal Mulai</th>
@@ -29,6 +30,7 @@
                             @foreach ($data as $key => $item)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
+                                    <td>{{ $item->kejuruan->nama_kejuruan?? '' }}</td>
                                     <td>{{ $item->nama_pelatihan }}</td>
                                     <td>{{ $item->tanggal_pelaksanaan }}</td>
                                     <td>{{ $item->tanggal_awal }}</td>
@@ -36,8 +38,9 @@
                                     <td>{{ $item->kuota }}</td>
                                     <td>{{ $item->status }}</td>
                                     <td>
-                                        <button type="button" class="btn" onclick="editData({{ $item->id }})"><i class="bi bi-pencil"></i></button>
-                                        <button type="button" class="btn" onclick="deleteData({{ $item->id }})"><i class="bi bi-trash"></i></button>
+                                        <a href="{{ url('peserta-pelatihan/'.$item->slug) }}" class="btn" title="Lihat Peserta"><i class="bi bi-eye"></i></a>
+                                        <button type="button" class="btn" title="Edit" onclick="editData({{ $item->id }})"><i class="bi bi-pencil"></i></button>
+                                        <button type="button" class="btn" title="Hapus" onclick="deleteData({{ $item->id }})"><i class="bi bi-trash"></i></button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -77,6 +80,15 @@
                             <div class="form-group">
                                 <input type="text" placeholder="Nama Pelatihan" class="form-control" name="nama_pelatihan" id="nama_pelatihan_edit" required>
                             </div>
+                            <label>Sub Kejuruan</label>
+                            <div class="form-group">
+                                <select name="sub_kejuruan" class="form-control" id="sub_kejuruan_edit">
+                                    <option value="">Pilih Sub Kejuruan</option>
+                                    @foreach ($sub_kejuruan as $item)
+                                        <option value="{{ $item->id }}">{{ $item->nama_kejuruan }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                             <label>Tanggal Pelaksanaan</label>
                             <div class="form-group">
                                 <input type="date" class="form-control" name="tanggal_pelaksanaan" id="tanggal_pelaksanaan_edit" required>
@@ -103,6 +115,10 @@
                             <label>Deskripsi</label>
                             <div class="form-group">
                                 <textarea class="form-control" name="deskripsi" id="deskripsi_edit" rows="3" required></textarea>
+                            </div>
+                            <label>Berkas Seleksi</label>
+                            <div class="form-group">
+                                <input type="file" name="berkas_seleksi" id="berkas_seleksi_edit" class="form-control" id="">
                             </div>
                             </div>
                         </div>
@@ -141,13 +157,22 @@
                         </ul>
                     </div>
                 @endif
-                <form action="{{ route('pelatihan.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('pelatihan.store') }}" method="POST" enctype="multipart/form-data" id="form-input">
                     @csrf
                     <div class="modal-body">
                         <div class="row">
                             <label>Nama Pelatihan</label>
                             <div class="form-group">
                                 <input type="text" placeholder="Nama Pelatihan" class="form-control" name="nama_pelatihan" id="nama_pelatihan" required value="{{ old('nama_pelatihan') }}">
+                            </div>
+                            <label>Sub Kejuruan</label>
+                            <div class="form-group">
+                                <select name="sub_kejuruan" class="form-control" id="sub_kejuruan" required>
+                                    <option value="">Pilih Sub Kejuruan</option>
+                                    @foreach ($sub_kejuruan as $item)
+                                        <option value="{{ $item->id }}">{{ $item->nama_kejuruan }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <label>Tanggal Pelaksanaan</label>
                             <div class="form-group">
@@ -168,6 +193,10 @@
                             <label>Deskripsi</label>
                             <div class="form-group">
                                 <textarea name="deskripsi" id="deskripsi" class="form-control" rows="3" placeholder="Deskripsi" required>{{ old('deskripsi') }}</textarea>
+                            </div>
+                            <label>Berkas Seleksi</label>
+                            <div class="form-group">
+                                <input type="file" name="berkas_seleksi" id="berkas_seleksi" class="form-control" required>
                             </div>
                             <label>Status</label>
                             <div class="form-group">
@@ -192,6 +221,7 @@
             </div>
         </div>
     </div>
+
 @endsection
 
 @push('js')
@@ -245,14 +275,16 @@
 
             e.preventDefault();
 
-            var nama_pelatihan = $("input[name=nama_pelatihan]").val();
-            var tanggal_pelaksanaan = $("input[name=tanggal_pelaksanaan]").val();
-            var tanggal_awal = $("input[name=tanggal_awal]").val();
-            var tanggal_akhir = $("input[name=tanggal_akhir]").val();
-            var kuota = $("input[name=kuota]").val();
-            var deskripsi = $("textarea[name=deskripsi]").val();
+            var nama_pelatihan = $("#nama_pelatihan").val();
+            var tanggal_pelaksanaan = $("#tanggal_pelaksanaan").val();
+            var tanggal_awal = $("#tanggal_awal").val();
+            var tanggal_akhir = $("#tanggal_akhir").val();
+            var kuota = $("#kuota").val();
+            var deskripsi = tinymce.get("deskripsi").getContent();
+            var berkas_seleksi = $("#berkas_seleksi")[0].files[0]; // Menambahkan pengambilan file
             var status = $("select[name=status]").val();
-            let token = $('input[name="_token"]').val();
+            var token = $('input[name="_token"]').val();
+            var sub_kejuruan = $('#sub_kejuruan').val();
 
             let fd = new FormData();
             fd.append('_token', token);
@@ -263,6 +295,8 @@
             fd.append('kuota', kuota);
             fd.append('deskripsi', deskripsi);
             fd.append('status', status);
+            fd.append('berkas', berkas_seleksi); // Menambahkan file ke FormData
+            fd.append('sub_kejuruan', sub_kejuruan);
 
             $.ajax({
                 type: 'POST',
@@ -290,11 +324,11 @@
                     $('.btn-simpan').prop('disabled', false);
                     $('.btn-simpan').html('')
                     $('.btn-simpan').append('Simpan');
-                    if(data.status == 200){
-                        setTimeout(function() {
-                            window.location.href = '{{ route('pelatihan.index') }}';
-                        }, 1220);
-                    }
+                    // if(data.status == 200){
+                    //     setTimeout(function() {
+                    //         window.location.href = '{{ route('pelatihan.index') }}';
+                    //     }, 1220);
+                    // }
                 },
                 error: function(xhr, status, error) {
                     if(xhr.status === 422) {
@@ -324,7 +358,8 @@
                     $('#tanggal_akhir_edit').val(data.data.tanggal_akhir);
                     $('#kuota_edit').val(data.data.kuota);
                     $('#status_edit').val(data.data.status).trigger('change');
-                    $('#deskripsi_edit').val(data.data.deskripsi);
+                    $('#sub_kejuruan_edit').val(data.data.sub_kejuruan).trigger('change');
+                    tinymce.get("deskripsi_edit").setContent(data.data.deskripsi);
                 },
                 complete: function() {}
             })
@@ -338,7 +373,9 @@
             var tanggal_akhir = $('#tanggal_akhir_edit').val();
             var kuota = $('#kuota_edit').val();
             var status = $('#status_edit').val();
-            var deskripsi = $('#deskripsi_edit').val();
+            var sub_kejuruan = $('#sub_kejuruan_edit').val();
+            var deskripsi = tinymce.get("deskripsi_edit").getContent();
+            var berkas_seleksi = $("#berkas_seleksi_edit")[0].files[0]; // Menambahkan pengambilan file
             var token = $('input[name="_token"]').val();
 
             Swal.fire({
@@ -361,7 +398,9 @@
                             'tanggal_akhir': tanggal_akhir,
                             'kuota': kuota,
                             'deskripsi': deskripsi,
+                            'sub_kejuruan': sub_kejuruan,
                             'status': status,
+                            'berkas_seleksi': berkas_seleksi,
                             '_token': token
                         },
                         success: function(response) {

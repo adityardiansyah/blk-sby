@@ -9,21 +9,36 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ActionController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ButtonController;
+use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\HubungiKamiController;
 use App\Http\Controllers\KejuruanController;
 use App\Http\Controllers\PelatihanController;
+use App\Http\Controllers\PendaftaranController;
 use App\Http\Controllers\ProfilController;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 
 Route::get('login', [LoginController::class, 'login']);
 Route::post('login', [LoginController::class, 'check_login'])->name('login');
+Route::post('register', [RegisterController::class, 'register'])->name('register');
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/', [HomeController::class, 'index'])->name('home.index');
+Route::get('profil-perusahaan', [HomeController::class, 'profil'])->name('home.profil');
+Route::get('call-us', [HomeController::class, 'hubungi_kami'])->name('home.hubungi_kami');
+Route::get('gallery', [HomeController::class, 'gallery'])->name('home.gallery');
+Route::get('detail-gallery/{id}', [HomeController::class, 'detail_gallery'])->name('home.detail-gallery');
+Route::get('profile-company', [HomeController::class, 'profile_company'])->name('home.profile-company');
+Route::get('program-pelatihan', [HomeController::class, 'program_pelatihan'])->name('home.program-pelatihan');
+Route::get('program-pelatihan/{slug}', [HomeController::class, 'detail_program_pelatihan'])->name('home.detail-program-pelatihan');
 
-// URL::forceScheme('https');
+
 Route::middleware(['auth'])->group(function () {
-    Route::get('/', [HomeController::class, 'index'])->name('home.index');
+    Route::get('daftar-pelatihan/{slug}', [HomeController::class, 'daftar_pelatihan'])->name('home.daftar-pelatihan');
+    Route::post('daftar-pelatihan/{slug}', [HomeController::class, 'daftar_pelatihan_simpan'])->name('home.daftar-pelatihan-simpan');
+    Route::get('informasi-seleksi/{slug}', [HomeController::class, 'informasi_pelatihan'])->name('home.informasi-pelatihan');
+    Route::get('riwayat-pelatihan', [HomeController::class, 'riwayat_pelatihan'])->name('home.riwayat-pelatihan');
 
     // Profile User
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
@@ -66,9 +81,14 @@ Route::middleware(['auth'])->group(function () {
     Route::post('permission/data-akses/edit_akses', [PermissionController::class, 'edit_akses'])->name('permission.edit-akses');
     Route::post('permission/data-akses/all_access', [PermissionController::class, 'all_access'])->name('permission.all-akses');
     
+    Route::resource('pendaftar', PendaftaranController::class);
     Route::resource('kejuruan', KejuruanController::class);
     Route::resource('pelatihan', PelatihanController::class);
+    Route::get('peserta-pelatihan/{slug}', [PelatihanController::class, 'peserta_pelatihan']);
+    Route::get('peserta-pelatihan/{id}/update-status', [PelatihanController::class, 'update_status']);
     Route::resource('profil', ProfilController::class);
     Route::resource('hubungi-kami', HubungiKamiController::class);
     Route::delete('/hubungi-kami/{id}/delete', [HubungiKamiController::class, 'destroy'])->name('hubungi-kami.delete');
+    Route::resource('galeri', GaleriController::class);
+    Route::delete('/galeri/foto/{id}', [GaleriController::class, 'delete'])->name('galeri.delete');
 });
